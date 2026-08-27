@@ -39,6 +39,14 @@ python -m ruff check .     # estil del codi de Python
 Per veure l'aplicació, obriu `dist/pi-eso.html` amb el navegador. No cal
 servidor: aquest és tot el sentit del projecte.
 
+Per veure la **versió web** —amb el manifest, el service worker i el botó de
+descàrrega, que amb `file://` no s'activen— cal servir-la per http:
+
+```bash
+python -m tools.pagines               # munta _site/
+python -m http.server -d _site 8000   # i obriu http://localhost:8000
+```
+
 Els documents PDF de `referencies/` **no cal baixar-los**. Només fan falta per
 tornar a extreure el currículum, cosa que passa quan canvia la normativa.
 
@@ -52,6 +60,8 @@ tornar a extreure el currículum, cosa que passa quan canvia la normativa.
 | L'aspecte | `src/styles/*.css` |
 | El comportament | `src/app/*.js` |
 | L'estructura del document | `src/index.html` |
+| El manifest o el service worker de la versió web | `web/` |
+| Les icones d'instal·lació | `python -m tools.icones` (cal Pillow) |
 
 **Mai** `dist/pi-eso.html`. És un fitxer generat, i qualsevol canvi que hi
 feu desapareixerà a la propera construcció.
@@ -125,6 +135,9 @@ Dues coses que és fàcil trencar sense adonar-se'n:
 - [ ] `python -m pytest` en verd
 - [ ] `python -m ruff check .` en verd
 - [ ] Provat obrint `dist/pi-eso.html` **des del disc**, no des d'un servidor
+- [ ] Si toca `web/` o `src/app/09-versio-web.js`: provat també servint `_site/`
+      per http, i comprovat que la còpia oberta des del disc no dona cap error
+      de consola
 - [ ] Si toca els estils: comprovada la vista prèvia d'impressió
 - [ ] Si toca les dades: afegida o revisada la `font` de cada entrada nova
 

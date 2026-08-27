@@ -22,3 +22,9 @@ EQUIVALENCIES = DADES / "equivalencies-primaria.json"
 REFERENCIES = ARREL / "referencies"
 DIST = ARREL / "dist"
 SORTIDA = DIST / "pi-eso.html"
+
+# Peces que només existeixen al lloc publicat: manifest, service worker i
+# icones d'instal·lació. `tools/pagines.py` les combina amb el fitxer únic
+# per muntar el lloc a `_site/`, que no es versiona.
+WEB = ARREL / "web"
+LLOC = ARREL / "_site"

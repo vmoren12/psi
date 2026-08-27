@@ -19,6 +19,27 @@
 .avis-obre.on{display:flex}
 .avis-obre:hover{border-color:var(--warn)}
 
+/* ---------- descàrrega del fitxer únic (només a la versió web) ----------
+   A la versió publicada l'aplicació s'obre amb un enllaç i no cal baixar res,
+   però la còpia de sempre —un sol fitxer que funciona amb doble clic i sense
+   connexió— ha de continuar sent a un clic de distància. El botó comparteix
+   mida i forma amb el rodó de l'avís i se situa just a sobre seu.
+
+   La posició es resol sense JavaScript, amb els dos estats que ja hi ha:
+   amb l'avís desplegat, --avis-h val l'alçada de la barra i el botó hi queda
+   just per sobre; amb l'avís amagat, --avis-h val zero, hi ha el botó rodó al
+   racó i el selector de germà adjacent li suma els 52 px que ocupa. Per això
+   #baixa-app ha d'anar immediatament després de #avis-obre al document. */
+.baixa-app{position:fixed;right:16px;bottom:calc(16px + var(--safe-b) + var(--avis-h,0px));z-index:60;
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;
+  border-radius:100px;cursor:pointer;background:var(--surface);border:1px solid var(--line2);color:var(--ink2);
+  box-shadow:0 6px 16px -8px rgba(20,32,38,.5);transition:border-color .12s,color .12s,bottom .2s}
+.avis-obre.on + .baixa-app{bottom:calc(16px + var(--safe-b) + 52px)}
+.baixa-app .msym{font-size:22px}
+.baixa-app:hover{border-color:var(--ink3);color:var(--ink)}
+/* L'atribut hidden ha de guanyar el display:flex de sobre. */
+.baixa-app[hidden]{display:none}
+
 .toast{position:fixed;left:50%;bottom:calc(26px + var(--safe-b) + var(--avis-h,0px));transform:translate(-50%,14px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:10px 18px;border-radius:100px;font-size:13.5px;z-index:80;transition:all .22s;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .note{background:var(--warn-soft);border:1px solid #e6dcb4;border-radius:var(--r);padding:11px 13px;font-size:13px;color:#6d5411;line-height:1.5}

@@ -37,5 +37,9 @@ desktop.ini
 .vscode/
 *.swp
 
+# El lloc publicat. El munta tools/pagines.py a partir de dist/ i web/, i el
+# genera la feina de GitHub Actions a cada publicació: no s'ha de versionar.
+/_site/
+
 # NO ignoreu dist/. L'artefacte generat es versiona a propòsit:
 # vegeu docs/adr/0004-dist-versionat.md.

@@ -4,7 +4,8 @@
 
 Un sol fitxer HTML autònom, escrit com un projecte partit en mòduls i cosit
 per un pas de construcció en Python, amb totes les dades de l'usuari al seu
-propi navegador i cap servidor enlloc.
+propi navegador. Es distribueix de dues maneres —baixant-lo o obrint-lo a una
+adreça— i cap de les dues envia res a cap servidor.
 
 ## La restricció que ho explica tot
 
@@ -58,7 +59,7 @@ i la paleta sencera cap en catorze línies.
 
 ## El codi
 
-29 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
+30 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
 Comparteixen, doncs, **un sol àmbit global**, i això té dues conseqüències que
 convé tenir presents abans de tocar res:
 
@@ -85,6 +86,7 @@ segura.
 |---|---|
 | `01`–`03` | Currículum, banc de mesures i plantilles de perfil: dades i vocabularis. |
 | `04`–`08` | Estat, persistència, utilitats, navegació, diàlegs i logotips del centre. |
+| `09` | La versió web: manifest, service worker i botó de descàrrega. Amb `file://` no fa res. |
 | `10`–`13` | Vistes de tauler, alumnat, banc i explorador del currículum. |
 | `20`–`31` | Editor del pla, un mòdul per pas del model oficial. |
 | `40`–`62` | Seguiment, generació del document, còpies de seguretat i importació. |
@@ -95,6 +97,46 @@ passos. El pas 5 —adaptació d'elements curriculars— ocupa tres mòduls perq
 és on hi ha la lògica real del projecte: prendre criteris d'avaluació i sabers
 d'un nivell anterior, seguir-los entre matèries i saber quan això converteix
 el pla en curricular.
+
+## Les dues formes de distribució
+
+El mateix artefacte es reparteix de dues maneres, i la segona és una capa
+damunt de la primera, no una variant:
+
+```
+                          dist/pi-eso.html
+                                 │
+             ┌───────────────────┴───────────────────┐
+             ▼                                       ▼
+      es baixa i s'obre                    tools/pagines.py  +  web/
+      amb doble clic                                 │
+      (protocol file://)                             ▼
+                                              _site/index.html
+                                        GitHub Pages · instal·lable
+```
+
+`_site/index.html` **és** `dist/pi-eso.html`, byte a byte; `tools/pagines.py`
+no el toca. El que hi afegeix són les peces que un fitxer únic no pot portar a
+dins perquè el navegador les exigeix com a fitxers separats: el manifest, el
+service worker i les icones d'instal·lació, que viuen a `web/`.
+
+La frontera entre les dues formes la manté un sol mòdul,
+`src/app/09-versio-web.js`. Comprova el protocol i, amb `file://`, no fa
+absolutament res: **el document baixat no conté cap referència a fitxers que
+no tindrà al costat**. Per això els enllaços al manifest i a la icona d'inici
+s'injecten en temps d'execució en comptes d'anar a `src/index.html`; si hi
+anessin, la còpia oberta des d'un llapis de memòria buscaria fitxers
+inexistents i ompliria la consola d'errors.
+
+[`tests/test_versio_web.py`](../tests/test_versio_web.py) vigila aquesta
+frontera als dos sentits: que el fitxer únic no referenciï res del servidor, i
+que el service worker no enviï res enlloc.
+
+La publicació la fa
+[`.github/workflows/pages.yml`](../.github/workflows/pages.yml) a cada canvi a
+`main`, i s'atura si `dist/` no correspon a les fonts: l'adreça pública i el
+fitxer del dipòsit no poden divergir. Vegeu
+[`adr/0006-versio-web-i-pwa.md`](adr/0006-versio-web-i-pwa.md).
 
 ## Les dades
 
@@ -161,6 +203,11 @@ ni `sendBeacon`, ni WebSocket, i hi ha una prova que ho impedeix. L'única cosa
 que el document baixa d'Internet són els tipus de lletra de Google, que estan
 pensats per fallar de manera benigna: sense connexió, el navegador cau a la
 font del sistema i l'aplicació segueix sent utilitzable.
+
+A la versió publicada el service worker sí que veu passar les peticions, però
+no en pot originar cap de nova: només respon amb el que ja s'ha baixat, i el
+que guarda és l'aplicació i els tipus de lletra. No té accés a `localStorage`
+ni a `IndexedDB`, que és on són els plans.
 
 Vegeu [`privadesa.md`](privadesa.md) i
 [`adr/0002-dades-al-navegador.md`](adr/0002-dades-al-navegador.md).

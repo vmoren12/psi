@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "PI · Pla de suport individualitzat",
+  "short_name": "PI",
+  "description": "Elaboració, seguiment i impressió de plans de suport individualitzat per a primària i ESO, amb el currículum del Decret 175/2022 i el banc de mesures del Decret 150/2017. Les dades no surten del dispositiu.",
+  "lang": "ca",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3f5f2",
+  "theme_color": "#141d23",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "icona-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icona-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icona-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

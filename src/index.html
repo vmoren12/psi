@@ -83,6 +83,15 @@
 </div>
 <button class="avis-obre" id="avis-obre" type="button" title="Llegeix l'avís sobre l'ús de l'aplicació"
   aria-label="Llegeix l'avís sobre l'ús de l'aplicació" onclick="mostraAvis(true)"><span class="msym" aria-hidden="true">&#xe002;</span></button>
+<!-- Endur-se l'aplicació: instal·lar-la o baixar el fitxer únic. Neix amagat
+     i només el mostra arrencaVersioWeb() quan el document se serveix per
+     http(s); a la còpia baixada no tindria cap sentit. Ha d'anar immediatament
+     després del botó rodó de l'avís: la fulla d'estils el col·loca just a
+     sobre seu. -->
+<button class="baixa-app" id="baixa-app" type="button" hidden
+  title="Instal·la l'aplicació o descarrega el fitxer"
+  aria-label="Instal·la l'aplicació o descarrega el fitxer"
+  onclick="obtenAplicacio()"><span class="msym" aria-hidden="true">&#xf090;</span></button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- <<<INSERTA: curriculum>>> -->

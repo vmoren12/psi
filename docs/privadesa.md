@@ -20,10 +20,10 @@ navegador on s'obre el fitxer:
 | `IndexedDB` | Fins a 10 instantànies internes recents, per poder desfer un error. |
 | La carpeta de baixades | Només si activeu la còpia automàtica, i sempre al vostre disc. |
 
-No hi ha servidor. No hi ha compte d'usuari. No hi ha analítica, telemetria,
-galetes de seguiment ni informes d'errors. L'aplicació **no conté cap crida de
-xarxa amb dades** —ni `fetch`, ni `XMLHttpRequest`, ni `sendBeacon`, ni
-WebSocket— i la suite de proves ho comprova a cada canvi
+No hi ha compte d'usuari. No hi ha analítica, telemetria, galetes de seguiment
+ni informes d'errors. L'aplicació **no conté cap crida de xarxa amb dades** —ni
+`fetch`, ni `XMLHttpRequest`, ni `sendBeacon`, ni WebSocket— i la suite de
+proves ho comprova a cada canvi
 ([`tests/test_aplicacio.py`](../tests/test_aplicacio.py)).
 
 L'única cosa que el document baixa d'Internet són els **tipus de lletra de
@@ -31,6 +31,36 @@ Google Fonts**. Això fa una petició als servidors de Google amb l'adreça IP i
 l'agent d'usuari del navegador, sense cap dada de l'aplicació. Si obriu el
 fitxer sense connexió, o si el vostre navegador ho bloqueja, l'aplicació
 funciona igual amb els tipus de lletra del sistema.
+
+## La versió web
+
+L'aplicació també es publica a una adreça
+(<https://vmoren12.github.io/psi/>), i des d'allà es pot instal·lar com a
+aplicació del dispositiu. Això **no canvia on van les dades**, però convé
+saber exactament què hi ha de diferent.
+
+**El servidor entrega l'aplicació i prou.** El que hi ha publicat és una
+pàgina estàtica, pública i igual per a tothom: el mateix `pi-eso.html` que es
+baixa del dipòsit, byte a byte. No hi ha base de dades, ni sessió, ni res que
+pugui rebre un pla. Els plans continuen vivint al `localStorage` i a
+l'`IndexedDB` del navegador, que no viatgen enlloc.
+
+**El que sí que canvia** és el que canvia en visitar qualsevol pàgina web: el
+proveïdor de l'allotjament —GitHub, Inc.— veu l'**adreça IP i l'agent
+d'usuari** de qui hi entra, als seus registres d'accés. Són dades de connexió
+del professional que obre l'eina, no de cap alumne. Qui prefereixi no
+generar-les té la còpia baixada, que no en genera cap.
+
+**El service worker** és el que permet tornar a obrir l'aplicació sense
+connexió. Guarda al navegador dues coses: l'aplicació i els tipus de lletra.
+No té accés a `localStorage` ni a `IndexedDB`, no origina cap petició pròpia i
+no envia res enlloc; una prova ho comprova
+([`tests/test_versio_web.py`](../tests/test_versio_web.py)).
+
+**Els dos magatzems són independents.** L'emmagatzematge del navegador va
+lligat a l'origen: els plans fets a l'adreça web i els fets a la còpia baixada
+són conjunts diferents i no es veuen entre ells, igual que no es veuen entre
+dos ordinadors. Per traslladar-los, exporteu i importeu la còpia de seguretat.
 
 ## Què vol dir això per a un centre
 

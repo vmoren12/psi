@@ -23,6 +23,17 @@
 .dlg-b li:last-child{margin-bottom:0}
 .dlg-b li .tag{margin-left:4px}
 .dlg-b input[type=text]{margin-bottom:6px}
+.dlg-b .note{margin-bottom:8px}
+/* Diàleg de tria: cada opció és un botó de tota l'amplada amb títol i
+   explicació. La diferència entre instal·lar l'aplicació i baixar el fitxer no
+   és evident —una conserva els plans i s'actualitza, l'altra no— i s'ha de
+   poder llegir abans de decidir, no després. */
+.tria{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+  padding:11px 13px;margin-bottom:8px;transition:border-color .12s,background .12s}
+.tria:hover{border-color:var(--ink3);background:var(--surface)}
+.tria-t{display:block;font-weight:600;color:var(--ink);margin-bottom:3px}
+.tria-d{display:block;font-size:13px;line-height:1.5;color:var(--ink2)}
 .dlg-f{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;padding:12px 20px 18px}
 .doc{padding:34px 44px 60px;font-family:var(--serif);font-size:14.5px;line-height:1.6;color:#1b2429}
 .doc h1{font-size:21px;font-weight:600;margin:0 0 3px;line-height:1.2}

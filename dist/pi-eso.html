@@ -425,6 +425,17 @@ details.ce .ceb{padding:6px 14px 12px}
 .dlg-b li:last-child{margin-bottom:0}
 .dlg-b li .tag{margin-left:4px}
 .dlg-b input[type=text]{margin-bottom:6px}
+.dlg-b .note{margin-bottom:8px}
+/* Diàleg de tria: cada opció és un botó de tota l'amplada amb títol i
+   explicació. La diferència entre instal·lar l'aplicació i baixar el fitxer no
+   és evident —una conserva els plans i s'actualitza, l'altra no— i s'ha de
+   poder llegir abans de decidir, no després. */
+.tria{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+  padding:11px 13px;margin-bottom:8px;transition:border-color .12s,background .12s}
+.tria:hover{border-color:var(--ink3);background:var(--surface)}
+.tria-t{display:block;font-weight:600;color:var(--ink);margin-bottom:3px}
+.tria-d{display:block;font-size:13px;line-height:1.5;color:var(--ink2)}
 .dlg-f{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;padding:12px 20px 18px}
 .doc{padding:34px 44px 60px;font-family:var(--serif);font-size:14.5px;line-height:1.6;color:#1b2429}
 .doc h1{font-size:21px;font-weight:600;margin:0 0 3px;line-height:1.2}
@@ -483,6 +494,27 @@ details.ce .ceb{padding:6px 14px 12px}
 .avis-obre.on{display:flex}
 .avis-obre:hover{border-color:var(--warn)}
 
+/* ---------- descàrrega del fitxer únic (només a la versió web) ----------
+   A la versió publicada l'aplicació s'obre amb un enllaç i no cal baixar res,
+   però la còpia de sempre —un sol fitxer que funciona amb doble clic i sense
+   connexió— ha de continuar sent a un clic de distància. El botó comparteix
+   mida i forma amb el rodó de l'avís i se situa just a sobre seu.
+
+   La posició es resol sense JavaScript, amb els dos estats que ja hi ha:
+   amb l'avís desplegat, --avis-h val l'alçada de la barra i el botó hi queda
+   just per sobre; amb l'avís amagat, --avis-h val zero, hi ha el botó rodó al
+   racó i el selector de germà adjacent li suma els 52 px que ocupa. Per això
+   #baixa-app ha d'anar immediatament després de #avis-obre al document. */
+.baixa-app{position:fixed;right:16px;bottom:calc(16px + var(--safe-b) + var(--avis-h,0px));z-index:60;
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;
+  border-radius:100px;cursor:pointer;background:var(--surface);border:1px solid var(--line2);color:var(--ink2);
+  box-shadow:0 6px 16px -8px rgba(20,32,38,.5);transition:border-color .12s,color .12s,bottom .2s}
+.avis-obre.on + .baixa-app{bottom:calc(16px + var(--safe-b) + 52px)}
+.baixa-app .msym{font-size:22px}
+.baixa-app:hover{border-color:var(--ink3);color:var(--ink)}
+/* L'atribut hidden ha de guanyar el display:flex de sobre. */
+.baixa-app[hidden]{display:none}
+
 .toast{position:fixed;left:50%;bottom:calc(26px + var(--safe-b) + var(--avis-h,0px));transform:translate(-50%,14px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:10px 18px;border-radius:100px;font-size:13.5px;z-index:80;transition:all .22s;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .note{background:var(--warn-soft);border:1px solid #e6dcb4;border-radius:var(--r);padding:11px 13px;font-size:13px;color:#6d5411;line-height:1.5}
@@ -528,6 +560,11 @@ details.ce .ceb{padding:6px 14px 12px}
   .app{grid-template-columns:1fr;padding-bottom:calc(62px + var(--safe-b) + var(--avis-h,0px))}
   .avis{bottom:calc(62px + var(--safe-b));padding:9px 12px 10px;font-size:12px;gap:8px}
   .avis-obre{bottom:calc(72px + var(--safe-b));right:12px;width:40px;height:40px}
+  /* La barra de navegació inferior ocupa 62 px: els botons rodons pugen
+     per sobre seu i el de descàrrega, per sobre del de l'avís. */
+  .baixa-app{bottom:calc(72px + var(--safe-b) + var(--avis-h,0px));right:12px;width:40px;height:40px}
+  .avis-obre.on + .baixa-app{bottom:calc(72px + var(--safe-b) + 48px)}
+  .baixa-app .msym{font-size:20px}
   .rail{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;flex-direction:row;z-index:40;border-top:1px solid #26323a;padding-bottom:var(--safe-b)}
   .brand{display:none}
   .nav{flex-direction:row;padding:5px 4px;gap:0;overflow:visible}
@@ -568,7 +605,7 @@ details.ce .ceb{padding:6px 14px 12px}
 }
 @media print{
   body{background:#fff}
-  .app,.topbar,.toast,.modal-h,.rail,.avis,.avis-obre{display:none!important}
+  .app,.topbar,.toast,.modal-h,.rail,.avis,.avis-obre,.baixa-app{display:none!important}
   .modal{position:static;padding:0;background:none;display:block;overflow:visible}
   .modal-inner{max-width:none;min-height:0}
   .doc{font-size:10.5pt}
@@ -661,6 +698,15 @@ details.ce .ceb{padding:6px 14px 12px}
 </div>
 <button class="avis-obre" id="avis-obre" type="button" title="Llegeix l'avís sobre l'ús de l'aplicació"
   aria-label="Llegeix l'avís sobre l'ús de l'aplicació" onclick="mostraAvis(true)"><span class="msym" aria-hidden="true">&#xe002;</span></button>
+<!-- Endur-se l'aplicació: instal·lar-la o baixar el fitxer únic. Neix amagat
+     i només el mostra arrencaVersioWeb() quan el document se serveix per
+     http(s); a la còpia baixada no tindria cap sentit. Ha d'anar immediatament
+     després del botó rodó de l'avís: la fulla d'estils el col·loca just a
+     sobre seu. -->
+<button class="baixa-app" id="baixa-app" type="button" hidden
+  title="Instal·la l'aplicació o descarrega el fitxer"
+  aria-label="Instal·la l'aplicació o descarrega el fitxer"
+  onclick="obtenAplicacio()"><span class="msym" aria-hidden="true">&#xf090;</span></button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- <<<CURRICULUM-ESO-INICI>>> -->
@@ -1758,6 +1804,158 @@ function commutaLogo(id){
                 : `«${l.nom}» només sortirà a la primera pàgina.`);
 }
 
+/* ---------- 9. La versió web ----------
+   Aquest és l'únic mòdul que sap que l'aplicació, a més de baixar-se, també
+   es publica a una adreça. Obert des del disc (`file://`) no fa absolutament
+   res: el fitxer únic continua sent autònom i no referencia cap recurs del
+   costat. Vegeu docs/adr/0006-versio-web-i-pwa.md.
+
+   Servit per http(s) fa tres coses:
+
+     1. Enllaça el manifest i la icona d'inici, que viuen a `web/` i només
+        existeixen al lloc publicat. S'injecten des d'aquí i no des de
+        `src/index.html` precisament perquè el document baixat no ha de portar
+        cap referència a fitxers que no tindrà al costat: obert des d'un llapis
+        de memòria donaria errors de consola i faria dubtar de si funciona.
+     2. Registra el service worker, que és el que permet instal·lar
+        l'aplicació i tornar-la a obrir sense connexió.
+     3. Ofereix les dues maneres d'endur-se-la: instal·lar-la com a aplicació
+        del dispositiu o baixar el fitxer únic de sempre.
+
+   Res d'això toca les dades: el service worker només guarda l'aplicació i els
+   tipus de lletra, i els plans continuen vivint només al navegador. */
+
+const SERVIT_PER_WEB = location.protocol === "http:" || location.protocol === "https:";
+
+/* El convit d'instal·lació que disparen Chrome, Edge i Android quan
+   l'aplicació compleix els criteris. Es reté en comptes de deixar-lo passar
+   perquè la barra automàtica del navegador apareix quan vol i no explica res;
+   així el mateix convit es dispara des del nostre diàleg, on al costat hi ha
+   l'altra opció i la diferència entre totes dues escrita.
+
+   Safari i Firefox no el disparen mai: no hi ha API equivalent, i allà la
+   instal·lació només es pot explicar. Val més dir com es fa que ensenyar un
+   botó que no faria res. */
+let convitInstal = null;
+
+/* Quan l'aplicació ja corre instal·lada, el convit no torna a arribar i
+   oferir-la seria absurd. `standalone` és el que fa servir iOS. */
+const jaInstalLada = () =>
+  window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+
+/* iPhone, iPad i els Mac amb pantalla tàctil, que Safari declara com a
+   MacIntel. Només serveix per triar quina instrucció es mostra. */
+const esDispositiuApple = () =>
+  /iPad|iPhone|iPod/.test(navigator.userAgent)
+  || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+/* Els recursos de la versió web, amb ruta relativa al document. Així el lloc
+   funciona igual a l'arrel d'un domini propi que dins d'un subdirectori de
+   github.io, i no cal tocar res si l'adreça canvia. */
+function enllacaRecursosWeb(){
+  const posa = (rel, href) => {
+    const l = document.createElement("link");
+    l.rel = rel;
+    l.href = href;
+    document.head.appendChild(l);
+  };
+  posa("manifest", "manifest.webmanifest");
+  /* iOS no llegeix les icones del manifest quan es fa «Afegeix a la pantalla
+     d'inici»: li cal aquesta, i opaca. */
+  posa("apple-touch-icon", "icona-180.png");
+}
+
+/* ----- El diàleg de tria -----
+   Les dues opcions no són equivalents i la diferència no és evident: una deixa
+   una aplicació que s'actualitza sola i conserva els plans, i l'altra deixa un
+   fitxer independent i buit. Per això cada opció porta la seva explicació al
+   costat i no només un nom. */
+function opcioInstal(){
+  if(jaInstalLada()) return "";
+  if(convitInstal){
+    return `<button class="tria" type="button" onclick="tancaDlg('instal')">
+      <span class="tria-t">Instal·la l'aplicació <span class="tag met">Recomanat</span></span>
+      <span class="tria-d">Queda amb icona pròpia al dispositiu, s'obre sense barra d'adreces,
+      funciona sense connexió i s'actualitza sola. <b>Els plans que ja tens es conserven.</b></span>
+    </button>`;
+  }
+  /* Sense convit no hi ha res a clicar: només es pot dir com es fa a mà. */
+  const com = esDispositiuApple()
+    ? "A Safari, botó de compartir → <b>Afegeix a la pantalla d'inici</b>."
+    : "Chrome i Edge l'ofereixen des de la barra d'adreces o del menú del navegador. "
+      + "A Safari del Mac, <b>Arxiu → Afegeix al Dock</b>.";
+  return `<div class="note info">Aquest navegador no permet instal·lar-la des d'aquí. ${com}</div>`;
+}
+
+function opcioDescarrega(){
+  return `<button class="tria" type="button" onclick="tancaDlg('fitxer')">
+    <span class="tria-t">Descarrega el fitxer</span>
+    <span class="tria-d">Un sol HTML que s'obre amb doble clic, per a un llapis de memòria, el correu
+    o una xarxa de centre que filtri dominis. Funciona sense connexió i no s'actualitza mai.
+    <b>Es baixa buit</b>: els plans d'aquesta pestanya no hi van, perquè cada còpia desa les dades
+    pel seu compte. Per traslladar-los, exporta la còpia des de «Dades i còpies».</span>
+  </button>`;
+}
+
+async function obtenAplicacio(){
+  const tria = await obreDlg("Com vols fer servir el PI?",
+    opcioInstal() + opcioDescarrega(),
+    [{text: "Cancel·la", classe: "ghost", valor: null}]);
+  if(tria === "instal") return instalAplicacio();
+  if(tria === "fitxer") return baixaFitxerUnic();
+}
+
+/* El convit només es pot fer servir un cop, i s'ha de disparar des del gest de
+   la persona: per això es crida aquí mateix, en resoldre's el diàleg, i no
+   més tard. Si es tanca sense instal·lar, el navegador ja el tornarà a
+   disparar quan li sembli i el tornarem a retenir. */
+async function instalAplicacio(){
+  const convit = convitInstal;
+  convitInstal = null;
+  if(!convit) return;
+  convit.prompt();
+  const resposta = await convit.userChoice;
+  if(resposta && resposta.outcome === "accepted") toast("S'està instal·lant l'aplicació");
+}
+
+function baixaFitxerUnic(){
+  /* L'enllaç s'insereix al document abans de clicar-lo: Safari no fa cas del
+     clic sobre un element que no hi és, i aquest botó l'han de poder fer
+     servir des d'un iPad. */
+  const a = document.createElement("a");
+  a.href = "pi-eso.html";
+  a.download = "pi-eso.html";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  toast("S'està baixant pi-eso.html");
+}
+
+function arrencaVersioWeb(){
+  if(!SERVIT_PER_WEB) return;
+  enllacaRecursosWeb();
+  const b = $("#baixa-app");
+  if(b) b.hidden = false;
+
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();          /* la barra automàtica no; el convit el fem nosaltres */
+    convitInstal = e;
+  });
+  window.addEventListener("appinstalled", () => {
+    convitInstal = null;
+    toast("Aplicació instal·lada");
+  });
+
+  /* El registre va després de la càrrega perquè no competeixi per l'amplada
+     de banda amb el document, que és el que la persona està esperant. Si el
+     navegador no en té, o si el lloc no se serveix per https, no passa res:
+     l'aplicació funciona igual, només que sense mode sense connexió ni
+     possibilitat d'instal·lar-la. */
+  if(!("serviceWorker" in navigator)) return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
 /* ---------- 5. Tauler ---------- */
 /* ----- Cerca i filtres del tauler -----
    El tauler llista plans, no fitxes: els filtres surten dels plans que hi ha
@@ -5881,6 +6079,7 @@ setInterval(tickCopies, TICK_COPIES);
 document.addEventListener("visibilitychange", () => { if(!document.hidden) tickCopies(); });
 go("dashboard");
 pintaAvis();
+arrencaVersioWeb();
 mesuraBarres();
 
 </script>

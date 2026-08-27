@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | [**Arquitectura**](arquitectura.md) | Com està organitzat el projecte i per què. Comenceu aquí. |
-| [**Decisions de disseny**](adr/) | Les cinc decisions estructurals, amb el que es va descartar i a canvi de què. |
+| [**Decisions de disseny**](adr/) | Les sis decisions estructurals, amb el que es va descartar i a canvi de què. |
 | [**Privadesa**](privadesa.md) | Què fa i què no fa l'aplicació amb les dades de l'alumnat. |
 
 ## Per mantenir les dades

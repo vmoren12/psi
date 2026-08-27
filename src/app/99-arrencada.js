@@ -18,5 +18,6 @@ setInterval(tickCopies, TICK_COPIES);
 document.addEventListener("visibilitychange", () => { if(!document.hidden) tickCopies(); });
 go("dashboard");
 pintaAvis();
+arrencaVersioWeb();
 mesuraBarres();
 

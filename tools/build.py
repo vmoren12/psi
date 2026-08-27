@@ -79,6 +79,7 @@ APLICACIO = [
     "06-navegacio.js",
     "07-dialegs.js",
     "08-logos.js",
+    "09-versio-web.js",
     # vistes principals
     "10-vista-tauler.js",
     "11-vista-alumnat.js",

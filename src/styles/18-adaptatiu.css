@@ -4,6 +4,11 @@
   .app{grid-template-columns:1fr;padding-bottom:calc(62px + var(--safe-b) + var(--avis-h,0px))}
   .avis{bottom:calc(62px + var(--safe-b));padding:9px 12px 10px;font-size:12px;gap:8px}
   .avis-obre{bottom:calc(72px + var(--safe-b));right:12px;width:40px;height:40px}
+  /* La barra de navegació inferior ocupa 62 px: els botons rodons pugen
+     per sobre seu i el de descàrrega, per sobre del de l'avís. */
+  .baixa-app{bottom:calc(72px + var(--safe-b) + var(--avis-h,0px));right:12px;width:40px;height:40px}
+  .avis-obre.on + .baixa-app{bottom:calc(72px + var(--safe-b) + 48px)}
+  .baixa-app .msym{font-size:20px}
   .rail{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;flex-direction:row;z-index:40;border-top:1px solid #26323a;padding-bottom:var(--safe-b)}
   .brand{display:none}
   .nav{flex-direction:row;padding:5px 4px;gap:0;overflow:visible}
@@ -44,7 +49,7 @@
 }
 @media print{
   body{background:#fff}
-  .app,.topbar,.toast,.modal-h,.rail,.avis,.avis-obre{display:none!important}
+  .app,.topbar,.toast,.modal-h,.rail,.avis,.avis-obre,.baixa-app{display:none!important}
   .modal{position:static;padding:0;background:none;display:block;overflow:visible}
   .modal-inner{max-width:none;min-height:0}
   .doc{font-size:10.5pt}

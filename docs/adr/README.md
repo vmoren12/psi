@@ -19,3 +19,4 @@ substitueixi l'anterior i la vella es marca com a substituïda.
 | [0003](0003-construccio-en-python.md) | Construir amb Python i sense dependències | Vigent |
 | [0004](0004-dist-versionat.md) | Versionar l'artefacte generat | Vigent |
 | [0005](0005-dades-fora-del-codi.md) | Separar el currículum i les mesures del codi | Vigent |
+| [0006](0006-versio-web-i-pwa.md) | Publicar l'aplicació a una adreça, i fer-la instal·lable | Vigent |
