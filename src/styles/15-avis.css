@@ -1,0 +1,26 @@
+/* ---------- avís permanent: l'aplicació no és oficial ----------
+   Barra fixa a baix de tot. Es pot amagar, però no desapareix mai del tot:
+   en queda el botó rodó de la dreta, que la torna a obrir. L'alçada que ocupa
+   es publica com a --avis-h perquè el missatge emergent (i, a mòbil, el
+   contingut) no li quedin a sota. */
+.avis{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:12px;align-items:flex-start;
+  padding:11px 18px calc(11px + var(--safe-b));background:var(--warn-soft);border-top:1px solid #e6dcb4;
+  color:#6d5411;font-size:12.5px;line-height:1.5;transition:transform .2s,opacity .2s}
+.avis.fora{transform:translateY(110%);opacity:0;pointer-events:none}
+.avis .msym{font-size:20px;flex:0 0 auto;margin-top:1px}
+.avis p{margin:0;flex:1;min-width:0}
+.avis-x{flex:0 0 auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  border:1px solid transparent;background:transparent;border-radius:100px;cursor:pointer;color:inherit;opacity:.6;font-size:17px;line-height:1}
+.avis-x:hover{opacity:1;border-color:currentColor}
+.avis-obre{position:fixed;right:16px;bottom:calc(16px + var(--safe-b));z-index:60;width:44px;height:44px;
+  display:none;align-items:center;justify-content:center;padding:0;line-height:0;border-radius:100px;cursor:pointer;
+  background:var(--warn-soft);border:1px solid #e6dcb4;color:#6d5411;box-shadow:0 6px 16px -8px rgba(20,32,38,.5)}
+.avis-obre .msym{font-size:23px}
+.avis-obre.on{display:flex}
+.avis-obre:hover{border-color:var(--warn)}
+
+.toast{position:fixed;left:50%;bottom:calc(26px + var(--safe-b) + var(--avis-h,0px));transform:translate(-50%,14px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:10px 18px;border-radius:100px;font-size:13.5px;z-index:80;transition:all .22s;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.note{background:var(--warn-soft);border:1px solid #e6dcb4;border-radius:var(--r);padding:11px 13px;font-size:13px;color:#6d5411;line-height:1.5}
+.note.info{background:var(--met-soft);border-color:#b9d6cb;color:#1a4a40}
+

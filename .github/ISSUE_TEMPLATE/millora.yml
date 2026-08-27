@@ -1,0 +1,46 @@
+name: Proposta de millora
+description: Una funció nova, un canvi de flux o una mesura que hi falta.
+title: "[millora] "
+labels: ["millora"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Quin problema resol
+      description: >
+        Expliqueu la situació real de treball, no la solució. Què esteu
+        intentant fer i on us encalla l'eina ara mateix?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Què proposeu
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ambit
+    attributes:
+      label: A quina part afecta
+      multiple: true
+      options:
+        - Tauler
+        - Alumnat
+        - Editor del pla
+        - Seguiment
+        - Banc de mesures
+        - Explorador del currículum
+        - Dades i còpies de seguretat
+        - Document imprès o en PDF
+        - Accessibilitat
+        - Altres
+
+  - type: textarea
+    id: normativa
+    attributes:
+      label: Base normativa, si n'hi ha
+      description: >
+        Si la proposta ve del Decret 150/2017, del Decret 175/2022 o del model
+        oficial del PI, digueu d'on surt.

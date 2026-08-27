@@ -1,0 +1,16 @@
+/* ---------- requadres informatius plegables (pas 5) ----------
+   Cada nota d'ajuda del pas 5 es pot tancar amb la creu. En tancar-se no
+   desapareix: baixa a la barra d'etiquetes ancorada a dalt del pas, amb una
+   sola paraula que la identifica, i des d'allà es torna a obrir. L'estat es
+   desa al navegador (KEY_UI) perquè no calgui tornar-les a tancar cada cop. */
+.note.plegable{position:relative;padding-right:36px}
+.note-x{position:absolute;top:6px;right:6px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  border:1px solid transparent;background:transparent;border-radius:100px;cursor:pointer;color:inherit;opacity:.55;font-size:15px;line-height:1}
+.note-x:hover{opacity:1;border-color:currentColor}
+.notes-ancora{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:-4px 0 12px;padding:7px 0}
+.notes-ancora .eyebrow{margin-right:2px}
+.nota-chip{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:3px 11px;border-radius:100px;cursor:pointer;
+  background:var(--met-soft);border:1px solid #b9d6cb;color:#134338;font-size:11.5px;font-family:var(--sans)}
+.nota-chip:hover{border-color:var(--met)}
+.nota-chip:after{content:"+";font-family:var(--mono);opacity:.6}
+

@@ -1,0 +1,10 @@
+/* ---------- horari ---------- */
+.horari{min-width:660px;border-collapse:collapse}
+.horari th{padding:6px 8px;font-size:10px}
+.horari td{padding:5px;border:1px solid var(--line);vertical-align:top}
+.horari .hcell input{padding:5px 7px;min-height:32px;font-size:12.5px;margin-bottom:3px;border-color:var(--line)}
+.horari .hcell input:last-child{margin-bottom:0}
+.horari .franja{width:74px}
+.horari .franja input{padding:5px;min-height:32px;font-size:12px;text-align:center}
+.horari tr.esbarjo td{background:var(--paper);text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+

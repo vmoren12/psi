@@ -1,0 +1,9 @@
+/* ---------- timeline ---------- */
+.timeline{border-left:2px solid var(--line);padding-left:18px;margin-left:6px}
+.timeline .ev{margin-bottom:18px;position:relative}
+.timeline .ev:before{content:"";position:absolute;left:-25px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--met);border:2px solid var(--paper)}
+.scale{display:flex;gap:6px;flex-wrap:wrap}
+.scale button{border:1px solid var(--line2);background:var(--surface);border-radius:100px;padding:6px 12px;font-size:12.5px;cursor:pointer;min-height:36px}
+.scale button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+

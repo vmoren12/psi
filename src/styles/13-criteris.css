@@ -1,0 +1,46 @@
+/* ---------- adaptació de criteris (pas 5) ---------- */
+.crit.on{background:#fbfdfb}
+.crit-tools{display:flex;gap:7px;flex-wrap:nowrap;align-items:center;margin-top:3px;
+  overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;padding:4px 0}
+.crit-tools>*{flex:0 0 auto}
+/* El desplegable d'acció té opcions molt llargues i s'enduria tota la fila:
+   se li posa sostre i el text triat es retalla. L'acció, si no és la de
+   mantenir el criteri igual, també surt sencera a l'etiqueta del costat. */
+.crit-tools select{max-width:190px;text-overflow:ellipsis}
+.adapt-box{background:var(--con-soft);border:1px solid #c2c2e0;border-radius:var(--r);padding:10px 11px;margin-top:8px}
+.adapt-box .lbl{margin-bottom:5px}
+.adapt-box textarea{min-height:62px;background:var(--surface)}
+.sel-count.adapt{color:var(--con)}
+.sel-count.prim{color:var(--warn)}
+/* Etiquetes de les fonts curriculars d'una matèria del pas 5: cada una obre
+   i tanca el seu currículum, i se'n poden tenir dues d'obertes alhora. */
+.curr-tabs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0 2px}
+.curr-tab{flex:0 1 auto;min-height:36px;padding:6px 13px;border:1px solid var(--line2);background:var(--surface);border-radius:100px;cursor:pointer;font-size:13px;color:var(--ink2);display:inline-flex;align-items:center;gap:7px;transition:background .14s,border-color .14s,color .14s}
+.curr-tab:hover{border-color:var(--ink3)}
+.curr-tab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:500}
+.curr-tab.prim[aria-pressed="true"]{background:var(--warn);border-color:var(--warn)}
+.curr-tab .tk{font-family:var(--mono);font-size:11px;opacity:.55}
+.curr-tab[aria-pressed="true"] .tk{opacity:1}
+.curr-tab .n{font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
+.curr-tab[aria-pressed="true"] .n{color:#fff;opacity:.85}
+.curr-pan{overflow-x:clip}
+@keyframes curr-dreta{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes curr-esq{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+.curr-pan.ent-dreta{animation:curr-dreta .2s ease-out}
+.curr-pan.ent-esq{animation:curr-esq .2s ease-out}
+@media (prefers-reduced-motion:reduce){.curr-pan.ent-dreta,.curr-pan.ent-esq{animation:none}}
+.cen{font-family:var(--mono);font-size:11px;color:#fff;background:var(--ink);border-radius:3px;padding:2px 6px;flex:0 0 auto;margin-top:2px}
+.btn.tria{background:var(--met-soft);border-color:#b9d6cb;color:#134338}
+.sab-tria{display:flex;flex-direction:column;gap:4px;margin-top:7px}
+.sab-chip{display:flex;gap:10px;align-items:baseline;font-size:12.5px;line-height:1.45;color:var(--ink2);background:var(--met-soft);border:1px solid #b9d6cb;border-radius:var(--r);padding:5px 9px}
+.sab-chip b{font-family:var(--mono);font-size:10.5px;font-weight:500;color:#134338;white-space:nowrap;margin-left:auto}
+.sab-chip.baix{background:var(--warn-soft);border-color:#e0d2a4}
+.sab-chip.baix b{color:var(--warn)}
+.tc-sab{display:flex;gap:7px;align-items:baseline;flex-wrap:wrap;font-size:12.5px;line-height:1.5;color:var(--ink2);margin-top:4px}
+.sab-peu{margin-top:16px;border-top:1px dotted var(--line2);padding-top:10px}
+
+/* currículum d'un nivell inferior (primària) dins d'una matèria */
+.prim-box{border:1px solid #e0d2a4;border-radius:var(--r);background:#fdfaf1;padding:2px 12px 10px;margin-top:16px}
+.prim-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0 2px;border-bottom:1px solid #ece0bf;margin-bottom:4px}
+.crit.prim .code{color:var(--warn)}
+

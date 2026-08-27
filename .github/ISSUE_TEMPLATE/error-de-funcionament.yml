@@ -1,0 +1,68 @@
+name: Error de funcionament
+description: L'aplicació no fa el que hauria de fer.
+title: "[error] "
+labels: ["error"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!WARNING]
+        > **No hi enganxeu mai dades d'alumnat real**, ni en una còpia de
+        > seguretat adjunta. Reproduïu el problema amb les dades d'exemple que
+        > podeu carregar des de *Dades i còpies*, o anonimitzeu la còpia abans
+        > d'enviar-la.
+        >
+        > Si el que heu trobat és un problema de **seguretat**, no obriu una
+        > incidència pública: vegeu [SECURITY.md](../blob/main/SECURITY.md).
+
+  - type: textarea
+    id: que-passa
+    attributes:
+      label: Què passa
+    validations:
+      required: true
+
+  - type: textarea
+    id: passos
+    attributes:
+      label: Com reproduir-ho
+      placeholder: |
+        1. Obro l'aplicació i carrego les dades d'exemple
+        2. Vaig a l'editor, pas 5
+        3. …
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperat
+    attributes:
+      label: Què esperàveu que passés
+    validations:
+      required: true
+
+  - type: input
+    id: navegador
+    attributes:
+      label: Navegador i versió
+      placeholder: "Firefox 130 · Windows 11"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: com
+    attributes:
+      label: Com heu obert l'aplicació
+      options:
+        - Doble clic al fitxer, des del disc (el cas habitual)
+        - Des d'un servidor web o d'una carpeta compartida en xarxa
+        - No ho sé
+    validations:
+      required: true
+
+  - type: input
+    id: versio
+    attributes:
+      label: Versió de l'aplicació
+      description: >
+        Si podeu, la suma SHA-256 del vostre `pi-eso.html`, o la data en què el
+        vau baixar.

@@ -1,0 +1,10 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Vulnerabilitat de seguretat
+    url: ../security/advisories/new
+    about: >
+      No obriu una incidència pública. Informeu-ne per l'avís de seguretat
+      privat de GitHub.
+  - name: Dubte sobre com fer servir l'aplicació
+    url: ../discussions
+    about: Per a preguntes d'ús, obriu una discussió en comptes d'una incidència.

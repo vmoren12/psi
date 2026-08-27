@@ -1,0 +1,18 @@
+/* ---------- editor d'una mesura del banc ---------- */
+.tag.edit{background:var(--con-soft);border-color:#c2c2e0;color:#33336a}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.pick label{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--line2);border-radius:100px;
+  font-size:12.5px;cursor:pointer;background:var(--surface);color:var(--ink2)}
+.pick label:hover{border-color:var(--ink3)}
+.pick label.on{background:var(--met-soft);border-color:#b9d6cb;color:#134338}
+.pick input{margin:0;width:14px;height:14px}
+.pick.scroll{max-height:190px;overflow-y:auto;align-content:flex-start;padding:8px;border:1px solid var(--line);border-radius:var(--r)}
+
+/* ---------- sabers ja triats en un altre criteri del mateix pla ---------- */
+.crit.dup{background:var(--warn-soft)}
+.crit.dup.on{background:#fbf3dd}
+.tag.dup{background:var(--warn-soft);border-color:#e0d2a4;color:var(--warn)}
+.sel-count.dup{color:var(--warn)}
+.legal{font-size:12px;color:var(--ink3);line-height:1.5}
+.doc .orig{font-size:11px;color:var(--ink3);font-style:italic}
+

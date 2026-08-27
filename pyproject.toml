@@ -1,0 +1,44 @@
+# Configuració de les eines de Python del projecte.
+#
+# Aquí no s'hi declara cap paquet instal·lable: `tools/` no es publica ni
+# s'instal·la, s'executa des de l'arrel del dipòsit amb `python -m tools.build`.
+# Aquest fitxer només configura pytest i ruff.
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = "-q --strict-markers --strict-config"
+# El català dels noms de prova i dels missatges d'error ha de sortir bé a
+# qualsevol consola, també a la de Windows.
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = ["dist", "referencies", ".copia-anterior"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "W",    # avisos de pycodestyle
+    "I",    # ordre de les importacions
+    "UP",   # construccions obsoletes
+    "B",    # errors probables (flake8-bugbear)
+    "C4",   # comprensions innecessàries
+    "SIM",  # simplificacions
+    "RUF",  # regles pròpies de ruff
+]
+ignore = [
+    # El projecte formata els missatges amb % perquè és el que fan servir els
+    # extractors i les validacions que ja hi havia; canviar-ho no aporta res.
+    "UP031",
+    # Els caràcters ambigus (accents, cometes tipogràfiques, ·) són normals en
+    # un projecte escrit en català.
+    "RUF001", "RUF002", "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Els extractors són codi d'un sol ús, escrit contra la forma concreta d'un
+# PDF del DOGC. Es conserven tal com van funcionar.
+"tools/extraccio/*.py" = ["E501", "E741", "E401", "E702", "B007", "I001", "SIM", "C4", "UP"]

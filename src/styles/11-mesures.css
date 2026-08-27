@@ -1,0 +1,21 @@
+/* ---------- mesures i suports (pas 4) ---------- */
+.note.alert{background:var(--alert-soft);border-color:#e2bfb3;color:#7a2d1d}
+.mes-item{border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:0 var(--r) var(--r) 0;padding:12px 13px;margin-bottom:10px;background:var(--surface)}
+.mes-item:has(.tag.alert){border-left-color:var(--alert)}
+.mes-item:has(.tag.warn){border-left-color:var(--warn)}
+.mes-item:has(.tag.met){border-left-color:var(--met)}
+.mes-head{display:flex;gap:9px;align-items:flex-start;flex-wrap:wrap;margin-bottom:8px}
+.mes-head>b{font-size:14.5px;line-height:1.35;flex:1 1 200px;min-width:0}
+.mes-tags{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.mes-text{min-height:66px;margin-bottom:8px}
+.mes-ref{border:0;background:var(--paper);border-radius:var(--r);margin-bottom:8px;padding:0}
+.mes-ref summary{cursor:pointer;padding:7px 10px;font-size:12.5px;color:var(--ink2);list-style:none}
+.mes-ref summary::-webkit-details-marker{display:none}
+.mes-ref summary::before{content:"› ";color:var(--ink3)}
+.mes-ref[open] summary::before{content:"⌄ "}
+.mes-ref p{margin:0 10px 8px;font-size:13px;line-height:1.55;color:var(--ink2)}
+.mes-foot{display:flex;gap:9px;flex-wrap:wrap}
+.mes-f{display:flex;flex-direction:column;gap:3px;min-width:150px;flex:1}
+.mes-f>span{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.mes-f select{min-height:36px;padding:6px 8px;font-size:13px}
+

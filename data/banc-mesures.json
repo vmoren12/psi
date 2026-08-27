@@ -1,0 +1,1965 @@
+{
+ "_llegiu_me": "Catàleg de mesures i suports del PI. Vegeu docs/dades/banc-mesures.md. Després d'editar aquest fitxer, executeu: python -m tools.build",
+ "versio": "2026-08-21",
+ "vocabulari": {
+  "intensitats": [
+   "Universal",
+   "Addicional",
+   "Intensiva"
+  ],
+  "blocs": [
+   "Disseny universal per a l'aprenentatge",
+   "Personalització dels aprenentatges",
+   "Organització flexible del centre",
+   "Avaluació formativa i formadora",
+   "Orientació educativa i acció tutorial",
+   "Accés, entorn i mobilitat",
+   "Materials i accés a la informació",
+   "Avaluació i proves",
+   "Gestió del temps i les tasques",
+   "Benestar emocional i conducta",
+   "Suports addicionals del centre",
+   "Suports intensius"
+  ],
+  "tipus": [
+   "Metodologia",
+   "Organització i agrupament",
+   "Espai i entorn",
+   "Materials i accés",
+   "Presentació de la informació",
+   "Expressió i producció",
+   "Avaluació i proves",
+   "Gestió del temps",
+   "Deures i tasques",
+   "Acompanyament emocional",
+   "Convivència i conducta",
+   "Orientació i tutoria",
+   "Llengua i comunicació",
+   "Recursos i professionals"
+  ]
+ },
+ "mesures": [
+  {
+   "id": "U-DUA-01",
+   "titol": "Disseny universal per a l'aprenentatge (DUA)",
+   "desc": "Marc que estableix tres principis fonamentals vinculats a les tres xarxes cerebrals implicades en l'aprenentatge: proporcionar múltiples formes de motivació i compromís, de representació, i d'acció i expressió. Parteix del principi que allò que és essencial per a alguns és bo per a tothom i té com a objectiu que l'alumnat esdevingui aprenent expert.",
+   "concrecio": "Les situacions d'aprenentatge de les matèries del pla es dissenyen des del marc DUA: cada proposta preveu, com a mínim, dues vies d'accés a la informació, dues formes d'expressar allò que s'ha après i una opció d'elecció per part de l'alumne/a.",
+   "intensitat": "Universal",
+   "bloc": "Disseny universal per a l'aprenentatge",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-DUA-02",
+   "titol": "Bastides de suport",
+   "desc": "Estructura de suport educatiu, afegida i temporal, que s'ajusta a les necessitats concretes de l'alumne/a en funció de la dificultat de la tasca o de l'estadi de maduració cognitiva, i que es retira gradualment quan és segur que pot aplicar estratègies cognitives de manera autònoma. Han d'estar recollides a la programació d'aula.",
+   "concrecio": "Es preveuen bastides explícites (models resolts, guions de treball, inicis de frase, taules de suport) per a les tasques noves, amb un calendari de retirada progressiva que es revisa cada trimestre.",
+   "intensitat": "Universal",
+   "bloc": "Disseny universal per a l'aprenentatge",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-DUA-03",
+   "titol": "Múltiples formes de motivació i compromís (xarxes afectives)",
+   "desc": "Estratègies per fomentar l'interès i la motivació per aprendre, mantenir l'esforç i la persistència, i donar opcions per facilitar l'autoregulació, amb l'objectiu que l'alumne/a esdevingui un aprenent motivat i amb iniciativa. Respon al PER QUÈ de l'aprenentatge.",
+   "concrecio": "S'ofereix a l'alumne/a capacitat d'elecció sobre el tema, el format o l'ordre de les tasques, es fan explícites la utilitat i la fita de cada activitat, i es preveu un moment d'autoregulació al final de cada sessió.",
+   "intensitat": "Universal",
+   "bloc": "Disseny universal per a l'aprenentatge",
+   "tipus": "Acompanyament emocional",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-DUA-04",
+   "titol": "Múltiples formes de representació (xarxes de reconeixement)",
+   "desc": "Opcions variades que faciliten la percepció i la comprensió de la informació amb diferents llenguatges, activant sempre els coneixements previs de l'alumnat. Respon al QUÈ de l'aprenentatge.",
+   "concrecio": "Tota la informació nova es presenta com a mínim en dos formats (oral i visual, text i esquema, vídeo subtitulat i guió escrit) i cada sessió comença amb una activació breu dels coneixements previs.",
+   "intensitat": "Universal",
+   "bloc": "Disseny universal per a l'aprenentatge",
+   "tipus": "Presentació de la informació",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-DUA-05",
+   "titol": "Múltiples formes d'acció i expressió (xarxes estratègiques)",
+   "desc": "Opcions perquè l'alumnat pugui manifestar allò que ha après de maneres diverses, donant suport a les funcions executives: planificació, organització, memòria de treball, gestió del temps, autoregulació i atenció. Respon al COM de l'aprenentatge.",
+   "concrecio": "L'alumne/a pot demostrar l'assoliment dels criteris d'avaluació en el format que li resulti més accessible (escrit, oral, esquema, producció digital o audiovisual), mantenint els mateixos criteris d'avaluació de referència.",
+   "intensitat": "Universal",
+   "bloc": "Disseny universal per a l'aprenentatge",
+   "tipus": "Expressió i producció",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "AD03",
+   "titol": "Verificació de la consigna amb repetició",
+   "desc": "Després de donar la instrucció al grup, establir contacte visual i demanar a l'alumne/a que expliqui amb les seves paraules què ha de fer abans de començar.",
+   "concrecio": "Un cop donada la instrucció al grup, el docent estableix contacte visual amb l'alumne/a i li demana que expliqui amb les seves paraules què ha de fer, abans no comenci la tasca.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "TDAH",
+    "TEA",
+    "TEL/TDL",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD10",
+   "titol": "Rol definit dins del treball cooperatiu",
+   "desc": "Assignar un rol concret i escrit dins del grup (cronometrador, encarregat del material, redactor) en lloc de deixar l'organització a la negociació espontània.",
+   "concrecio": "En les activitats de treball cooperatiu, l'alumne/a té assignat per escrit un rol concret (cronometratge, material, redacció o portaveu), que consta al full del grup i que es va alternant al llarg del curs.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Trastorns de conducta",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD15",
+   "titol": "Lectura pública només amb preparació prèvia",
+   "desc": "No demanar lectura en veu alta improvisada davant del grup. Si es fa, facilitar el fragment amb 24 hores d'antelació perquè el pugui assajar.",
+   "concrecio": "No es demana a l'alumne/a lectura en veu alta improvisada davant del grup; quan la lectura pública forma part de l'activitat, se li facilita el fragment amb 24 hores d'antelació perquè el pugui preparar.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Salut mental"
+   ],
+   "materies": [
+    "Llengua Catalana i Literatura",
+    "Llengua Castellana i Literatura",
+    "Llengua Estrangera",
+    "Ciències Socials: Geografia i Història"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD17",
+   "titol": "Material manipulatiu per als conceptes numèrics nous",
+   "desc": "Introduir cada concepte nou (fraccions, enters, proporcionalitat) amb material manipulatiu o representació gràfica abans de passar a la notació simbòlica.",
+   "concrecio": "Cada concepte numèric nou s'introdueix amb material manipulatiu o amb representació gràfica, i només es passa a la notació simbòlica quan l'alumne/a el resol amb suport concret.",
+   "intensitat": "Addicional",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Discalcúlia",
+    "Discapacitat intel·lectual"
+   ],
+   "materies": [
+    "Matemàtiques",
+    "Física i Química"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD19",
+   "titol": "Tres idees clau per unitat, vinculades a la vida quotidiana",
+   "desc": "Prioritzar tres conceptes essencials per unitat didàctica i treballar-los sempre amb exemples de l'entorn immediat de l'alumne/a. La resta de continguts són d'ampliació.",
+   "concrecio": "Per a cada unitat didàctica es prioritzen tres idees clau, que es treballen sempre amb exemples de l'entorn immediat de l'alumne/a; la resta de continguts es consideren d'ampliació.",
+   "intensitat": "Addicional",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "Incorporació tardana",
+    "TEL/TDL"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD21",
+   "titol": "Compactació curricular amb projecte substitutori",
+   "desc": "Si l'alumne/a demostra el domini previ de la unitat en una prova inicial, substituir les activitats de consolidació per un projecte d'aprofundiment amb producte final i presentació.",
+   "concrecio": "Quan l'alumne/a demostra en una prova inicial que ja domina la unitat, les activitats de consolidació se substitueixen per un projecte d'aprofundiment amb producte final i presentació al grup, avaluat amb els mateixos criteris.",
+   "intensitat": "Addicional",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Altes capacitats"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD33",
+   "titol": "Adaptació de la tasca a Educació física amb objectiu equivalent",
+   "desc": "Substituir l'execució motriu no accessible per una variant amb el mateix objectiu competencial (arbitratge, anàlisi tàctica, disseny de l'escalfament) acordada prèviament amb l'alumne/a.",
+   "concrecio": "A Educació Física, les execucions motrius no accessibles se substitueixen per una variant amb el mateix objectiu competencial (arbitratge, anàlisi tàctica o disseny de l'escalfament), acordada prèviament amb l'alumne/a.",
+   "intensitat": "Addicional",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Discapacitat motriu",
+    "Salut mental",
+    "Discapacitat visual"
+   ],
+   "materies": [
+    "Educació Física"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "U-PER-01",
+   "titol": "Programació d'aula amb les mesures i les bastides previstes",
+   "desc": "La programació didàctica és l'eina de planificació del docent. Ha de reflectir les bastides que faciliten l'aprenentatge, la detecció i minimització de les barreres d'accés al currículum i l'organització de les mesures i suports universals, de caràcter preventiu i proactiu.",
+   "concrecio": "Les mesures i els suports acordats en aquest pla consten explícitament a la programació d'aula de la matèria i es revisen a cada reunió d'equip docent.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-02",
+   "titol": "Situacions d'aprenentatge contextualitzades",
+   "desc": "Experiències que parteixen d'un context i plantegen un repte a la persona que aprèn. Es desenvolupen seguint les fases del cicle de l'aprenentatge (inici, desenvolupament, estructuració i aplicació) i s'orienten a l'assoliment de competències.",
+   "concrecio": "Les situacions d'aprenentatge de la matèria es contextualitzen en l'entorn immediat i els interessos manifestats per l'alumne/a, i es tanquen sempre amb una fase d'aplicació que permeti evidenciar l'assoliment.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-03",
+   "titol": "Aprenentatge cooperatiu",
+   "desc": "Estratègia didàctica que afavoreix la construcció del coneixement i l'adquisició de competències comunicatives i habilitats socials mitjançant la participació activa de l'alumnat. El docent pren un paper de dinamitzador, mediador i facilitador de recursos per aconseguir la transferència de responsabilitats i l'autogestió del grup.",
+   "concrecio": "L'alumne/a treballa en equips cooperatius heterogenis estables, amb un rol assignat i explicitat per escrit, materials de consulta preparats i un instrument d'avaluació del funcionament del grup.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Organització i agrupament",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Incorporació tardana",
+    "Alumne/a nouvingut"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-04",
+   "titol": "Aprenentatge entre iguals i apadrinament lector",
+   "desc": "Creació de parelles d'alumnes de la mateixa edat o d'edats diferents, amb una relació asimètrica (rol de tutor i rol de tutorat), amb un objectiu comú, conegut i compartit, que s'assoleix a través d'activitats planificades pels docents. Afavoreix la motivació, l'empatia, les habilitats comunicatives i el sentiment de pertinença.",
+   "concrecio": "S'estableix una parella d'aprenentatge amb rols i objectiu explícits, amb sessions planificades i pauta de treball escrita; la composició de la parella es revisa cada trimestre.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Organització i agrupament",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Incorporació tardana",
+    "Alumne/a nouvingut"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-05",
+   "titol": "Ensenyament multinivell",
+   "desc": "Estratègia que permet dissenyar de manera flexible i oberta, oferint múltiples opcions per donar resposta a tot l'alumnat, amb activitats i materials que responen a diferents nivells competencials i faciliten diversos nivells de participació, de resolució i d'avaluació del progrés. Parteix d'un objectiu clar i ben definit dirigit a tot l'alumnat.",
+   "concrecio": "Cada situació d'aprenentatge de la matèria es planteja amb tres nivells de resolució sobre el mateix objectiu i amb preguntes graduades segons el nivell de raonament, de manera que l'alumne/a participa de la mateixa activitat que la resta del grup.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "Altes capacitats",
+    "TEL/TDL",
+    "Dislèxia"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-06",
+   "titol": "Racons de treball",
+   "desc": "Organització de l'aula en diversos espais on l'alumnat, distribuït en petits grups, realitza activitats simultànies de manera autònoma. Afavoreix la flexibilitat de les propostes, l'autonomia i la possibilitat de refer el treball tantes vegades com calgui, cosa que ajuda a perdre la por a equivocar-se.",
+   "concrecio": "Una sessió setmanal de la matèria s'organitza per racons, amb material manipulatiu i autocorrectiu, de manera que l'alumne/a pot repetir la tasca sense penalització.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Organització i agrupament",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-07",
+   "titol": "Tallers",
+   "desc": "Organització que permet fer propostes d'activitats educatives lúdiques, manipulatives, experimentals i vivencials, ja sigui en un espai diferent de l'aula, dins l'aula, a temps parcial o convertint l'aula en taller amb rotació de grups.",
+   "concrecio": "Els sabers de la matèria que presenten més barreres per a l'alumne/a es treballen en format taller manipulatiu i experimental abans de passar a la formalització escrita.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-08",
+   "titol": "Ambients o espais d'aprenentatge",
+   "desc": "Propostes educatives distribuïdes en l'espai de l'aula o del centre que conviden a actuar, observar, experimentar, construir, compartir i interactuar amb els altres. Segueixen el model socioconstructivista i parteixen dels coneixements previs de l'alumnat.",
+   "concrecio": "L'alumne/a participa dels ambients del centre en la franja establerta, amb propostes obertes que li permeten triar el nivell de participació i el material.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Espai i entorn",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-09",
+   "titol": "Classe inversa",
+   "desc": "Metodologia que gira l'estructura habitual de les classes: l'alumnat revisa els continguts a casa amb suport d'audiovisuals i el temps d'aula es destina a activitats pràctiques i participatives. Allibera temps del docent per observar i oferir una retroalimentació més personalitzada.",
+   "concrecio": "Els materials de la unitat es faciliten en vídeo amb subtítols i guió escrit amb 48 hores d'antelació, i el temps d'aula es dedica a la pràctica guiada amb retroacció individual.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "TDAH",
+    "Malaltia prolongada",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-10",
+   "titol": "Treball per projectes",
+   "desc": "Parteix d'un problema o centre d'interès negociat amb l'alumnat, a partir del qual es construeixen nous aprenentatges des dels coneixements previs. Els sabers s'organitzen des d'una perspectiva globalitzadora i l'alumnat n'és protagonista; el docent acompanya, proposa, regula i pregunta.",
+   "concrecio": "L'alumne/a participa del projecte de la matèria amb un rol i un producte final acordats prèviament, ajustats als seus punts forts i als criteris d'avaluació prioritzats en aquest pla.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Altes capacitats",
+    "TDAH"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-11",
+   "titol": "Aprenentatge basat en problemes (ABP)",
+   "desc": "Metodologia basada en l'estudi de situacions del món real, contextualitzades i significatives. En petits grups de discussió sota la direcció d'un tutor, l'alumnat identifica la demanda, planteja una hipòtesi, cerca informació complementària, l'analitza, debat i busca una solució.",
+   "concrecio": "Les unitats de la matèria s'organitzen al voltant d'un problema real, amb pauta escrita de les cinc fases, de manera que l'alumne/a sap en tot moment en quin pas es troba.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-12",
+   "titol": "Aprenentatge servei comunitari (APS)",
+   "desc": "Acció educativa que combina processos d'aprenentatge i servei a la comunitat en un sol projecte articulat. Desenvolupa la competència ciutadana i és una pràctica facilitadora de l'escola inclusiva, ja que permet la participació de tot l'alumnat a diferents nivells.",
+   "concrecio": "L'alumne/a participa del projecte de servei comunitari amb una tasca ajustada als seus punts forts, que li permet aportar un valor reconegut al grup i a l'entorn.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-13",
+   "titol": "Pla de treball",
+   "desc": "Metodologia que afavoreix l'autogestió i l'autoregulació en el procés d'ensenyament-aprenentatge. És una mesura personalitzada i ajustada a les necessitats i als objectius d'aprenentatge de cada aprenent.",
+   "concrecio": "L'alumne/a disposa d'un pla de treball setmanal per escrit, amb les tasques prioritzades, els terminis i una casella de revisió, que es comenta amb el docent al final de cada setmana.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Gestió del temps",
+   "perfils": [
+    "TDAH",
+    "Altes capacitats",
+    "Salut mental",
+    "Trastorns de conducta"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-14",
+   "titol": "Ludificació a l'aula",
+   "desc": "Metodologia que utilitza elements del joc (mecàniques, dinàmiques i components) en un context que no és de joc, amb l'objectiu de motivar, fer créixer la cohesió de grup i l'autonomia. Permet adaptar-se als diferents nivells i ritmes dels aprenents.",
+   "concrecio": "Les activitats de consolidació de la matèria s'organitzen amb dinàmiques de joc, amb normativa i sistema de progrés explícits, que permeten a l'alumne/a avançar al seu ritme sense comparació pública de resultats.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [
+    "TDAH",
+    "Trastorns de conducta"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-15",
+   "titol": "Suport digital",
+   "desc": "Ús de la tecnologia al servei de la pedagogia per ampliar els formats d'accés a la informació, l'acció i l'expressió. En alguns casos esdevé imprescindible per afavorir l'accés al currículum o la comunicació. Inclou les recomanacions d'accessibilitat als documents i les configuracions dels sistemes operatius i dels navegadors.",
+   "concrecio": "L'alumne/a disposa dels materials en format digital accessible i té autoritzat l'ús del dispositiu amb lector de pantalla, dictat per veu i corrector a totes les activitats i proves de la matèria.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Materials i accés",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat visual",
+    "Discapacitat motriu",
+    "TEL/TDL"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-PER-16",
+   "titol": "Capses d'aprenentatge",
+   "desc": "Propostes de treball guiat, globalitzat i transversal amb un repte per assolir, que permeten l'autogestió del temps de l'aprenent o del grup d'aprenents. El material s'organitza en una capsa amb formats diversos i el treball es fa en grups cooperatius amb rols definits i avaluació formativa al llarg de la sessió.",
+   "concrecio": "Els sabers transversals es treballen amb capses d'aprenentatge que combinen material manipulatiu, visual i digital, amb rols definits per escrit per a cada membre del grup.",
+   "intensitat": "Universal",
+   "bloc": "Personalització dels aprenentatges",
+   "tipus": "Metodologia",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-01",
+   "titol": "Organització de la intensitat de mesures i suports",
+   "desc": "Planificació de l'atenció educativa a partir del model de resposta a la intervenció: proporcionar a tot l'alumnat una atenció educativa universal de qualitat, establir un sistema d'avaluació universal que permeti la identificació precoç de necessitats i avaluar l'efectivitat de la intervenció segons el progrés de l'alumnat.",
+   "concrecio": "El centre revisa trimestralment la intensitat de les mesures d'aquest pla i deixa constància escrita de si cal mantenir-les, retirar-les o augmentar-ne la intensitat, a partir de les evidències de progrés recollides.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Recursos i professionals",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-02",
+   "titol": "Flexibilització horària del centre",
+   "desc": "L'organització flexible de l'horari permet donar una resposta educativa més personalitzada a tot l'alumnat, fomentant l'autonomia i l'aprenentatge competencial, i ajuda a fer canvis organitzatius que s'adaptin al context sempre que sigui necessari.",
+   "concrecio": "S'estableix una franja horària setmanal identificada a l'horari de l'alumne/a per ajustar l'atenció educativa i revisar el pla de treball amb la persona de referència.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Gestió del temps",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-03",
+   "titol": "Objectius dels diferents espais de l'aula",
+   "desc": "Disseny intencionat de l'espai-aula tenint en compte l'estructura i l'organització, la disposició, la il·luminació, el color i els materials, garantint l'accessibilitat per a tothom i evitant espais sobrecarregats i destorbs visuals que puguin esdevenir una barrera d'accés a l'aprenentatge.",
+   "concrecio": "L'aula manté una zona lliure de distractors visuals a l'entorn del lloc de treball de l'alumne/a, amb bona il·luminació i el material d'ús freqüent a l'abast i etiquetat.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Espai i entorn",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Discapacitat visual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-04",
+   "titol": "Espais multifuncionals al centre",
+   "desc": "Disposar d'espais flexibles, connectats i multifuncionals, alliberats d'elements distractors, d'amenaces i de barreres, que fomenten un ambient creatiu i motivador i que es poden reorganitzar de manera menys rígida segons les necessitats de l'alumnat.",
+   "concrecio": "El centre posa a disposició de l'alumne/a un espai alternatiu de treball tranquil, identificat i acordat, per a les tasques que requereixen concentració sostinguda o per a la realització de proves.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Espai i entorn",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Salut mental",
+    "Discapacitat auditiva"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-05",
+   "titol": "Espais de l'entorn com a espai d'aprenentatge",
+   "desc": "Obertura del centre a l'entorn per gaudir dels recursos que ofereix la comunitat. Jardins públics, boscos, biblioteques, places, carrers i centres culturals esdevenen espais regulars on aprendre i dels quals aprendre.",
+   "concrecio": "Es preveu que una part de les situacions d'aprenentatge de la matèria es desenvolupin en espais de l'entorn, amb la previsió d'accessibilitat i d'acompanyament que l'alumne/a necessiti.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Espai i entorn",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-06",
+   "titol": "Plans educatius d'entorn",
+   "desc": "Proposta de cooperació educativa amb les entitats municipalistes i la resta d'agents educatius del territori, dissenyada per aconseguir l'èxit educatiu de tot l'alumnat, amb una atenció especial als més vulnerables, i per contribuir a la cohesió social. Els centres hi han de participar segons l'article 4.6 del Decret 150/2017.",
+   "concrecio": "Es deriva l'alumne/a a les activitats del pla educatiu d'entorn (acompanyament a l'estudi, activitats de lleure educatiu, reforç lingüístic) i el tutor/a en fa el seguiment amb la família.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Situació socioeconòmica desfavorida",
+    "Incorporació tardana",
+    "Alumne/a nouvingut"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-07",
+   "titol": "Dinamitzadors/es d'esbarjo",
+   "desc": "Figura que impulsa la cohesió social i afavoreix un clima favorable de convivència durant el temps de lleure, gestionant situacions d'exclusió, conflictes entre iguals, aïllament o passivitat que es poden observar a l'esbarjo.",
+   "concrecio": "Es garanteix la presència d'una persona dinamitzadora a l'esbarjo, amb propostes de joc obertes i coeducatives que asseguren que l'alumne/a pugui participar d'alguna activitat amb el grup.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Convivència i conducta",
+   "perfils": [
+    "TEA",
+    "Trastorns de conducta",
+    "Salut mental",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-08",
+   "titol": "Mediadors/es d'esbarjo o guaites",
+   "desc": "Alumnat format per detectar i resoldre els conflictes que sorgeixin a l'hora de l'esbarjo entre alumnat de cursos iguals o inferiors, en el marc del projecte de convivència del centre.",
+   "concrecio": "L'alumne/a compta amb un company o companya guaita de referència a l'esbarjo com a mesura de prevenció de l'aïllament i de les situacions d'assetjament.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Convivència i conducta",
+   "perfils": [
+    "TEA",
+    "Salut mental",
+    "Incorporació tardana",
+    "Alumne/a nouvingut"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-09",
+   "titol": "Participació de les famílies en la vida escolar",
+   "desc": "El centre ha de dotar les famílies dels mitjans per participar activament d'un projecte comú, compartint objectius i significats per afavorir l'èxit educatiu dels seus fills i filles. El Decret 150/2017 atorga un paper fonamental a les famílies en la consecució de l'escola inclusiva.",
+   "concrecio": "S'acorda amb la família un canal i una periodicitat de comunicació estables (agenda, correu o entrevista mensual) per compartir el seguiment del pla.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Orientació i tutoria",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-10",
+   "titol": "Càrrecs i responsabilitats",
+   "desc": "Assignació de rols i responsabilitats a l'alumnat com a via de participació real en el funcionament del grup i del centre: elaboració de normes d'aula, delegat/da de classe, comissions d'aula, assemblea de delegats i projectes de centre.",
+   "concrecio": "S'assigna a l'alumne/a un càrrec o responsabilitat estable dins del grup, ajustat als seus punts forts, amb la funció explicitada per escrit i revisada trimestralment.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Convivència i conducta",
+   "perfils": [
+    "TEA",
+    "Trastorns de conducta",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-11",
+   "titol": "Rutines",
+   "desc": "Establiment d'hàbits, tasques i accions diàries que anticipen i fan possible predir què passarà durant la jornada escolar. L'anticipació és una estratègia metodològica eficaç que genera seguretat i confiança i ajuda a estructurar el dia a dia escolar.",
+   "concrecio": "Cada sessió de la matèria segueix una mateixa estructura visible a la pissarra (inici, desenvolupament, tancament) i qualsevol canvi de rutina s'anticipa amb suport visual.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Metodologia",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-12",
+   "titol": "Docència compartida",
+   "desc": "Suport dins l'aula que implica compartir i millorar la resposta educativa. Posa l'ajut a disposició de tot l'alumnat, facilita l'avaluació de les seves necessitats, permet decidir més ràpidament el tipus de suport adient i fa possible l'ús de recursos metodològics poc factibles amb docència individual.",
+   "concrecio": "La matèria compta amb una sessió setmanal de docència compartida, amb repartiment de funcions acordat prèviament entre els dos docents i planificació i avaluació conjuntes.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Recursos i professionals",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-13",
+   "titol": "Agrupament flexible i heterogeni de l'alumnat",
+   "desc": "L'agrupament flexible com a mesura organitzativa, d'accés al currículum, de socialització i de vinculació. Cal reduir al mínim imprescindible l'agrupament per nivells d'aprenentatge, per capacitats i per dificultats, ja que les evidències científiques demostren que hi ha més aprenentatge i socialització en grups heterogenis.",
+   "concrecio": "L'alumne/a es manté en agrupaments heterogenis amb canvis freqüents de composició; qualsevol agrupament per nivell és temporal, justificat i revisat trimestralment.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Organització i agrupament",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-ORG-14",
+   "titol": "Formes flexibles de treball",
+   "desc": "Combinació d'estratègies metodològiques diverses, riques i variades (ABP, treball cooperatiu, projectes, ensenyament multinivell, docència compartida, tutoria entre iguals, suports tecnològics, racons, tallers, activitats entre nivells i treball en petits grups), sempre dissenyades des de la mirada del DUA.",
+   "concrecio": "La matèria alterna al llarg del trimestre almenys tres formes de treball diferents (gran grup, petit grup cooperatiu i treball individual amb suport), de manera que l'alumne/a disposi de diverses vies de participació.",
+   "intensitat": "Universal",
+   "bloc": "Organització flexible del centre",
+   "tipus": "Organització i agrupament",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-01",
+   "titol": "Compartir objectius i indicadors d'assoliment amb l'alumnat",
+   "desc": "Estratègia imprescindible de l'avaluació formativa que ajuda a reduir la distància entre el punt on es troba l'aprenent i el lloc on hauria d'arribar. Serveix perquè entengui amb claredat els objectius d'aprenentatge, els resultats esperables i què fa que una tasca estigui ben resolta.",
+   "concrecio": "A l'inici de cada unitat es lliura a l'alumne/a, en llenguatge planer i amb exemples resolts, els objectius i els indicadors d'assoliment dels criteris d'avaluació que es treballaran.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Avaluació i proves",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-02",
+   "titol": "Autoavaluació i coavaluació",
+   "desc": "L'autoavaluació fa referència a la retroalimentació de l'aprenent mateix i la coavaluació a la retroalimentació entre iguals. Permeten identificar què i com s'està aprenent i analitzar els encerts, les dificultats i les barreres per avançar. Que l'alumnat aprengui a avaluar-se és una de les condicions bàsiques per aprendre a aprendre.",
+   "concrecio": "Abans de cada lliurament, l'alumne/a revisa la seva producció amb una pauta d'autoavaluació de tres o quatre ítems i, quan escaigui, la contrasta amb un company o companya.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Avaluació i proves",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-03",
+   "titol": "Retroacció efectiva i ajustada",
+   "desc": "Procés bidireccional que permet regular l'aprenentatge. Ha de tenir un missatge específic i clar, trobar el moment oportú, ajudar a establir l'objectiu i els criteris d'èxit, centrar-se en l'activitat i no en l'aprenent, i oferir estratègies perquè l'alumnat trobi el seu propi camí.",
+   "concrecio": "La retroacció a les produccions de l'alumne/a es dona per escrit i de manera breu, centrada en la tasca, amb un aspecte assolit i un pas concret de millora, i sempre abans de la següent activitat equivalent.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Avaluació i proves",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-04",
+   "titol": "Metacognició",
+   "desc": "Habilitat de reflexionar sobre allò que s'està aprenent i com s'està aprenent. Es pot adquirir mitjançant preguntes que facin pensar els camins que han conduït a aprendre de forma exitosa: què he après, com ho he après, què m'ha resultat més fàcil o difícil i com ho puc millorar.",
+   "concrecio": "Al final de cada unitat, l'alumne/a respon per escrit o oralment tres preguntes metacognitives fixes sobre què ha après, com ho ha après i què faria diferent la propera vegada.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "TDAH",
+    "Altes capacitats",
+    "Discapacitat intel·lectual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-05",
+   "titol": "Portafoli o carpeta d'aprenentatge",
+   "desc": "Instrument d'avaluació integrat en el procés d'ensenyament-aprenentatge que facilita a l'aprenent fer evident allò que ha après i com ho ha après al llarg d'un període, per mitjà d'un recull raonat d'evidències. Promou el pensament crític i reflexiu i pot ser una eina per compartir amb les famílies.",
+   "concrecio": "L'alumne/a manté una carpeta d'aprenentatge de la matèria amb les evidències seleccionades i una reflexió breu per evidència, que es revisa a cada sessió d'avaluació i es comparteix amb la família.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Avaluació i proves",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-06",
+   "titol": "Contracte pedagògic",
+   "desc": "Document que estableix una fórmula de compromís de l'alumnat en el marc d'un pacte a tres bandes entre la família, l'escola i l'alumnat mateix. Ha de permetre corregir des de la tutoria allò que dificulta l'aprenentatge, tant en el saber estar com en els hàbits de treball i estudi.",
+   "concrecio": "Es formalitza un contracte pedagògic signat per l'alumne/a, la família i la tutoria, amb dos o tres compromisos concrets formulats en positiu i revisió mensual.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Orientació i tutoria",
+   "perfils": [
+    "Trastorns de conducta",
+    "TDAH",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-07",
+   "titol": "Base d'orientació",
+   "desc": "Instrument d'avaluació formativa que mostra una seqüència ordenada d'accions per resoldre un problema o un repte o per realitzar una tasca. Sintetitza el coneixement que els aprenents han d'interioritzar de manera que es pugui activar quan calgui. La seva finalitat és guiar l'alumnat en la seva tasca.",
+   "concrecio": "L'alumne/a disposa d'una base d'orientació escrita per als procediments recurrents de la matèria, que pot consultar durant les activitats i també durant les proves.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Materials i accés",
+   "perfils": [
+    "Discalcúlia",
+    "Dislèxia",
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-08",
+   "titol": "Mapa conceptual",
+   "desc": "Representació gràfica de la informació que permet organitzar i disposar el coneixement d'un tema, format per conceptes, proposicions i paraules d'enllaç. Representa una estructura de diferents nivells de generalitat i facilita la construcció del coneixement.",
+   "concrecio": "Cada unitat es tanca amb un mapa conceptual, que l'alumne/a pot completar a partir d'una versió parcialment resolta i utilitzar com a suport durant les proves.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Presentació de la informació",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Discapacitat intel·lectual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-09",
+   "titol": "Línia del temps",
+   "desc": "Gràfic que permet representar períodes històrics o successos, la distribució de dades i informacions, l'anticipació i planificació del temps dedicat a les tasques, o la seqüenciació del contingut d'una lectura.",
+   "concrecio": "Els continguts seqüencials de la matèria i la planificació de les tasques llargues es representen en una línia del temps visible, que l'alumne/a va marcant a mesura que avança.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Presentació de la informació",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "TEA"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-10",
+   "titol": "Rúbrica",
+   "desc": "Instrument d'avaluació formativa en forma de taula de doble entrada: en un eix, els criteris d'avaluació de realització de les tasques i, en l'altre, els criteris d'avaluació dels resultats en diferents categories de qualitat. Ajuda l'aprenent a saber en quin moment es troba i l'orienta sobre què ha de fer per millorar.",
+   "concrecio": "Cada producció avaluable de la matèria es lliura amb la rúbrica corresponent des de l'inici de la tasca, redactada en llenguatge accessible i amb un exemple de cada nivell.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Avaluació i proves",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-11",
+   "titol": "Diari d'aula",
+   "desc": "Instrument per afavorir l'avaluació formativa mitjançant un recull i una reflexió de cada activitat realitzada, en forma de diari, on se sintetitza la tasca: què has après, com ho has fet i quines dificultats has trobat. Permet detectar si l'alumnat identifica l'objectiu d'aprenentatge i quines barreres ha trobat.",
+   "concrecio": "L'alumne/a manté un diari d'aula breu de la matèria amb tres entrades per unitat, que serveix de base per a l'entrevista de seguiment amb la tutoria.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Avaluació i proves",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-AVA-12",
+   "titol": "Participació de la família en l'avaluació",
+   "desc": "Compartir l'avaluació de l'alumne/a amb el pare, la mare o el tutor o tutora legal per afavorir la implicació, el compromís i la corresponsabilitat en el procés educatiu i poder establir unes línies conjuntes d'actuació.",
+   "concrecio": "Es comparteix amb la família, abans de cada sessió d'avaluació, el grau d'assoliment dels objectius d'aquest pla i s'acorden per escrit les línies d'actuació conjuntes per al trimestre següent.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació formativa i formadora",
+   "tipus": "Orientació i tutoria",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-01",
+   "titol": "Carta de compromís educatiu",
+   "desc": "Document que té com a finalitat potenciar la comunicació, la participació, la implicació, el compromís i la corresponsabilització de la família i el centre respecte del procés educatiu de l'alumnat.",
+   "concrecio": "Es revisa i s'actualitza la carta de compromís educatiu incorporant els acords específics derivats d'aquest pla de suport individualitzat.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Orientació i tutoria",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-02",
+   "titol": "Entrevista amb la família i/o altres agents externs",
+   "desc": "Reunió per intercanviar informació sobre l'alumne/a (família, entorn, professionals externs, centre educatiu) i compartir objectius.",
+   "concrecio": "S'estableix una entrevista amb la família com a mínim un cop per trimestre, amb ordre del dia previ i acta d'acords, i s'hi convida els professionals externs que atenen l'alumne/a quan escaigui.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Orientació i tutoria",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-03",
+   "titol": "Entrevista tutor/a i alumne/a",
+   "desc": "L'atenció personal a l'alumnat és un component bàsic de l'acció tutorial. En una entrevista cal tenir clar l'objectiu i, si cal, arribar a acords per consens. L'alumnat ha de percebre que se n'atenen les necessitats educatives i que se l'acompanya de forma personalitzada.",
+   "concrecio": "Es fixa una entrevista individual quinzenal de quinze minuts entre la tutoria i l'alumne/a per revisar el pla de treball, els acords i el seu benestar al centre.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Orientació i tutoria",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-04",
+   "titol": "Tutoria entre iguals",
+   "desc": "Un company o companya fa la tasca de referent per acompanyar l'alumne/a des d'un altre punt de vista, amb rol de tutor i rol de tutelat, un objectiu comú i un marc de relació planificat pel professorat. L'objectiu és la prevenció de casos d'assetjament i facilitar la integració i el sentiment de pertinença al centre.",
+   "concrecio": "S'assigna a l'alumne/a un company o companya tutor/a de referència dins del programa de tutoria entre iguals del centre, amb seguiment per part de la tutoria.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Orientació i tutoria",
+   "perfils": [
+    "TEA",
+    "Incorporació tardana",
+    "Alumne/a nouvingut",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-05",
+   "titol": "Cohesió de grup",
+   "desc": "Sensació de pertinença al grup i identificació amb les seves metes, valors i normes, perquè els seus membres se sentin acollits i cooperin. Activitats com les sortides, les jornades, els jocs i les activitats de lleure en petits grups donen cohesió al grup.",
+   "concrecio": "El pla d'acció tutorial preveu dinàmiques de cohesió mensuals amb agrupaments variables, dissenyades perquè l'alumne/a hi tingui una participació garantida i valorada.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Convivència i conducta",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-06",
+   "titol": "Pràctiques restauratives · Cercle de diàleg",
+   "desc": "Els cercles de diàleg consisteixen a reunir els alumnes del grup en cercle, disposats a expressar-se en pla d'igualtat amb la col·laboració d'una persona facilitadora. Posen l'accent en la comunitat, la reconstrucció de relacions, la responsabilitat i la confiança, i volen resoldre qüestions de baixa intensitat.",
+   "concrecio": "Es fan cercles de diàleg periòdics amb el grup classe, amb torn de paraula pautat i objecte de paraula, com a via de prevenció i gestió dels conflictes de baixa intensitat.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Convivència i conducta",
+   "perfils": [
+    "Trastorns de conducta",
+    "TEA",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-07",
+   "titol": "Assemblea de classe i d'escola",
+   "desc": "Activitat d'acció tutorial grupal que té com a objectiu la participació directa de tot l'alumnat de la classe en defensa dels seus interessos i el respecte als interessos dels altres. Afavoreix la inclusió, la socialització i la pràctica d'una ciutadania activa.",
+   "concrecio": "L'assemblea setmanal de classe preveu un torn de paraula accessible (per escrit o amb suport visual) perquè l'alumne/a hi pugui participar en condicions d'igualtat.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Convivència i conducta",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-08",
+   "titol": "Prevenció de situacions de conflicte",
+   "desc": "Aplicació dels protocols del Departament per prevenir, detectar i intervenir en situacions de conflicte que alterin la convivència. El Pla les escoles lliures de violències crea la Unitat de Suport a l'Alumnat en Situació de Violència (USAV), que acull la comunicació o revelació, gestiona el cas i en coordina l'abordatge.",
+   "concrecio": "L'equip docent aplica les activitats de prevenció previstes als protocols de convivència i deixa constància escrita de qualsevol indici de situació de violència que afecti l'alumne/a.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Convivència i conducta",
+   "perfils": [
+    "Trastorns de conducta",
+    "Salut mental",
+    "TEA"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-09",
+   "titol": "Mediació escolar",
+   "desc": "Procediment per a la prevenció i la resolució dels conflictes previst a l'article 32 de la LEC, per mitjà del qual es dona suport a les parts en conflicte perquè puguin arribar per si mateixes a un acord satisfactori, amb l'ajut d'una persona mediadora.",
+   "concrecio": "Els conflictes de convivència que impliquin l'alumne/a es deriven al servei de mediació del centre abans d'aplicar cap mesura correctora, sempre que les parts hi accedeixin.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Convivència i conducta",
+   "perfils": [
+    "Trastorns de conducta",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-10",
+   "titol": "Filosofia 3/18",
+   "desc": "Currículum ampli i sistemàtic que té com a objectiu reforçar les habilitats del pensament de l'alumnat, partint de la filosofia com a disciplina fonamental.",
+   "concrecio": "L'alumne/a participa de les sessions del programa Filosofia 3/18, que li permeten desenvolupar el raonament i l'argumentació oral sense la barrera de la producció escrita.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Altes capacitats",
+    "Dislèxia"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-11",
+   "titol": "Educació emocional",
+   "desc": "Procés educatiu, continu i permanent que potencia el desenvolupament de les habilitats socials i de regulació emocional. Inclou la consciència emocional, el control de la impulsivitat, la capacitat per al treball en equip i la cura d'un mateix i dels altres. És un factor important de cara a la convivència.",
+   "concrecio": "El pla d'acció tutorial incorpora una sessió setmanal d'educació emocional amb treball explícit de reconeixement i regulació emocional, i l'alumne/a disposa d'un registre personal d'estats emocionals.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Acompanyament emocional",
+   "perfils": [
+    "Salut mental",
+    "Trastorns de conducta",
+    "TEA",
+    "TDAH"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-12",
+   "titol": "Hàbits i estratègies d'estudi",
+   "desc": "Treball unificat des de cada matèria de les tècniques que afavoreixen l'aprenentatge: el subratllat, el resum, els mapes conceptuals, les estratègies memorístiques, l'evocació, la planificació i organització del pla de treball, la lectura i la síntesi de les idees principals.",
+   "concrecio": "Es treballa explícitament amb l'alumne/a una tècnica d'estudi per trimestre, modelada pel docent dins la matèria i aplicada als seus propis materials, amb pauta escrita de referència.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Metodologia",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Discapacitat intel·lectual",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-13",
+   "titol": "Orientació acadèmica",
+   "desc": "Acompanyament personalitzat perquè l'alumne/a s'impliqui en l'aprenentatge, el rendiment i la projecció de si mateix. És una tasca compartida entre àrees i matèries que orienta l'alumnat cap a la definició del seu projecte personal.",
+   "concrecio": "Es programen sessions d'orientació acadèmica individualitzades amb l'alumne/a i la família, amb informació accessible sobre els itineraris possibles i les mesures de suport disponibles a cada opció.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Orientació i tutoria",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "U-TUT-14",
+   "titol": "Orientació professional",
+   "desc": "Construcció de l'itinerari formatiu i professional a partir de la reflexió i de la presa de consciència d'un mateix i del coneixement de l'entorn personal, social, acadèmic i laboral. Les xerrades i activitats professionalitzadores ajuden a conèixer els itineraris formatius i els perfils professionals existents.",
+   "concrecio": "L'alumne/a participa d'activitats professionalitzadores i de coneixement de l'entorn laboral vinculades als seus interessos manifestats, amb el suport i el seguiment de la tutoria.",
+   "intensitat": "Universal",
+   "bloc": "Orientació educativa i acció tutorial",
+   "tipus": "Orientació i tutoria",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Mesures i suports universals en el centre educatiu (Departament d'Educació, 2023)"
+  },
+  {
+   "id": "AD01",
+   "titol": "Seient preferent i lliure de distractors",
+   "desc": "Ubicar l'alumne/a a la primera o segona fila, lluny de finestres i porta, al costat d'un company o companya que faci de model de treball. Revisar la ubicació cada trimestre.",
+   "concrecio": "L'alumne/a ocupa un lloc fix a la primera o segona fila, allunyat de la porta i de les finestres i al costat d'un company o companya que fa de model de treball; la ubicació es revisa cada trimestre amb l'equip docent.",
+   "intensitat": "Universal",
+   "bloc": "Accés, entorn i mobilitat",
+   "tipus": "Espai i entorn",
+   "perfils": [
+    "TDAH",
+    "TEA",
+    "Discapacitat auditiva",
+    "Discapacitat visual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD06",
+   "titol": "Anticipació de canvis amb 24 hores",
+   "desc": "Avisar amb un dia d'antelació de qualsevol canvi d'aula, docent, horari o sortida, amb suport visual (horari imprès actualitzat) i indicant qui l'acompanyarà.",
+   "concrecio": "Qualsevol canvi d'aula, de docent, d'horari o de sortida es comunica a l'alumne/a amb 24 hores d'antelació, amb l'horari imprès actualitzat i indicant qui l'acompanyarà.",
+   "intensitat": "Addicional",
+   "bloc": "Accés, entorn i mobilitat",
+   "tipus": "Espai i entorn",
+   "perfils": [
+    "TEA",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD27",
+   "titol": "Material ampliat i lliurat amb antelació",
+   "desc": "Facilitar tots els documents en cos 18–24 amb alt contrast, i enviar-ne la còpia digital 24 hores abans de la sessió perquè l'alumne/a la pugui preparar amb el seu programari.",
+   "concrecio": "Tots els documents es lliuren a l'alumne/a en cos 18 a 24 amb alt contrast i, a més, en còpia digital 24 hores abans de la sessió, perquè els pugui preparar amb el seu programari d'accessibilitat.",
+   "intensitat": "Addicional",
+   "bloc": "Accés, entorn i mobilitat",
+   "tipus": "Espai i entorn",
+   "perfils": [
+    "Discapacitat visual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD29",
+   "titol": "Condicions de comunicació per a la lectura labial",
+   "desc": "Parlar de cara al grup, sense tapar-se la boca ni girar-se cap a la pissarra mentre s'explica, amb el rostre il·luminat i fent servir l'equip de FM si n'hi ha.",
+   "concrecio": "El professorat parla sempre de cara al grup, amb el rostre il·luminat i sense tapar-se la boca ni girar-se cap a la pissarra mentre explica, i fa servir l'equip de FM quan el centre en disposa.",
+   "intensitat": "Addicional",
+   "bloc": "Accés, entorn i mobilitat",
+   "tipus": "Espai i entorn",
+   "perfils": [
+    "Discapacitat auditiva"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD31",
+   "titol": "Adequació del lloc de treball i dels desplaçaments",
+   "desc": "Taula d'alçada regulable, espai lliure de pas fins al seient i sortida 5 minuts abans del canvi de classe per evitar les aglomeracions del passadís.",
+   "concrecio": "L'alumne/a disposa d'una taula d'alçada regulable i d'un espai lliure de pas fins al seu seient, i surt de l'aula cinc minuts abans del canvi de classe per evitar les aglomeracions del passadís.",
+   "intensitat": "Addicional",
+   "bloc": "Accés, entorn i mobilitat",
+   "tipus": "Espai i entorn",
+   "perfils": [
+    "Discapacitat motriu"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD07",
+   "titol": "Guió visual seqüenciat per a tasques de més de tres passos",
+   "desc": "Lliurar la tasca amb els passos numerats i una imatge o icona per pas, amb una casella per marcar cada pas completat.",
+   "concrecio": "Les tasques de més de tres passos es lliuren amb els passos numerats, una icona o imatge per pas i una casella per marcar cada pas completat.",
+   "intensitat": "Addicional",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Presentació de la informació",
+   "perfils": [
+    "TEA",
+    "Discapacitat intel·lectual",
+    "TEL/TDL"
+   ],
+   "materies": [
+    "Tecnologia i Digitalització",
+    "Biologia i Geologia",
+    "Física i Química",
+    "Educació Plàstica, Visual i Audiovisual",
+    "Matemàtiques"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD11",
+   "titol": "Format de text accessible a tots els materials",
+   "desc": "Tipografia sense serifa de 12–14 punts, interlineat 1,5, text alineat a l'esquerra sense justificar, i paràgrafs de màxim 5 línies. Evitar el text sobre imatge.",
+   "concrecio": "Tots els materials de les matèries d'aquest pla es lliuren amb tipografia sense serifa de 12 a 14 punts, interlineat 1,5, text alineat a l'esquerra i paràgrafs de cinc línies com a màxim, sense text sobreposat a imatges.",
+   "intensitat": "Universal",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Materials i accés",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat visual",
+    "TEL/TDL"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD13",
+   "titol": "Lectura en veu alta de l'enunciat abans de començar",
+   "desc": "El docent llegeix els enunciats de la prova en veu alta per a tot el grup, o bé es facilita el text en format digital amb lector de pantalla.",
+   "concrecio": "Abans de començar qualsevol prova, el docent llegeix els enunciats en veu alta per a tot el grup o bé en facilita la versió digital perquè l'alumne/a la pugui escoltar amb el lector de pantalla.",
+   "intensitat": "Universal",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Presentació de la informació",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat visual",
+    "TEL/TDL",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD22",
+   "titol": "Tasques d'enriquiment amb pregunta oberta",
+   "desc": "Afegir a cada unitat una pregunta d'investigació sense resposta única que connecti la matèria amb un interès manifestat per l'alumne/a, amb pauta de lliurament i rúbrica pròpia.",
+   "concrecio": "Cada unitat incorpora per a l'alumne/a una pregunta d'investigació sense resposta única, connectada amb els seus interessos, amb pauta de lliurament i rúbrica pròpies.",
+   "intensitat": "Addicional",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Materials i accés",
+   "perfils": [
+    "Altes capacitats"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD25",
+   "titol": "Vocabulari clau treballat abans de la unitat",
+   "desc": "Lliurar un glossari de 8–10 termes de la unitat amb definició breu i imatge una setmana abans, i repassar-lo oralment el primer dia.",
+   "concrecio": "Una setmana abans de començar cada unitat, l'alumne/a rep un glossari de vuit a deu termes amb definició breu i imatge, que es repassa oralment el primer dia de la unitat.",
+   "intensitat": "Addicional",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Materials i accés",
+   "perfils": [
+    "TEL/TDL",
+    "Incorporació tardana",
+    "Discapacitat intel·lectual",
+    "Discapacitat auditiva"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD28",
+   "titol": "Verbalització de tot el que s'escriu a la pissarra",
+   "desc": "Llegir en veu alta tot el que s'escriu o es projecta i descriure els elements gràfics rellevants (eixos, direccions, colors) en lloc de referir-s'hi com «això d'aquí».",
+   "concrecio": "El professorat llegeix en veu alta tot el que escriu o projecta i descriu verbalment els elements gràfics rellevants (eixos, direccions i colors), evitant referències com ara «això d'aquí».",
+   "intensitat": "Addicional",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Presentació de la informació",
+   "perfils": [
+    "Discapacitat visual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD30",
+   "titol": "Subtítols i transcripció de tot el material audiovisual",
+   "desc": "Reproduir els vídeos sempre amb subtítols i facilitar la transcripció o el guió previ de les audicions i dictats.",
+   "concrecio": "Tots els vídeos es reprodueixen amb subtítols i l'alumne/a rep la transcripció o el guió previ de les audicions i dels dictats.",
+   "intensitat": "Addicional",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Presentació de la informació",
+   "perfils": [
+    "Discapacitat auditiva",
+    "Incorporació tardana",
+    "TEL/TDL"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD32",
+   "titol": "Escriptura amb dispositiu digital",
+   "desc": "Fer servir l'ordinador o la tauleta amb teclat adaptat per a les tasques escrites de més de mitja pàgina, i acceptar el lliurament digital de qualsevol activitat.",
+   "concrecio": "L'alumne/a fa servir l'ordinador o la tauleta amb teclat adaptat per a les tasques escrites de més de mitja pàgina, i qualsevol activitat es pot lliurar en format digital.",
+   "intensitat": "Addicional",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Materials i accés",
+   "perfils": [
+    "Discapacitat motriu",
+    "Dislèxia"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD34",
+   "titol": "Vocabulari de la matèria amb suport visual bilingüe",
+   "desc": "Lliurar les paraules clau de cada unitat amb imatge i traducció a la llengua familiar, i permetre'n l'ús durant les activitats i les proves.",
+   "concrecio": "L'alumne/a rep les paraules clau de cada unitat amb imatge i traducció a la llengua familiar, i en pot fer ús durant les activitats i les proves.",
+   "intensitat": "Addicional",
+   "bloc": "Materials i accés a la informació",
+   "tipus": "Materials i accés",
+   "perfils": [
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD04",
+   "titol": "Prova escrita en dos blocs amb pausa",
+   "desc": "Partir l'examen en dos quaderns lliurats per separat amb una pausa de 5 minuts entremig. Un sol exercici per cara, sense text decoratiu ni imatges no rellevants.",
+   "concrecio": "Les proves escrites de les matèries d'aquest pla es lliuren en dos quaderns separats, amb una pausa de cinc minuts entremig, un sol exercici per cara i sense elements gràfics no rellevants.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "TDAH",
+    "Salut mental",
+    "Discapacitat intel·lectual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD08",
+   "titol": "Enunciats literals, sense metàfores ni doble sentit",
+   "desc": "Revisar les proves per eliminar ironies, frases fetes i preguntes amb doble negació. Una pregunta = una acció demanada.",
+   "concrecio": "Els enunciats de les activitats i de les proves es revisen prèviament per eliminar ironies, frases fetes i dobles negacions, de manera que cada pregunta demani una sola acció.",
+   "intensitat": "Universal",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "TEA",
+    "TEL/TDL",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD12",
+   "titol": "L'ortografia no penalitza fora de les matèries lingüístiques",
+   "desc": "A les matèries no lingüístiques es valora el contingut i el raonament. Els errors ortogràfics es marquen com a retorn formatiu, però no descompten nota.",
+   "concrecio": "A les matèries no lingüístiques d'aquest pla, la qualificació valora el contingut i el raonament; els errors ortogràfics es marquen com a retorn formatiu i no descompten nota.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "Matemàtiques",
+    "Biologia i Geologia",
+    "Física i Química",
+    "Tecnologia i Digitalització",
+    "Ciències Socials: Geografia i Història",
+    "Educació Física",
+    "Música",
+    "Educació Plàstica, Visual i Audiovisual"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD16",
+   "titol": "Suport de càlcul disponible durant les proves",
+   "desc": "Permetre l'ús de la taula de multiplicar, la recta numèrica i el formulari durant les proves, ja que l'objectiu avaluat és el raonament i el procediment, no la memorització.",
+   "concrecio": "Durant les proves, l'alumne/a pot fer servir la taula de multiplicar, la recta numèrica i el formulari, atès que allò que s'avalua és el raonament i el procediment i no la memorització dels fets numèrics.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "Discalcúlia",
+    "Discapacitat intel·lectual",
+    "TDAH"
+   ],
+   "materies": [
+    "Matemàtiques",
+    "Física i Química",
+    "Tecnologia i Digitalització",
+    "Biologia i Geologia"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD18",
+   "titol": "Puntuació separada de procediment i càlcul",
+   "desc": "A cada problema, puntuar per separat el plantejament (dades, operació escollida, unitats) i el resultat numèric, de manera que un error de càlcul no anul·li tot l'exercici.",
+   "concrecio": "A cada problema es puntuen per separat el plantejament (dades, operació escollida i unitats) i el resultat numèric, de manera que un error de càlcul no anul·la la totalitat de l'exercici.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "Discalcúlia",
+    "Dislèxia",
+    "TDAH"
+   ],
+   "materies": [
+    "Matemàtiques",
+    "Física i Química",
+    "Tecnologia i Digitalització"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD20",
+   "titol": "Prova amb suport visual i tres opcions de resposta",
+   "desc": "Substituir preguntes obertes llargues per ítems d'elecció múltiple amb tres opcions i suport d'imatge, mantenint el mateix criteri d'avaluació de referència.",
+   "concrecio": "Les preguntes obertes llargues se substitueixen per ítems d'elecció múltiple amb tres opcions i suport d'imatge, mantenint el mateix criteri d'avaluació de referència.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "TEL/TDL",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD26",
+   "titol": "Alternativa oral o amb esquema a les respostes escrites",
+   "desc": "Permetre respondre oralment davant del docent, o lliurar la resposta en forma d'esquema o mapa conceptual, amb els mateixos criteris d'avaluació.",
+   "concrecio": "L'alumne/a pot respondre oralment davant del docent o lliurar la resposta en forma d'esquema o de mapa conceptual, amb els mateixos criteris d'avaluació que la resta del grup.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "TEL/TDL",
+    "Dislèxia",
+    "Discapacitat motriu",
+    "Discapacitat intel·lectual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD35",
+   "titol": "Ús del diccionari i enunciats simplificats a les proves",
+   "desc": "Autoritzar el diccionari bilingüe a totes les proves i revisar-ne els enunciats per reduir la càrrega lingüística sense reduir l'exigència del contingut avaluat.",
+   "concrecio": "L'alumne/a pot fer servir el diccionari bilingüe a totes les proves, i els enunciats es revisen prèviament per reduir-ne la càrrega lingüística sense rebaixar l'exigència del contingut avaluat.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "Incorporació tardana",
+    "TEL/TDL"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD38",
+   "titol": "Reprogramació de les proves acumulades",
+   "desc": "Després d'una absència prolongada, distribuir les proves pendents en un calendari pactat de màxim dues per setmana, prioritzant els criteris d'avaluació essencials.",
+   "concrecio": "Les proves pendents acumulades es distribueixen en un calendari pactat amb l'alumne/a de dues per setmana com a màxim, prioritzant els criteris d'avaluació essencials de cada matèria.",
+   "intensitat": "Addicional",
+   "bloc": "Avaluació i proves",
+   "tipus": "Avaluació i proves",
+   "perfils": [
+    "Salut mental",
+    "Situació socioeconòmica desfavorida"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD02",
+   "titol": "Fragmentació de tasques en blocs de 10–15 minuts",
+   "desc": "Dividir les tasques llargues en blocs curts amb una fita visible al final de cada bloc (casella per marcar). Comprovar l'inici del primer bloc abans de continuar amb el grup.",
+   "concrecio": "Les tasques llargues es lliuren dividides en blocs de 10 a 15 minuts, amb una casella per marcar al final de cada bloc; el docent comprova que l'alumne/a ha iniciat el primer bloc abans de continuar amb el grup.",
+   "intensitat": "Addicional",
+   "bloc": "Gestió del temps i les tasques",
+   "tipus": "Gestió del temps",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD05",
+   "titol": "Reducció del volum de deures mantenint la varietat",
+   "desc": "Assignar 4 exercicis representatius de cada tipologia en lloc dels 10 de la tasca general. El criteri d'avaluació és el mateix; el que canvia és la quantitat de repetició.",
+   "concrecio": "Les tasques per fer a casa es redueixen a quatre exercicis representatius de cada tipologia, mantenint totes les tipologies de la tasca general i els mateixos criteris d'avaluació.",
+   "intensitat": "Addicional",
+   "bloc": "Gestió del temps i les tasques",
+   "tipus": "Deures i tasques",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Discalcúlia",
+    "Situació socioeconòmica desfavorida",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD14",
+   "titol": "Temps addicional del 25% en proves escrites",
+   "desc": "Ampliar el temps de la prova en un 25%, o bé reduir el nombre d'ítems mantenint la representativitat dels criteris d'avaluació. Acordar amb l'alumne/a quina de les dues opcions prefereix.",
+   "concrecio": "L'alumne/a disposa d'un 25% de temps addicional en les proves escrites o, si ho prefereix, d'una prova amb menys ítems que mantingui la representativitat dels criteris d'avaluació; l'opció escollida s'acorda amb ell o ella a l'inici del curs.",
+   "intensitat": "Addicional",
+   "bloc": "Gestió del temps i les tasques",
+   "tipus": "Gestió del temps",
+   "perfils": [
+    "Dislèxia",
+    "TDAH",
+    "Discalcúlia",
+    "Discapacitat motriu",
+    "Discapacitat visual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD36",
+   "titol": "Tasques completables íntegrament al centre",
+   "desc": "Garantir que qualsevol tasca es pugui acabar en horari lectiu i amb material del centre, sense dependre de connexió, impressora ni compres a casa.",
+   "concrecio": "Totes les tasques avaluables es poden acabar en horari lectiu i amb material del centre, sense dependre de connexió a internet, d'impressora ni de cap compra a càrrec de la família.",
+   "intensitat": "Universal",
+   "bloc": "Gestió del temps i les tasques",
+   "tipus": "Deures i tasques",
+   "perfils": [
+    "Situació socioeconòmica desfavorida"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD09",
+   "titol": "Espai de regulació amb targeta de sortida",
+   "desc": "Acordar un espai concret del centre i una targeta que l'alumne/a pot mostrar per sortir-hi durant 5–10 minuts sense negociació ni explicació prèvia. Registrar-ne l'ús per veure'n l'evolució.",
+   "concrecio": "L'alumne/a disposa d'una targeta de sortida que li permet anar a l'espai de regulació acordat durant cinc o deu minuts sense haver de negociar-ho ni justificar-ho; la tutoria en registra l'ús per valorar-ne l'evolució.",
+   "intensitat": "Addicional",
+   "bloc": "Benestar emocional i conducta",
+   "tipus": "Acompanyament emocional",
+   "perfils": [
+    "TEA",
+    "Trastorns de conducta",
+    "Salut mental",
+    "TDAH"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD23",
+   "titol": "Contracte conductual amb dos objectius i registre diari",
+   "desc": "Acordar per escrit dues conductes objectiu formulades en positiu, amb un full de registre que el docent signa cada hora i que es revisa amb la tutoria cada divendres.",
+   "concrecio": "S'acorda per escrit amb l'alumne/a i la família un contracte amb dues conductes objectiu formulades en positiu i un full de registre que el professorat signa cada hora i que es revisa a la tutoria cada divendres.",
+   "intensitat": "Addicional",
+   "bloc": "Benestar emocional i conducta",
+   "tipus": "Acompanyament emocional",
+   "perfils": [
+    "Trastorns de conducta",
+    "TDAH"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD24",
+   "titol": "Senyal privat d'avís de desregulació",
+   "desc": "Establir un gest o objecte discret que el docent pot fer servir per avisar l'alumne/a que està elevant el to, evitant la crida d'atenció pública davant del grup.",
+   "concrecio": "El professorat i l'alumne/a acorden un gest o un objecte discret per avisar-lo que està elevant el to, de manera que la regulació es faci sense cridar-li l'atenció davant del grup.",
+   "intensitat": "Addicional",
+   "bloc": "Benestar emocional i conducta",
+   "tipus": "Acompanyament emocional",
+   "perfils": [
+    "Trastorns de conducta",
+    "TEA",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD37",
+   "titol": "Pla de reincorporació progressiva després d'una absència",
+   "desc": "Acordar un calendari de retorn per matèries, amb una persona de referència al centre i una revisió setmanal els primers quinze dies.",
+   "concrecio": "Després d'una absència prolongada es fixa un calendari de retorn matèria per matèria, amb una persona de referència al centre i una revisió setmanal durant els primers quinze dies.",
+   "intensitat": "Addicional",
+   "bloc": "Benestar emocional i conducta",
+   "tipus": "Acompanyament emocional",
+   "perfils": [
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Adaptacions d'aula d'ús habitual (pràctica docent)"
+  },
+  {
+   "id": "AD-DEP-01",
+   "titol": "Mesures d'acció tutorial específiques",
+   "desc": "Actuacions d'acció tutorial intensificades i personalitzades per a alumnes amb circumstàncies personals singulars o de vulnerabilitat, permanents o transitòries, o amb risc d'abandonament escolar prematur. Es determinen a partir de la detecció de les necessitats per part del tutor/a, la família i l'equip docent.",
+   "concrecio": "S'estableix un pla d'acció tutorial individualitzat amb una persona de referència designada, entrevistes setmanals i registre escrit dels acords i de l'evolució.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Orientació i tutoria",
+   "perfils": [
+    "Salut mental",
+    "Trastorns de conducta",
+    "Situació socioeconòmica desfavorida"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "AD-DEP-02",
+   "titol": "Suport del/de la mestre/a d'educació especial o del professorat d'orientació educativa",
+   "desc": "Suport especialitzat aplicat pels docents designats per la direcció del centre i orientat pels mestres d'educació especial o els professionals d'orientació educativa, sempre en coordinació amb tot l'equip docent i amb la col·laboració dels serveis educatius.",
+   "concrecio": "L'alumne/a rep suport del professorat d'orientació educativa en les sessions i les matèries que es concreten a l'horari d'aquest pla, preferentment dins l'aula ordinària.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Recursos i professionals",
+   "perfils": [],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "AD-DEP-03",
+   "titol": "Suport escolar personalitzat (SEP) i Programa intensiu de millora (PIM)",
+   "desc": "Actuacions educatives que permeten ajustar la resposta educativa de forma flexible i temporal, focalitzant la intervenció en aquells aspectes del procés d'aprenentatge i desenvolupament personal que poden comprometre l'avenç personal i escolar de l'alumne/a.",
+   "concrecio": "L'alumne/a participa del programa intensiu de millora en les competències de lectura, escriptura i matemàtiques, amb la periodicitat i la durada concretades a l'horari d'aquest pla i amb avaluació del progrés a cada trimestre.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Dislèxia",
+    "Discalcúlia",
+    "Discapacitat intel·lectual",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "AD-DEP-04",
+   "titol": "Suport lingüístic i social",
+   "desc": "Suport aplicat pels mestres de suport lingüístic i social a l'alumnat d'origen estranger, en coordinació amb l'equip docent i amb la col·laboració dels serveis educatius, per afavorir l'aprenentatge de la llengua i la incorporació al centre.",
+   "concrecio": "L'alumne/a rep suport lingüístic i social en les franges concretades a l'horari, amb objectius de llengua vinculats als sabers de les matèries del pla i revisió trimestral del nivell assolit.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Llengua i comunicació",
+   "perfils": [
+    "Incorporació tardana",
+    "Alumne/a nouvingut"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "AD-DEP-05",
+   "titol": "Aula d'acollida",
+   "desc": "Recurs per a l'alumnat nouvingut, aplicat pels tutors i tutores d'aula d'acollida en coordinació amb tot l'equip docent, que permet l'aprenentatge inicial de la llengua i l'acompanyament en la incorporació al sistema educatiu català.",
+   "concrecio": "L'alumne/a assisteix a l'aula d'acollida en les franges concretades a l'horari, amb un pla individual de llengua i una previsió escrita de reducció progressiva de les hores a mesura que avanci el nivell.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Llengua i comunicació",
+   "perfils": [
+    "Alumne/a nouvingut",
+    "Incorporació tardana"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "AD-DEP-06",
+   "titol": "Programa de diversificació curricular",
+   "desc": "Programa que permet organitzar el currículum de manera diferent de l'establerta amb caràcter general, amb metodologies específiques i una organització de continguts i matèries diferent, per afavorir que l'alumnat pugui assolir les competències de l'etapa.",
+   "concrecio": "L'alumne/a cursa el programa de diversificació curricular amb l'organització d'àmbits i la distribució horària que consten en aquest pla, mantenint com a referent els criteris d'avaluació de l'etapa.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Metodologia",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "Situació socioeconòmica desfavorida",
+    "Trastorns de conducta"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "AD-DEP-07",
+   "titol": "Projecte específic de suport a l'audició i el llenguatge",
+   "desc": "Projecte específic de centre adreçat a donar suport a l'alumnat amb necessitats vinculades a l'audició i el llenguatge, amb la intervenció de professionals especialitzats i en coordinació amb l'equip docent.",
+   "concrecio": "L'alumne/a rep atenció logopèdica dins del projecte específic de suport a l'audició i el llenguatge, amb els objectius i la periodicitat concretats en aquest pla.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Llengua i comunicació",
+   "perfils": [
+    "TEL/TDL",
+    "Discapacitat auditiva"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "AD-DEP-08",
+   "titol": "Projecte de promoció escolar del poble gitano de Catalunya",
+   "desc": "Projecte del Departament d'Educació orientat a afavorir l'escolarització, la continuïtat formativa i l'èxit educatiu de l'alumnat gitano, amb la implicació de les famílies i de les entitats de l'entorn.",
+   "concrecio": "El centre incorpora l'alumne/a a les actuacions del projecte de promoció escolar, amb una persona de referència i seguiment conjunt amb la família i les entitats de l'entorn.",
+   "intensitat": "Addicional",
+   "bloc": "Suports addicionals del centre",
+   "tipus": "Orientació i tutoria",
+   "perfils": [
+    "Situació socioeconòmica desfavorida"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports addicionals (Departament d'Educació) · Decret 150/2017, art. 9"
+  },
+  {
+   "id": "IN-DEP-01",
+   "titol": "Suport intensiu per a l'escolarització inclusiva (SIEI)",
+   "desc": "Suport intensiu adreçat a alumnes amb necessitats educatives especials reconegudes en l'informe de reconeixement de necessitats específiques de suport educatiu elaborat per l'EAP. Comporta l'elaboració d'un pla de suport individualitzat i ha de constar a l'expedient acadèmic.",
+   "concrecio": "L'alumne/a disposa del suport intensiu per a l'escolarització inclusiva, amb la distribució horària, els professionals i els emplaçaments que consten a l'apartat d'horari d'aquest pla; la referència educativa es manté sempre al grup ordinari.",
+   "intensitat": "Intensiva",
+   "bloc": "Suports intensius",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "TEA",
+    "Discapacitat motriu"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports intensius (Departament d'Educació) · Decret 150/2017, art. 10 i 11"
+  },
+  {
+   "id": "IN-DEP-02",
+   "titol": "Suport intensiu a l'audició i el llenguatge (SIAL)",
+   "desc": "Suport intensiu per a l'alumnat amb sordesa que requereix una atenció especialitzada continuada en audició i llenguatge, reconegut a l'informe de l'EAP i concretat en el pla de suport individualitzat.",
+   "concrecio": "L'alumne/a rep suport intensiu a l'audició i el llenguatge amb la periodicitat i els professionals que consten a l'horari, i el centre garanteix les condicions acústiques i de comunicació acordades.",
+   "intensitat": "Intensiva",
+   "bloc": "Suports intensius",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Discapacitat auditiva",
+    "TEL/TDL"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports intensius (Departament d'Educació) · Decret 150/2017, art. 10 i 11"
+  },
+  {
+   "id": "IN-DEP-03",
+   "titol": "Suport del personal d'atenció educativa (PAE)",
+   "desc": "Suport de professionals d'atenció educativa (educador/a d'educació especial, tècnic/a d'integració social, monitor/a per a l'educació inclusiva, fisioterapeuta) per garantir l'accés, l'autonomia personal i la participació de l'alumne/a en les activitats del centre.",
+   "concrecio": "L'alumne/a compta amb suport de personal d'atenció educativa en les franges i activitats que consten a l'horari, amb funcions delimitades per escrit i orientades sempre a augmentar-ne l'autonomia.",
+   "intensitat": "Intensiva",
+   "bloc": "Suports intensius",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Discapacitat motriu",
+    "Discapacitat intel·lectual",
+    "TEA"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports intensius (Departament d'Educació) · Decret 150/2017, art. 10 i 11"
+  },
+  {
+   "id": "IN-DEP-04",
+   "titol": "Programa d'aula integral de suport (AIS)",
+   "desc": "Recurs intensiu adreçat a alumnat amb trastorns greus de conducta i/o de salut mental que requereix una atenció educativa i terapèutica integrada, amb la participació dels departaments d'Educació i de Salut.",
+   "concrecio": "L'alumne/a s'incorpora al programa d'aula integral de suport amb el calendari, la durada i els objectius de retorn al centre ordinari que consten en aquest pla.",
+   "intensitat": "Intensiva",
+   "bloc": "Suports intensius",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Trastorns de conducta",
+    "Salut mental"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports intensius (Departament d'Educació) · Decret 150/2017, art. 10 i 11"
+  },
+  {
+   "id": "IN-DEP-05",
+   "titol": "Unitat d'escolarització compartida (UEC)",
+   "desc": "Recurs d'escolarització compartida entre el centre i una unitat externa, adreçat a alumnat amb risc d'abandonament escolar prematur reconegut en l'informe corresponent, amb l'objectiu que assoleixi les competències de l'etapa.",
+   "concrecio": "L'alumne/a comparteix escolarització amb la unitat d'escolarització compartida segons la distribució horària d'aquest pla; el centre manté la tutoria, l'avaluació i la referència del grup ordinari.",
+   "intensitat": "Intensiva",
+   "bloc": "Suports intensius",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Trastorns de conducta",
+    "Situació socioeconòmica desfavorida"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports intensius (Departament d'Educació) · Decret 150/2017, art. 10 i 11"
+  },
+  {
+   "id": "IN-DEP-06",
+   "titol": "Escolarització compartida amb centre d'educació especial",
+   "desc": "Oferta educativa dels centres d'educació especial per a l'alumnat amb necessitats educatives especials que ho requereixi, en règim d'escolarització compartida amb el centre ordinari.",
+   "concrecio": "L'alumne/a comparteix escolarització amb el centre d'educació especial segons el calendari acordat, amb coordinació periòdica entre els dos centres i criteris d'avaluació únics recollits en aquest pla.",
+   "intensitat": "Intensiva",
+   "bloc": "Suports intensius",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "Discapacitat motriu",
+    "TEA"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports intensius (Departament d'Educació) · Decret 150/2017, art. 10 i 11"
+  },
+  {
+   "id": "IN-DEP-07",
+   "titol": "Suport del CEEPSIR i dels centres proveïdors de serveis i recursos",
+   "desc": "Suport dels centres d'educació especial proveïdors de serveis i recursos a l'educació inclusiva (CEEPSIR) i d'altres serveis educatius específics (CREDA, CREDV) al centre ordinari, per assessorar i acompanyar l'equip docent en l'atenció a l'alumne/a.",
+   "concrecio": "El centre rep assessorament del servei educatiu específic corresponent, amb sessions de coordinació planificades i acords escrits que s'incorporen al seguiment d'aquest pla.",
+   "intensitat": "Intensiva",
+   "bloc": "Suports intensius",
+   "tipus": "Recursos i professionals",
+   "perfils": [
+    "Discapacitat auditiva",
+    "Discapacitat visual",
+    "Discapacitat motriu",
+    "Discapacitat intel·lectual"
+   ],
+   "materies": [
+    "*"
+   ],
+   "font": "Taula de mesures i suports intensius (Departament d'Educació) · Decret 150/2017, art. 10 i 11"
+  }
+ ]
+}

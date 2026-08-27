@@ -1,0 +1,72 @@
+/* ---------- banc / currículum ---------- */
+.bank{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.ad{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px;display:flex;flex-direction:column;gap:9px}
+.ad h3{margin:0;font-size:14.5px;font-weight:600;line-height:1.35}
+.ad p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.55}
+.ad .foot{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:4px}
+.grp-title{display:flex;align-items:center;gap:10px;margin:22px 0 4px}
+.grp-title:first-child{margin-top:0}
+.grp-title:after{content:"";flex:1;border-top:1px solid var(--line)}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.toolbar input[type=text],.toolbar input[type=search]{max-width:280px;min-width:210px;flex:1}
+.toolbar select{max-width:210px;width:auto}
+
+details.ce{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:9px}
+details.ce>summary{padding:12px 14px;cursor:pointer;list-style:none;display:flex;gap:10px;align-items:flex-start}
+details.ce>summary::-webkit-details-marker{display:none}
+details.ce>summary:hover{background:#f7f9f7}
+details.ce .cen{font-family:var(--mono);font-size:11px;color:#fff;background:var(--ink);border-radius:3px;padding:2px 6px;flex:0 0 auto;margin-top:2px}
+details.ce .cetxt{flex:1;min-width:0;font-size:13.8px;line-height:1.5}
+details.ce[open]>summary{border-bottom:1px solid var(--line);background:#f7f9f7}
+details.ce .ceb{padding:6px 14px 12px}
+.crit{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dotted var(--line2)}
+.crit:last-child{border-bottom:0}
+.crit input[type=checkbox]{margin:2px 0 0;width:19px;height:19px;flex:0 0 auto;accent-color:#1f6b5c}
+.crit .code{font-family:var(--mono);font-size:11.5px;color:var(--met);flex:0 0 auto;padding-top:1px}
+.crit .ct{flex:1;min-width:0;font-size:13.5px;line-height:1.5}
+.curs-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin:12px 0 2px}
+.sel-count{font-family:var(--mono);font-size:11px;color:var(--met)}
+/* Etiqueta de camp amb un botó a la dreta (suggeriments d'instruments i evidències). */
+.tutor-box{border:1px solid var(--line);border-radius:var(--r);background:#fafbfa;padding:12px 14px;margin-bottom:12px}
+.lbl.amb-boto{display:flex;align-items:center;gap:8px}
+.lbl .btn{text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:11.5px;min-height:26px;padding:2px 9px;margin-left:auto}
+/* Resum del que s'ha triat al pas 5 i llistes de suggeriments. */
+.tc-cen{font-family:var(--mono);font-size:11px;color:#fff;background:var(--met);border-radius:3px;padding:2px 6px;flex:0 0 auto;margin-top:2px}
+.tc-cen.prim{background:var(--warn)}
+.tc-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;margin-bottom:10px}
+.tc-crit{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-bottom:1px dotted var(--line2);font-size:13.5px;line-height:1.5}
+.tc-crit:last-child{border-bottom:0}
+.tc-crit .code{font-family:var(--mono);font-size:11.5px;color:var(--met);flex:0 0 auto;padding-top:1px}
+.tc-crit.prim .code{color:var(--warn)}
+.sg-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.sg-item{text-align:left;background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);padding:10px 12px;font-size:13.5px;line-height:1.45;cursor:pointer;transition:border-color .12s,background .12s}
+.sg-item:hover{border-color:var(--met);background:var(--met-soft)}
+.sg-item.ja{background:var(--met-soft);border-color:var(--met)}
+/* Camps que admeten més d'una entrada (instruments d'avaluació i evidències). */
+.llista-camp{display:flex;gap:7px;align-items:center;margin-bottom:6px}
+.llista-camp input[type=text]{flex:1;min-width:0;margin:0}
+.llista-camp .btn{flex:0 0 auto;text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:11.5px;min-height:38px;padding:2px 10px}
+/* Botó «×» de treure una entrada d'una llista (camps del pas 6, plans d'Alumnat). */
+.btn.sm.treu{padding:2px 10px;font-size:15px;line-height:1}
+/* Codi del pla: a la capçalera de l'editor porta al camp que el fa editable. */
+.codi-pi{gap:6px;padding:3px 9px;min-height:30px;color:var(--ink3);border:1px dashed var(--line2)}
+.codi-pi:hover{color:var(--ink2);border-color:var(--ink3);border-style:solid}
+.codi-pi .ic{font-size:11px;opacity:.7}
+#pi-codi{max-width:280px}
+/* Alumnat: cada pla amb el seu botó d'obrir i el d'eliminar, i les accions de
+   la fitxa alineades a la dreta de la fila. */
+.pi-chip{display:inline-flex;align-items:center;gap:5px;margin:0 10px 4px 0;vertical-align:middle}
+.pi-chip-b{display:inline-flex;align-items:center;gap:1px}
+.pi-chip .tag{font-size:10px;padding:1px 6px}
+.fila-accions{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}
+/* Proposta de mesures a partir dels perfils de l'alumne/a. */
+.pp-fila{align-items:flex-start;gap:11px}
+.pp-fila.ja{opacity:.62}
+.pp-fila .cap{display:flex;gap:6px;flex-wrap:wrap;align-items:center;cursor:pointer}
+.pp-fila .cap b{font-size:14px;font-weight:600}
+.pp-peu{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:7px}
+.pp-peu .mes-f{flex-direction:row;align-items:center;gap:7px;flex:0 1 auto;max-width:100%}
+.pp-peu .mes-f>span{white-space:nowrap}
+.pp-peu .mes-f select{min-height:32px;max-width:230px}
+.pp-perfils{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 0}
+

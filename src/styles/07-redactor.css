@@ -1,0 +1,8 @@
+/* ---------- redactor SMART ---------- */
+.composer{background:var(--paper);border-left:3px solid var(--met);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;font-family:var(--serif);font-size:16.5px;line-height:1.7;color:var(--ink)}
+.composer .blank{color:var(--ink3);border-bottom:1px dotted var(--ink3);font-style:italic;padding:0 3px}
+.composer .fill{background:#e3efea;box-shadow:0 0 0 2px #e3efea;border-radius:2px}
+.obj-item{border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px;background:var(--surface)}
+.obj-item .composer{font-size:15px;padding:11px 13px;margin-bottom:10px}
+.obj-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+

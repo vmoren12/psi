@@ -1,0 +1,41 @@
+# Documents oficials de referència.
+#
+# No es versionen per dos motius: són publicacions de la Generalitat de
+# Catalunya i no els cobreix la llicència d'aquest dipòsit, i ocupen 33 MB que
+# només calen per tornar a extreure el currículum quan canvia la normativa.
+# Vegeu referencies/README.md.
+referencies/**/*.pdf
+
+# Restes de l'estructura anterior. La carpeta curriculum/ va passar a
+# referencies/curriculum/; si encara existeix, es pot esborrar.
+/curriculum/
+/Inclusion/
+/dades/
+
+# Còpies i esborranys locals
+.copia-anterior/
+*.bak
+*.bak[0-9]*
+*.orig
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Sistema operatiu i editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+
+# NO ignoreu dist/. L'artefacte generat es versiona a propòsit:
+# vegeu docs/adr/0004-dist-versionat.md.

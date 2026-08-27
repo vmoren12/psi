@@ -1,0 +1,6 @@
+# Dependències per tornar a extreure el currículum dels PDF oficials.
+#
+# Només calen si canvia la normativa. Vegeu docs/dades/curriculum-eso.md.
+
+pymupdf>=1.24      # lectura del PDF i de les fonts incrustades
+fonttools>=4.50    # reconstrucció de la taula de glifs (només el primer cop)

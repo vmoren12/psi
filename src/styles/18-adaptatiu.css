@@ -1,0 +1,70 @@
+/* ---------- responsive ---------- */
+@media (max-width:1080px){ .wizard{grid-template-columns:1fr} .qc{position:static;order:-1} }
+@media (max-width:860px){
+  .app{grid-template-columns:1fr;padding-bottom:calc(62px + var(--safe-b) + var(--avis-h,0px))}
+  .avis{bottom:calc(62px + var(--safe-b));padding:9px 12px 10px;font-size:12px;gap:8px}
+  .avis-obre{bottom:calc(72px + var(--safe-b));right:12px;width:40px;height:40px}
+  .rail{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;flex-direction:row;z-index:40;border-top:1px solid #26323a;padding-bottom:var(--safe-b)}
+  .brand{display:none}
+  .nav{flex-direction:row;padding:5px 4px;gap:0;overflow:visible}
+  .nav button{flex-direction:column;gap:2px;justify-content:center;align-items:center;padding:6px 2px;font-size:10.5px;line-height:1.2;text-align:center;min-height:52px}
+  .nav .ic{display:block;font-size:17px;line-height:1}
+  .nav .cnt{display:none}
+  .nav .lb{display:block}
+  .rail-foot{display:none}
+  .topbar{padding:13px 16px 11px;position:sticky}
+  .pi-bar.enganxada .pi-ident .curs-grup,
+  .pi-bar.enganxada .pi-ident .codi-pi{display:none}
+  .topbar h1{font-size:20px}
+  .topbar .sub{display:none}
+  .topbar .actions{margin-left:0;width:100%;order:3}
+  .topbar .actions .btn{flex:1}
+  .wrap{padding:16px 14px 40px}
+  .card-b{padding:14px}
+  .row>*{min-width:100%}
+  .doc{padding:20px 16px 40px}
+  .doc table td.k{width:40%}
+  .bm-filters{grid-template-columns:1fr 1fr}
+  .bm-bar{top:41px;padding:9px 12px 10px}
+  .bm-body{padding:6px 12px 30px}
+  .mes-f{min-width:120px}
+  .llista-camp{flex-wrap:wrap}
+  .llista-camp input[type=text]{flex:1 0 100%}
+  .pp-peu .mes-f{flex:1 1 100%}
+  .modal-h{padding:9px 12px}
+  .modal-h h2{font-size:14px}
+  .bank{grid-template-columns:1fr}
+  .toolbar input[type=text],.toolbar input[type=search],.toolbar select{max-width:none;width:100%}
+  table.stack thead{display:none}
+  table.stack tbody tr{display:block;border-bottom:1px solid var(--line);padding:10px 0}
+  table.stack tbody tr:last-child{border-bottom:0}
+  table.stack td{display:block;border:0;padding:3px 2px}
+  .fila-accions{justify-content:flex-start;margin-top:6px}
+  table.stack td[data-l]:before{content:attr(data-l);display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+}
+@media print{
+  body{background:#fff}
+  .app,.topbar,.toast,.modal-h,.rail,.avis,.avis-obre{display:none!important}
+  .modal{position:static;padding:0;background:none;display:block;overflow:visible}
+  .modal-inner{max-width:none;min-height:0}
+  .doc{font-size:10.5pt}
+  .doc h2{background:#3f8c9e!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc table td.k{background:#f6f8f6!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  /* Marges verticals de cada full. Els valors els posa el full commutable
+     #print-page; aquí només se'n descriu el repartiment.
+       --m-dalt  marge de dalt d'un full sense capçalera d'imatge
+       --m-cap   marge de dalt d'un full que sí que porta la imatge
+       --m-baix  marge de baix
+     La imatge s'encabeix dins del marge en comptes de sumar-s'hi: als fulls
+     amb capçalera corrent l'espai de sobre es redueix a --m-cap, i a la
+     primera pàgina, quan la imatge va al cos, la fila puja la diferència. */
+  .doc .marge-dalt{height:var(--m-dalt,0mm)}
+  .doc.cap-corrent .marge-dalt{height:var(--m-cap,0mm)}
+  .doc .logos.puja{margin-top:calc(var(--m-cap,0mm) - var(--m-dalt,0mm))}
+  .doc .marge-baix{height:var(--m-baix,0mm)}
+  .doc .logos{margin-bottom:5mm}
+  .doc .logos img{max-height:14mm}
+  .doc section{break-inside:avoid}
+  .no-print{display:none!important}
+  .dlg{display:none!important}
+}

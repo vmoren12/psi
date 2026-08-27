@@ -1,0 +1,14 @@
+:root{
+  --paper:#f3f5f2; --surface:#ffffff; --ink:#141d23; --ink2:#4c5860; --ink3:#7f8a90;
+  --line:#e1e6e1; --line2:#ccd4cc;
+  --met:#1f6b5c; --met-soft:#e3efea;
+  --con:#4a4a86; --con-soft:#e8e8f4;
+  --alert:#9c3a26; --alert-soft:#f6e8e3;
+  --warn:#856616; --warn-soft:#f5eed9;
+  --r:5px;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Newsreader',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --tap:44px;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}

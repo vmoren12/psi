@@ -1,0 +1,80 @@
+Creative Commons Reconeixement 4.0 Internacional (CC BY 4.0)
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Identificador SPDX: CC-BY-4.0
+
+Copyright (c) 2026 Víctor Moreno de la Torre
+
+
+RESUM (no substitueix la llicència)
+-----------------------------------
+
+Sou lliures de:
+
+  * Compartir — copiar i redistribuir aquesta obra en qualsevol mitjà i
+    format, per a qualsevol finalitat, inclosa la comercial.
+
+  * Adaptar — remesclar, transformar i crear a partir d'aquesta obra, per a
+    qualsevol finalitat, inclosa la comercial.
+
+Sempre que:
+
+  * Reconegueu l'autoria — n'heu de reconèixer l'autoria, proporcionar un
+    enllaç a la llicència i indicar si hi heu fet canvis. Ho podeu fer de
+    qualsevol manera raonable, però no d'una manera que suggereixi que
+    l'autoria us dona suport o aprova el vostre ús.
+
+  * No hi apliqueu restriccions addicionals — no podeu aplicar termes legals
+    ni mesures tecnològiques que restringeixin legalment a altres de fer
+    qualsevol cosa que la llicència permeti.
+
+No hi ha garanties. La llicència pot no donar-vos tots els permisos
+necessaris per a l'ús que en vulgueu fer. Per exemple, altres drets com els
+de publicitat, privadesa o drets morals poden limitar com feu servir l'obra.
+
+
+TEXT LEGAL COMPLET
+------------------
+
+Aquesta obra està subjecta als termes de la llicència Creative Commons
+Reconeixement 4.0 Internacional. El text legal complet i vinculant és a:
+
+    https://creativecommons.org/licenses/by/4.0/legalcode.ca   (català)
+    https://creativecommons.org/licenses/by/4.0/legalcode      (anglès)
+
+Resum en llenguatge planer:
+
+    https://creativecommons.org/licenses/by/4.0/deed.ca
+
+
+ABAST
+-----
+
+Aquesta llicència cobreix el codi, la documentació i les dades originals
+d'aquest dipòsit: el catàleg de mesures i suports (data/banc-mesures.json),
+les plantilles de perfil (data/perfils.json), les equivalències entre
+matèries i àrees (data/equivalencies-primaria.json) i tot el que hi ha a
+src/, tools/, tests/ i docs/.
+
+NO cobreix els textos normatius i curriculars de la Generalitat de Catalunya
+que s'hi incorporen a efectes de consulta —el currículum del Decret 175/2022
+reproduït a data/curriculum-eso.json i data/curriculum-primaria.json, i els
+documents de referencies/—, l'autoria dels quals correspon al Departament
+d'Educació. Vegeu referencies/README.md.
+
+Aquesta no és una aplicació oficial del Departament d'Educació de la
+Generalitat de Catalunya.
+
+
+NOTA SOBRE LA TRIA DE LLICÈNCIA
+-------------------------------
+
+CC BY 4.0 està pensada per a obres de contingut i no per a programari: no
+tracta explícitament qüestions com la concessió de patents o la
+compatibilitat amb altres llicències de codi obert. S'ha triat perquè el gruix
+d'aquest projecte és contingut educatiu —el catàleg de mesures, el currículum
+i la documentació— i perquè és la llicència amb què l'obra es va publicar
+originalment.
+
+Qui vulgui reutilitzar només el codi en un projecte de programari pot
+demanar-ho obrint una incidència.

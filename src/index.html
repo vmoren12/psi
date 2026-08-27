@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#141d23">
+<meta name="description" content="Eina d'elaboració, seguiment i impressió de plans de suport individualitzat (PI) per a l'educació primària i l'educació secundària obligatòria a Catalunya, amb el currículum del Decret 175/2022 integrat (matèries d'ESO i àrees de primària, per si cal adaptar els criteris a un nivell inferior).">
+<title>PI · Pla de suport individualitzat — Educació bàsica</title>
+<!-- Icona de la pestanya. Va incrustada al document, com la resta de
+     l'aplicació: un sol fitxer que funciona sense connexió ni servidor. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23141d23'/%3E%3Ctext%20x='16'%20y='20'%20text-anchor='middle'%20font-family='Georgia,Times%20New%20Roman,serif'%20font-size='17'%20font-weight='600'%20fill='%23ffffff'%3EPI%3C/text%3E%3Crect%20x='9'%20y='23'%20width='14'%20height='2.5'%20rx='1'%20fill='%231f6b5c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+<style>
+/* <<<INSERTA: estils>>> */
+</style>
+<!-- Marge de pàgina de la impressió. Amb marge zero el navegador no hi
+     imprimeix la seva capçalera (data i hora) ni el peu amb l'URL, i el marge
+     real del full el posa el padding de .doc. Qui vulgui recuperar la
+     numeració automàtica de pàgines pot commutar-ho des de la finestra del
+     document; llavors hi tornen també la data i l'URL. -->
+<style id="print-page">@media print{@page{margin:0}.doc{padding:0 15mm;--m-dalt:20mm;--m-cap:8mm;--m-baix:14mm}}</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <div class="brand"><b>Pla Individualitzat</b><span>Primària i ESO · Decret 175/2022</span></div>
+    <nav class="nav" id="nav">
+      <button data-view="dashboard" aria-current="true"><span class="ic">◧</span><span class="lb">Tauler</span> <span class="cnt" id="c-pis"></span></button>
+      <button data-view="alumnes"><span class="ic">◉</span><span class="lb">Alumnat</span> <span class="cnt" id="c-al"></span></button>
+      <button data-view="pi"><span class="ic">✎</span><span class="lb">Editor</span></button>
+      <button data-view="seguiment"><span class="ic">◷</span><span class="lb">Seguiment</span></button>
+      <button data-view="banc"><span class="ic">◈</span><span class="lb">Banc de mesures</span> <span class="cnt" id="c-ad"></span></button>
+      <button data-view="curriculum"><span class="ic">▤</span><span class="lb">Currículum</span></button>
+      <button data-view="dades"><span class="ic">▽</span><span class="lb">Dades i còpies</span></button>
+    </nav>
+    <div class="rail-foot">Les dades es desen només en aquest dispositiu (emmagatzematge local del navegador). Feu còpies de seguretat periòdiques per evitar pèrdues d'informació.
+      <br><br>Aplicació creada per <b style="color:#c9d2d6;font-weight:600">Víctor Moreno de la Torre</b>, psicòleg i orientador educatiu, amb l'assistència de <b style="color:#c9d2d6;font-weight:600">Claude</b> (Anthropic).
+      <br><br>Llicència <a href="https://creativecommons.org/licenses/by/4.0/deed.ca" target="_blank" rel="noopener">Creative Commons BY 4.0</a>: ús, còpia i modificació lliures i gratuïts, sempre que se'n reconegui l'autoria.</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><h1 id="vtitle">Tauler</h1><div class="sub" id="vsub"></div></div>
+      <div class="actions" id="vactions"></div>
+    </header>
+    <div class="wrap">
+      <section id="view-dashboard" class="view on"></section>
+      <section id="view-alumnes" class="view"></section>
+      <section id="view-pi" class="view"></section>
+      <section id="view-seguiment" class="view"></section>
+      <section id="view-banc" class="view"></section>
+      <section id="view-curriculum" class="view"></section>
+      <section id="view-dades" class="view"></section>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-inner">
+    <div class="modal-h">
+      <h2 id="modal-title">Document</h2>
+      <label class="small" id="modal-caps" title="Si ho actives, el navegador hi torna a imprimir la data, l'URL i la numeració automàtica de pàgines."><input type="checkbox" id="cap-nav" onchange="capsaleraNavegador(this.checked)"> Capçalera i numeració del navegador</label>
+      <button class="btn sm" id="modal-print" onclick="window.print()">Imprimeix / PDF</button>
+      <button class="btn sm" id="modal-back" onclick="tornaModal()">Torna</button>
+      <button class="btn sm x" title="Tanca" aria-label="Tanca" onclick="closeModal()">&times;</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+<div class="dlg" id="dlg" role="alertdialog" aria-modal="true" aria-labelledby="dlg-title"><div class="dlg-box">
+  <h2 id="dlg-title"></h2>
+  <div class="dlg-b" id="dlg-body"></div>
+  <div class="dlg-f" id="dlg-foot"></div>
+</div></div>
+<div class="avis" id="avis" role="note">
+  <span class="msym" aria-hidden="true">&#xe002;</span>
+  <p><b>Aquesta no és una aplicació oficial del Departament d'Educació de la Generalitat de Catalunya.</b>
+  És una eina d'ajuda a la redacció: el currículum i el catàleg de mesures s'hi incorporen a efectes de consulta i poden contenir errors o estar desactualitzats.
+  Reviseu sempre el contingut de cada pla de suport individualitzat abans de validar-lo, compartir-lo o imprimir-lo, i contrasteu-lo amb la normativa vigent i amb els criteris del vostre centre. La responsabilitat del text final és de qui signa el pla.</p>
+  <button class="avis-x" type="button" title="Amaga l'avís" aria-label="Amaga l'avís" onclick="mostraAvis(false)">&times;</button>
+</div>
+<button class="avis-obre" id="avis-obre" type="button" title="Llegeix l'avís sobre l'ús de l'aplicació"
+  aria-label="Llegeix l'avís sobre l'ús de l'aplicació" onclick="mostraAvis(true)"><span class="msym" aria-hidden="true">&#xe002;</span></button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- <<<INSERTA: curriculum>>> -->
+<script>
+/* <<<INSERTA: aplicacio>>> */
+</script>
+</body>
+</html>

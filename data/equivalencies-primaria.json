@@ -1,0 +1,90 @@
+{
+ "_llegiu-me": [
+  "Correspondència entre les matèries de l'ESO (annex 3 del Decret 175/2022) i",
+  "les àrees d'educació primària (annex 2) que en són l'antecedent.",
+  "L'aplicació la fa servir per oferir, dins la franja de cada matèria del pas 5,",
+  "el currículum de primària de l'àrea anàloga.",
+  "",
+  "relacio = 'directa': la matèria és la continuïtat de la mateixa àrea.",
+  "relacio = 'parcial': l'àrea de primària només cobreix una part de la matèria",
+  "  (o a l'inrevés). En aquest cas l'aplicació sempre demana confirmació al",
+  "  docent i li mostra la nota.",
+  "",
+  "Les matèries que no hi consten no tenen àrea anàloga a primària: el docent",
+  "hi pot carregar igualment qualsevol àrea, triant-la a mà.",
+  "",
+  "Per aplicar els canvis: python dades/construeix-curriculum.py"
+ ],
+ "equivalencies": {
+  "Aranès i Literatura a l’Aran": [
+   {"area": "Aranès i Literatura a l’Aran", "relacio": "directa"}
+  ],
+  "Llengua Catalana i Literatura": [
+   {"area": "Llengua Catalana i Literatura", "relacio": "directa"}
+  ],
+  "Llengua Castellana i Literatura": [
+   {"area": "Llengua Castellana i Literatura", "relacio": "directa"}
+  ],
+  "Llengua Estrangera": [
+   {"area": "Llengua Estrangera", "relacio": "directa"}
+  ],
+  "Segona Llengua Estrangera": [
+   {"area": "Segona Llengua Estrangera", "relacio": "directa"}
+  ],
+  "Matemàtiques": [
+   {"area": "Matemàtiques", "relacio": "directa"}
+  ],
+  "Educació Física": [
+   {"area": "Educació Física", "relacio": "directa"}
+  ],
+  "Educació en Valors Cívics i Ètics": [
+   {"area": "Educació en Valors Cívics i Ètics", "relacio": "directa"}
+  ],
+  "Biologia i Geologia": [
+   {"area": "Coneixement del Medi Natural, Social i Cultural", "relacio": "parcial",
+    "nota": "A primària els sabers de biologia i geologia són dins el bloc de cultura científica de l'àrea de Coneixement del Medi, compartida amb Física i Química i amb Ciències Socials."}
+  ],
+  "Física i Química": [
+   {"area": "Coneixement del Medi Natural, Social i Cultural", "relacio": "parcial",
+    "nota": "A primària els sabers de física i química són dins el bloc de cultura científica (matèria, forces i energia) de l'àrea de Coneixement del Medi."}
+  ],
+  "Ciències Socials: Geografia i Història": [
+   {"area": "Coneixement del Medi Natural, Social i Cultural", "relacio": "parcial",
+    "nota": "A primària els sabers de geografia i història són dins el bloc de societats i territoris de l'àrea de Coneixement del Medi."}
+  ],
+  "Tecnologia i Digitalització": [
+   {"area": "Coneixement del Medi Natural, Social i Cultural", "relacio": "parcial",
+    "nota": "A primària els sabers tecnològics i digitals són dins el bloc de tecnologia i digitalització de l'àrea de Coneixement del Medi."}
+  ],
+  "Tecnologia": [
+   {"area": "Coneixement del Medi Natural, Social i Cultural", "relacio": "parcial",
+    "nota": "A primària els sabers tecnològics són dins el bloc de tecnologia i digitalització de l'àrea de Coneixement del Medi."}
+  ],
+  "Digitalització": [
+   {"area": "Coneixement del Medi Natural, Social i Cultural", "relacio": "parcial",
+    "nota": "A primària la competència digital es treballa al bloc de tecnologia i digitalització de l'àrea de Coneixement del Medi i de manera transversal."}
+  ],
+  "Robòtica i Programació": [
+   {"area": "Coneixement del Medi Natural, Social i Cultural", "relacio": "parcial",
+    "nota": "A primària el pensament computacional és dins el bloc de tecnologia i digitalització de l'àrea de Coneixement del Medi, i també al sentit algebraic de Matemàtiques."},
+   {"area": "Matemàtiques", "relacio": "parcial",
+    "nota": "El pensament computacional també forma part del sentit algebraic de l'àrea de Matemàtiques."}
+  ],
+  "Educació Plàstica, Visual i Audiovisual": [
+   {"area": "Educació Artística", "relacio": "parcial",
+    "nota": "A primària correspon als blocs d'educació plàstica i visual i d'educació audiovisual de l'àrea d'Educació Artística, compartida amb Música."}
+  ],
+  "Música": [
+   {"area": "Educació Artística", "relacio": "parcial",
+    "nota": "A primària correspon al bloc d'educació musical de l'àrea d'Educació Artística, compartida amb Educació Plàstica, Visual i Audiovisual."}
+  ],
+  "Arts Escèniques i Dansa": [
+   {"area": "Educació Artística", "relacio": "parcial",
+    "nota": "A primària correspon al bloc d'educació en arts escèniques i performatives de l'àrea d'Educació Artística."}
+  ],
+  "Filosofia": [
+   {"area": "Educació en Valors Cívics i Ètics", "relacio": "parcial",
+    "nota": "A primària l'antecedent més proper és l'àrea d'Educació en Valors Cívics i Ètics, que es cursa en un curs del cicle superior."}
+  ]
+ }
+}

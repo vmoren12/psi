@@ -1,0 +1,22 @@
+# Els fitxers de text es normalitzen a LF al dipòsit.
+* text=auto eol=lf
+
+# L'aplicació distribuïda ha de portar LF sempre: la seva suma SHA-256 és el
+# que permet comprovar que un fitxer que corre en un centre correspon a una
+# versió publicada, i canviaria amb els salts de línia.
+dist/pi-eso.html text eol=lf
+
+*.py    text eol=lf
+*.js    text eol=lf
+*.css   text eol=lf
+*.html  text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+
+*.pdf   binary
+
+# Les dades i l'artefacte generat no compten com a codi a les estadístiques
+# ni a les diferències del navegador de GitHub.
+dist/pi-eso.html      linguist-generated=true
+data/curriculum-*.json linguist-generated=true
+data/annex3-glifs.json linguist-generated=true

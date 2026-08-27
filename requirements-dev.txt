@@ -1,0 +1,7 @@
+# Dependències de desenvolupament.
+#
+# Cap d'aquestes fa falta per construir l'aplicació: «python -m tools.build»
+# només necessita Python 3.9 o superior i la biblioteca estàndard.
+
+pytest>=8.0        # suite de proves
+ruff>=0.6          # revisió d'estil del codi de Python

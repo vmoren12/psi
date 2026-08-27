@@ -1,0 +1,84 @@
+name: CI
+
+# Es comproven tres coses, en aquest ordre:
+#   1. que les dades siguin coherents,
+#   2. que dist/pi-eso.html correspongui exactament a src/ i data/,
+#   3. que la suite de proves passi.
+#
+# La segona és la que impedeix que es publiqui un fitxer distribuït que ja no
+# correspon al codi del dipòsit. Vegeu docs/adr/0004-dist-versionat.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proves:
+    name: Validació, construcció i proves
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # La versió mínima que documenta el projecte i l'última estable.
+        python-version: ["3.9", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Instal·la les dependències de desenvolupament
+        run: python -m pip install --upgrade pip -r requirements-dev.txt
+
+      - name: Valida les dades
+        run: python -m tools.valida
+
+      - name: Comprova que dist/ correspon a les fonts
+        run: python -m tools.build --verifica
+
+      - name: Proves
+        run: python -m pytest
+
+  estil:
+    name: Estil del codi de Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install --upgrade pip -r requirements-dev.txt
+      - run: python -m ruff check --output-format=github .
+
+  reproducibilitat:
+    name: La construcció és reproduïble
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Es construeix dues vegades en processos separats i es compara la suma
+      # SHA-256. Si no coincideix, alguna cosa depèn de l'ordre d'un
+      # diccionari, de l'hora o del sistema de fitxers, i el fitxer distribuït
+      # deixa de ser comprovable per suma de verificació.
+      - name: Construeix dos cops i compara
+        run: |
+          python -m tools.build --silenci
+          sha256sum dist/pi-eso.html > primera.txt
+          rm dist/pi-eso.html
+          python -m tools.build --silenci
+          sha256sum -c primera.txt
+          cat primera.txt
