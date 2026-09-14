@@ -1,7 +1,8 @@
 # Banc d'estratègies metodològiques
 
 Aquest document explica com està construït el **banc de frases breus** que
-encapçala els resultats del banc de mesures i com ampliar-lo o corregir-lo.
+encapçala, en forma d'annex, els resultats del banc de mesures, i com
+ampliar-lo o corregir-lo.
 
 ---
 
@@ -25,7 +26,9 @@ escriure, abans d'arribar al llenguatge del decret.
 | Editable sencer pel centre | Un vocabulari tancat |
 
 Per aquest motiu les dues coses van a fitxers diferents, es validen amb regles
-diferents i es mostren en seccions separades.
+diferents i es mostren per separat: l'annex ocupa una caixa d'unes deu frases
+amb desplaçament propi al capdamunt dels resultats, i el catàleg de mesures
+continua just a sota. El botó **Oculta** deixa l'annex reduït a la capçalera.
 
 ---
 
@@ -36,7 +39,7 @@ diferents i es mostren en seccions separades.
 | `data/estrategies.json` | **Font de veritat.** El banc complet, editable a mà. |
 | `tools/build.py` | Valida el banc i l'incrusta dins de `dist/pi-eso.html`. |
 | `src/app/02-banc-mesures.js` | Hi rep el bloc generat, entre els marcadors `ESTRATEGIES-INICI` i `ESTRATEGIES-FI`. |
-| `src/app/14-estrategies.js` | La secció del banc, l'editor i el pas al pla. |
+| `src/app/14-estrategies.js` | L'annex del banc, l'editor i el pas al pla. |
 
 ### Flux de treball
 

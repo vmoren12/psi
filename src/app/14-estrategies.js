@@ -1,8 +1,13 @@
 /* ---------- 9. Estratègies metodològiques ----------
-   Secció que encapçala els resultats dels dos bancs —la vista «Banc de
+   Annex que encapçala els resultats dels dos bancs —la vista «Banc de
    mesures» i la finestra que s'obre des del pas 4— amb frases breus d'ús comú
    a l'aula, agrupades per categoria i etiquetades pels perfils de necessitats
    a què solen respondre.
+
+   Ocupa una caixa petita amb desplaçament propi, d'unes deu frases, i el
+   catàleg de mesures continua just a sota: és un complement per començar a
+   redactar, no el contingut principal de la finestra, i no se li ha de menjar
+   l'espai. El botó «Oculta» la redueix a la seva capçalera.
 
    Va abans del catàleg de mesures i no barrejada amb ell perquè són dues coses
    diferents: una mesura del Decret 150/2017 té intensitat, bloc i font
@@ -42,27 +47,28 @@ function seccioEstrategies(p, q, perfil, perfilsAlumne){
   llista.forEach(e => (perCat[e.categoria] = perCat[e.categoria] || []).push(e));
   const jaAl = id => p && p.adaptacions.some(x => x.adId === id);
 
-  return `<section class="estr">
-    <div class="grp-title estr-cap">
-      <span class="eyebrow">Estratègies metodològiques</span>
-      <span class="muted small">${llista.length} de ${total}</span>
-      <select class="estr-cat-sel" onchange="filtraCatEstrategies(this.value)">
+  return `<section class="estr${st.obert?"":" tancada"}">
+    <div class="estr-cap">
+      <span class="estr-titol">Estratègies metodològiques</span>
+      <span class="estr-annex">Complement del catàleg</span>
+      <span class="muted small estr-n">${llista.length} de ${total}</span>
+      <select class="estr-cat-sel" aria-label="Categoria d'estratègies" onchange="filtraCatEstrategies(this.value)">
         <option value="">Totes les categories</option>
         ${cats.map(c => `<option value="${esc(c)}" ${st.cat===c?"selected":""}>${esc(c)}</option>`).join("")}
       </select>
       <button class="btn sm ghost" onclick="editaEstrategia('')">Nova estratègia</button>
       ${comptaEstrategiesEditades() ? `<button class="btn sm ghost" onclick="restauraTotesEstrategies()">Restaura el banc</button>` : ""}
-      <button class="btn sm ghost" aria-expanded="${st.obert}" onclick="plegaEstrategies()">${st.obert?"Plega":"Desplega"}</button>
+      <button class="btn sm ghost" aria-expanded="${st.obert}" onclick="plegaEstrategies()">${st.obert?"Oculta":"Mostra"}</button>
     </div>
-    <p class="legal estr-nota">Frases breus d'ús comú a l'aula, recollides de la pràctica docent i de l'evidència sobre què funciona amb cada perfil. No provenen de cap norma: complementen el catàleg de mesures i es poden editar totes.</p>
-    ${st.obert ? (llista.length === 0
-      ? `<div class="empty" style="padding:22px 14px"><b>Cap estratègia amb aquests filtres</b>Prova amb altres paraules, canvia de categoria o escriu-ne una de nova.</div>`
+    ${st.obert ? `
+    <p class="legal estr-nota">Frases breus d'ús comú a l'aula, de la pràctica docent i de l'evidència sobre què funciona amb cada perfil. No provenen de cap norma: complementen el catàleg de mesures i es poden editar totes.</p>
+    <div class="estr-scroll">${llista.length === 0
+      ? `<div class="empty" style="padding:22px 14px;margin:0"><b>Cap estratègia amb aquests filtres</b>Prova amb altres paraules, canvia de categoria o escriu-ne una de nova.</div>`
       : cats.filter(c => perCat[c]).map(c => `
         <div class="estr-cat">
           <div class="estr-cat-t"><span class="eyebrow">${esc(c)}</span><span class="muted small">${perCat[c].length}</span></div>
           <div class="estr-list">${perCat[c].map(e => fitxaEstrategia(e, p, jaAl(e.id))).join("")}</div>
-        </div>`).join("")) : ""}
-    <hr class="rule">
+        </div>`).join("")}</div>` : ""}
   </section>`;
 }
 
@@ -86,6 +92,7 @@ function filtraCatEstrategies(v){
   state.estr.cat = v;
   repintaEstrategies();
 }
+/* Oculta l'annex i el deixa reduït a la capçalera, o el torna a mostrar. */
 function plegaEstrategies(){
   state.estr = state.estr || {cat:"", obert:true};
   state.estr.obert = !state.estr.obert;

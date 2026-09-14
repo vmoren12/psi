@@ -17,10 +17,14 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   avaluació, entorn i família) i etiquetades pels perfils de necessitats als
   quals responen.
 
-  Va en una secció a part i no barrejat amb el catàleg perquè són dues coses
+  Va en un **annex a part** i no barrejat amb el catàleg perquè són dues coses
   diferents: una mesura del Decret 150/2017 té intensitat, bloc i font
   normativa, i una estratègia d'aquí és pràctica docent sense norma al darrere.
   És el que se sol necessitar per començar a redactar.
+
+  L'annex ocupa una caixa pròpia d'unes deu frases, **amb desplaçament propi**,
+  de manera que el catàleg de mesures continuï a la vista just a sota. Es pot
+  deixar reduït a la seva capçalera amb el botó **Oculta**.
 
   **Tot és editable**: qualsevol frase es pot reescriure o reetiquetar, el
   centre pot afegir-ne de pròpies i sempre se'n pot recuperar la del banc. Les
@@ -47,9 +51,6 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   finestra el deixa **adaptar** abans de tancar-la, que és el que sol caldre
   amb un criteri del decret, escrit per al grup i no per a un alumne/a concret.
   Si el criteri ja es va adaptar al pas 5, és el text adaptat el que s'ofereix.
-
-- **«Altres docents i/o especialistes que intervenen»** al pas 1, sota del
-  tutor/a responsable. Surt a l'apartat 2 del document.
 
 - **«Acords amb la família»** al pas 8, dins de la conformitat: un camp obert
   per als compromisos generals que s'acorden amb la família, diferent dels

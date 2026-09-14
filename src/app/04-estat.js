@@ -7,7 +7,7 @@ function nouPiObj(alumneId){
   return {
     id: uid("PI-"), alumneId, estat:"esborrany", tipus:"metodologic",
     curs: cursActual(),
-    de: {etapa:"ESO", curs:"", grup:"", tutor:"", altresDocents:"", dataArribada:"", dataSistema:"", dataCentre:"",
+    de: {etapa:"ESO", curs:"", grup:"", tutor:"", dataArribada:"", dataSistema:"", dataCentre:"",
          escolaritzacio:"", centresAnteriors:"", repeticions:"", mesuresPrevies:"", altres:""},
     just: {motius:[], caeiProposta:"", caeiMotiu:"", altresMotiu:"", text:"",
            fortaleses:"", dificultats:"", interessos:""},
@@ -223,9 +223,7 @@ function exemple(){
   const p = nouPiObj("AL1");
   Object.assign(p, {
     id:"PI-0001", estat:"vigent", tipus:"metodologic",
-    de:{curs:"2n", grup:"2n A", tutor:"Tutoria de 2n A",
-        altresDocents:"Docents de Llengua Catalana, Matemàtiques i Llengua Estrangera; mestra de pedagogia terapèutica (dues sessions setmanals); orientació educativa del centre.",
-        dataArribada:"", dataSistema:"", dataCentre:"2023-09-12", escolaritzacio:"Regular", centresAnteriors:"Escola pública de primària", repeticions:"Cap", mesuresPrevies:"Suport universal a l'aula ordinària i mesures addicionals de lectura a 6è de primària.", altres:""},
+    de:{curs:"2n", grup:"2n A", tutor:"Tutoria de 2n A", dataArribada:"", dataSistema:"", dataCentre:"2023-09-12", escolaritzacio:"Regular", centresAnteriors:"Escola pública de primària", repeticions:"Cap", mesuresPrevies:"Suport universal a l'aula ordinària i mesures addicionals de lectura a 6è de primària.", altres:""},
     just:{motius:["Avaluació psicopedagògica"], caeiProposta:"", caeiMotiu:"", altresMotiu:"", 
       text:"L'avaluació psicopedagògica identifica un trastorn de l'aprenentatge de la lectoescriptura amb dèficit d'atenció associat. Cal ajustar el format dels materials, el temps de les proves i la càrrega de tasques.",
       fortaleses:"Molt bona comprensió oral i raonament matemàtic. Participa quan la tasca és curta i té un final visible.",

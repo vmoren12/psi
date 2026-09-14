@@ -84,7 +84,6 @@ function doc(p, a){
   <section><h2>2. Dades escolars</h2>
   ${kv([["Etapa", esc(etapaPla(p) === "Primària" ? "Educació primària" : "Educació secundària obligatòria")],
        ["Curs", esc(p.de.curs)],["Grup", esc(p.de.grup)],["Tutor/a responsable de coordinar el PI", esc(p.de.tutor)],
-       ["Altres docents i/o especialistes que intervenen", esc(p.de.altresDocents)],
        ["Data d'arribada a Catalunya", dataCat(p.de.dataArribada)],["Data d'incorporació al sistema educatiu català", dataCat(p.de.dataSistema)],
        ["Data d'incorporació al centre actual", dataCat(p.de.dataCentre)],["Escolarització prèvia", esc(p.de.escolaritzacio)],
        ["Centres on ha estat matriculat anteriorment", esc(p.de.centresAnteriors)],["Repeticions de curs", esc(p.de.repeticions)],

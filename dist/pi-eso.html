@@ -294,24 +294,40 @@ details.ce .ceb{padding:6px 14px 12px}
 .pp-perfils{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 0}
 
 
-/* ---------- banc d'estratègies metodològiques ----------
-   Encapçala els resultats dels dos bancs. La fitxa és una sola línia —frase,
-   perfils i accions— perquè la gràcia d'aquest banc és poder-ne llegir moltes
-   d'una ullada, al contrari que la fitxa d'una mesura. */
-.estr{margin-bottom:6px}
-.estr-cap{flex-wrap:wrap;gap:8px}
-.estr-cap .estr-cat-sel{margin-left:auto;font-size:12.5px;padding:5px 8px;max-width:230px}
-.estr-nota{margin:0 0 10px}
+/* ---------- annex d'estratègies metodològiques ----------
+   Encapçala els resultats dels dos bancs, però no n'és el contingut
+   principal: el catàleg de mesures ve just a sota i ha de quedar a la vista.
+   Per això l'annex es llegeix com una caixa a part —fons enfonsat, filet de
+   color al costat— i es queda dins d'una alçada fixa amb desplaçament propi,
+   d'unes deu frases. La fitxa és una sola línia —frase, perfils i accions—
+   perquè la gràcia d'aquest banc és poder-ne llegir moltes d'una ullada, al
+   contrari que la fitxa d'una mesura. */
+.estr{margin:0 0 16px;background:#eaeeea;border:1px solid var(--line);
+  border-left:3px solid var(--met);border-radius:var(--r);padding:11px 13px 12px}
+.estr-cap{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.estr-titol{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink2);font-weight:500}
+.estr-annex{font-size:10.5px;color:var(--ink3);border:1px solid var(--line2);
+  border-radius:99px;padding:1px 8px;white-space:nowrap}
+.estr-cap .estr-n{margin-left:2px}
+.estr-cap .estr-cat-sel{margin-left:auto;font-size:12.5px;padding:5px 8px;max-width:220px;min-height:32px}
+.estr-cap .btn.sm{min-height:32px}
+.estr-nota{margin:7px 0 9px}
+/* Deu frases i para: la resta, amb la barra de desplaçament de la caixa. */
+.estr-scroll{max-height:400px;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 11px}
 .estr-cat{margin-bottom:12px}
+.estr-cat:last-child{margin-bottom:0}
 .estr-cat-t{display:flex;align-items:baseline;gap:8px;margin:0 0 5px}
 .estr-list{display:flex;flex-direction:column;gap:5px}
 .estr-item{display:flex;align-items:center;gap:9px;flex-wrap:wrap;
-  padding:8px 11px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+  padding:7px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
 .estr-item.ja{border-color:#b9d6cb;background:var(--met-soft)}
-.estr-item .estr-t{flex:1;min-width:190px;font-size:13.5px;line-height:1.45}
+.estr-item .estr-t{flex:1;min-width:190px;font-size:13px;line-height:1.45}
 .estr-item .estr-perf{display:flex;gap:4px;flex-wrap:wrap}
 .estr-item .estr-perf .tag{font-size:10px}
 .estr-item .estr-acc{display:flex;gap:6px;margin-left:auto}
+.estr-item .btn.sm{min-height:30px;padding:3px 9px}
 /* ---------- horari ---------- */
 .horari{min-width:660px;border-collapse:collapse}
 .horari th{padding:6px 8px;font-size:10px}
@@ -625,9 +641,12 @@ details.ce .ceb{padding:6px 14px 12px}
   .modal-h{padding:9px 12px}
   .modal-h h2{font-size:14px}
   .bank{grid-template-columns:1fr}
-  /* La secció d'estratègies: el selector de categoria i les accions de
-     cada frase passen a línia pròpia en comptes d'estrenyer el text. */
+  /* L'annex d'estratègies: el selector de categoria i les accions de cada
+     frase passen a línia pròpia en comptes d'estrènyer el text, i la caixa es
+     queda més baixa perquè cada frase hi ocupa dues línies. */
+  .estr{padding:10px 11px 11px}
   .estr-cap .estr-cat-sel{margin-left:0;max-width:none;flex:1 0 100%}
+  .estr-scroll{max-height:320px;padding:9px}
   .estr-item .estr-acc{margin-left:0;flex:1 0 100%}
   .estr-item .estr-acc .btn{flex:1}
   .toolbar input[type=text],.toolbar input[type=search],.toolbar select{max-width:none;width:100%}
@@ -1453,7 +1472,7 @@ function nouPiObj(alumneId){
   return {
     id: uid("PI-"), alumneId, estat:"esborrany", tipus:"metodologic",
     curs: cursActual(),
-    de: {etapa:"ESO", curs:"", grup:"", tutor:"", altresDocents:"", dataArribada:"", dataSistema:"", dataCentre:"",
+    de: {etapa:"ESO", curs:"", grup:"", tutor:"", dataArribada:"", dataSistema:"", dataCentre:"",
          escolaritzacio:"", centresAnteriors:"", repeticions:"", mesuresPrevies:"", altres:""},
     just: {motius:[], caeiProposta:"", caeiMotiu:"", altresMotiu:"", text:"",
            fortaleses:"", dificultats:"", interessos:""},
@@ -1669,9 +1688,7 @@ function exemple(){
   const p = nouPiObj("AL1");
   Object.assign(p, {
     id:"PI-0001", estat:"vigent", tipus:"metodologic",
-    de:{curs:"2n", grup:"2n A", tutor:"Tutoria de 2n A",
-        altresDocents:"Docents de Llengua Catalana, Matemàtiques i Llengua Estrangera; mestra de pedagogia terapèutica (dues sessions setmanals); orientació educativa del centre.",
-        dataArribada:"", dataSistema:"", dataCentre:"2023-09-12", escolaritzacio:"Regular", centresAnteriors:"Escola pública de primària", repeticions:"Cap", mesuresPrevies:"Suport universal a l'aula ordinària i mesures addicionals de lectura a 6è de primària.", altres:""},
+    de:{curs:"2n", grup:"2n A", tutor:"Tutoria de 2n A", dataArribada:"", dataSistema:"", dataCentre:"2023-09-12", escolaritzacio:"Regular", centresAnteriors:"Escola pública de primària", repeticions:"Cap", mesuresPrevies:"Suport universal a l'aula ordinària i mesures addicionals de lectura a 6è de primària.", altres:""},
     just:{motius:["Avaluació psicopedagògica"], caeiProposta:"", caeiMotiu:"", altresMotiu:"", 
       text:"L'avaluació psicopedagògica identifica un trastorn de l'aprenentatge de la lectoescriptura amb dèficit d'atenció associat. Cal ajustar el format dels materials, el temps de les proves i la càrrega de tasques.",
       fortaleses:"Molt bona comprensió oral i raonament matemàtic. Participa quan la tasca és curta i té un final visible.",
@@ -2980,10 +2997,15 @@ function renderCurriculum(){
 }
 
 /* ---------- 9. Estratègies metodològiques ----------
-   Secció que encapçala els resultats dels dos bancs —la vista «Banc de
+   Annex que encapçala els resultats dels dos bancs —la vista «Banc de
    mesures» i la finestra que s'obre des del pas 4— amb frases breus d'ús comú
    a l'aula, agrupades per categoria i etiquetades pels perfils de necessitats
    a què solen respondre.
+
+   Ocupa una caixa petita amb desplaçament propi, d'unes deu frases, i el
+   catàleg de mesures continua just a sota: és un complement per començar a
+   redactar, no el contingut principal de la finestra, i no se li ha de menjar
+   l'espai. El botó «Oculta» la redueix a la seva capçalera.
 
    Va abans del catàleg de mesures i no barrejada amb ell perquè són dues coses
    diferents: una mesura del Decret 150/2017 té intensitat, bloc i font
@@ -3023,27 +3045,28 @@ function seccioEstrategies(p, q, perfil, perfilsAlumne){
   llista.forEach(e => (perCat[e.categoria] = perCat[e.categoria] || []).push(e));
   const jaAl = id => p && p.adaptacions.some(x => x.adId === id);
 
-  return `<section class="estr">
-    <div class="grp-title estr-cap">
-      <span class="eyebrow">Estratègies metodològiques</span>
-      <span class="muted small">${llista.length} de ${total}</span>
-      <select class="estr-cat-sel" onchange="filtraCatEstrategies(this.value)">
+  return `<section class="estr${st.obert?"":" tancada"}">
+    <div class="estr-cap">
+      <span class="estr-titol">Estratègies metodològiques</span>
+      <span class="estr-annex">Complement del catàleg</span>
+      <span class="muted small estr-n">${llista.length} de ${total}</span>
+      <select class="estr-cat-sel" aria-label="Categoria d'estratègies" onchange="filtraCatEstrategies(this.value)">
         <option value="">Totes les categories</option>
         ${cats.map(c => `<option value="${esc(c)}" ${st.cat===c?"selected":""}>${esc(c)}</option>`).join("")}
       </select>
       <button class="btn sm ghost" onclick="editaEstrategia('')">Nova estratègia</button>
       ${comptaEstrategiesEditades() ? `<button class="btn sm ghost" onclick="restauraTotesEstrategies()">Restaura el banc</button>` : ""}
-      <button class="btn sm ghost" aria-expanded="${st.obert}" onclick="plegaEstrategies()">${st.obert?"Plega":"Desplega"}</button>
+      <button class="btn sm ghost" aria-expanded="${st.obert}" onclick="plegaEstrategies()">${st.obert?"Oculta":"Mostra"}</button>
     </div>
-    <p class="legal estr-nota">Frases breus d'ús comú a l'aula, recollides de la pràctica docent i de l'evidència sobre què funciona amb cada perfil. No provenen de cap norma: complementen el catàleg de mesures i es poden editar totes.</p>
-    ${st.obert ? (llista.length === 0
-      ? `<div class="empty" style="padding:22px 14px"><b>Cap estratègia amb aquests filtres</b>Prova amb altres paraules, canvia de categoria o escriu-ne una de nova.</div>`
+    ${st.obert ? `
+    <p class="legal estr-nota">Frases breus d'ús comú a l'aula, de la pràctica docent i de l'evidència sobre què funciona amb cada perfil. No provenen de cap norma: complementen el catàleg de mesures i es poden editar totes.</p>
+    <div class="estr-scroll">${llista.length === 0
+      ? `<div class="empty" style="padding:22px 14px;margin:0"><b>Cap estratègia amb aquests filtres</b>Prova amb altres paraules, canvia de categoria o escriu-ne una de nova.</div>`
       : cats.filter(c => perCat[c]).map(c => `
         <div class="estr-cat">
           <div class="estr-cat-t"><span class="eyebrow">${esc(c)}</span><span class="muted small">${perCat[c].length}</span></div>
           <div class="estr-list">${perCat[c].map(e => fitxaEstrategia(e, p, jaAl(e.id))).join("")}</div>
-        </div>`).join("")) : ""}
-    <hr class="rule">
+        </div>`).join("")}</div>` : ""}
   </section>`;
 }
 
@@ -3067,6 +3090,7 @@ function filtraCatEstrategies(v){
   state.estr.cat = v;
   repintaEstrategies();
 }
+/* Oculta l'annex i el deixa reduït a la capçalera, o el torna a mostrar. */
 function plegaEstrategies(){
   state.estr = state.estr || {cat:"", obert:true};
   state.estr.obert = !state.estr.obert;
@@ -3508,10 +3532,6 @@ function pas1(p, a){
       <span class="small muted" style="display:block;margin-top:4px">Surt a la capçalera del document imprès. Pots adaptar-lo a la nomenclatura del centre; ha de ser únic i admet lletres, xifres, espais i els signes . _ - / ·</span>
     </label>
     <label class="field"><span class="lbl">Tutor/a responsable de coordinar l'elaboració del PI</span><input type="text" value="${esc(p.de.tutor)}" onchange="up(p=>p.de.tutor=this.value)"></label>
-    <label class="field"><span class="lbl">Altres docents i/o especialistes que intervenen</span>
-      <textarea onchange="up(p=>p.de.altresDocents=this.value)" placeholder="Docents de matèria, mestre/a de pedagogia terapèutica, especialista d'orientació educativa, educador/a, vetlladora, professionals externs…">${esc(p.de.altresDocents)}</textarea>
-      <span class="small muted" style="display:block;margin-top:4px">Qui més intervé en el pla al costat del tutor/a. Al pas 3 se'n concreten els professionals i serveis responsables de cada actuació.</span>
-    </label>
     <div class="row g3">
       <label class="field"><span class="lbl">Data d'arribada a Catalunya</span><input type="date" value="${esc(p.de.dataArribada)}" onchange="up(p=>p.de.dataArribada=this.value)"></label>
       <label class="field"><span class="lbl">Incorporació al sistema educatiu català</span><input type="date" value="${esc(p.de.dataSistema)}" onchange="up(p=>p.de.dataSistema=this.value)"></label>
@@ -6143,7 +6163,6 @@ function doc(p, a){
   <section><h2>2. Dades escolars</h2>
   ${kv([["Etapa", esc(etapaPla(p) === "Primària" ? "Educació primària" : "Educació secundària obligatòria")],
        ["Curs", esc(p.de.curs)],["Grup", esc(p.de.grup)],["Tutor/a responsable de coordinar el PI", esc(p.de.tutor)],
-       ["Altres docents i/o especialistes que intervenen", esc(p.de.altresDocents)],
        ["Data d'arribada a Catalunya", dataCat(p.de.dataArribada)],["Data d'incorporació al sistema educatiu català", dataCat(p.de.dataSistema)],
        ["Data d'incorporació al centre actual", dataCat(p.de.dataCentre)],["Escolarització prèvia", esc(p.de.escolaritzacio)],
        ["Centres on ha estat matriculat anteriorment", esc(p.de.centresAnteriors)],["Repeticions de curs", esc(p.de.repeticions)],
@@ -6898,7 +6917,7 @@ function importaAlumnes(){
 
 async function esborraTot(){
   if(!await confirma("Esborra totes les dades",
-        "S'esborraran <b>tot l'alumnat, tots els plans, les mesures pròpies i les modificacions del catàleg</b> d'aquest dispositiu.",
+        "S'esborraran <b>tot l'alumnat, tots els plans, les mesures i les estratègies pròpies i les modificacions del catàleg i del banc d'estratègies</b> d'aquest dispositiu.",
         {confirma:"Continua", perillos:true})) return;
   if(!await confirma("Confirmació final",
         "L'acció no es pot desfer. Has descarregat una còpia de seguretat abans de continuar?",

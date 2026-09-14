@@ -131,7 +131,7 @@ function importaAlumnes(){
 
 async function esborraTot(){
   if(!await confirma("Esborra totes les dades",
-        "S'esborraran <b>tot l'alumnat, tots els plans, les mesures pròpies i les modificacions del catàleg</b> d'aquest dispositiu.",
+        "S'esborraran <b>tot l'alumnat, tots els plans, les mesures i les estratègies pròpies i les modificacions del catàleg i del banc d'estratègies</b> d'aquest dispositiu.",
         {confirma:"Continua", perillos:true})) return;
   if(!await confirma("Confirmació final",
         "L'acció no es pot desfer. Has descarregat una còpia de seguretat abans de continuar?",

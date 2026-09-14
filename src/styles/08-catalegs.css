@@ -71,21 +71,37 @@ details.ce .ceb{padding:6px 14px 12px}
 .pp-perfils{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 0}
 
 
-/* ---------- banc d'estratègies metodològiques ----------
-   Encapçala els resultats dels dos bancs. La fitxa és una sola línia —frase,
-   perfils i accions— perquè la gràcia d'aquest banc és poder-ne llegir moltes
-   d'una ullada, al contrari que la fitxa d'una mesura. */
-.estr{margin-bottom:6px}
-.estr-cap{flex-wrap:wrap;gap:8px}
-.estr-cap .estr-cat-sel{margin-left:auto;font-size:12.5px;padding:5px 8px;max-width:230px}
-.estr-nota{margin:0 0 10px}
+/* ---------- annex d'estratègies metodològiques ----------
+   Encapçala els resultats dels dos bancs, però no n'és el contingut
+   principal: el catàleg de mesures ve just a sota i ha de quedar a la vista.
+   Per això l'annex es llegeix com una caixa a part —fons enfonsat, filet de
+   color al costat— i es queda dins d'una alçada fixa amb desplaçament propi,
+   d'unes deu frases. La fitxa és una sola línia —frase, perfils i accions—
+   perquè la gràcia d'aquest banc és poder-ne llegir moltes d'una ullada, al
+   contrari que la fitxa d'una mesura. */
+.estr{margin:0 0 16px;background:#eaeeea;border:1px solid var(--line);
+  border-left:3px solid var(--met);border-radius:var(--r);padding:11px 13px 12px}
+.estr-cap{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.estr-titol{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink2);font-weight:500}
+.estr-annex{font-size:10.5px;color:var(--ink3);border:1px solid var(--line2);
+  border-radius:99px;padding:1px 8px;white-space:nowrap}
+.estr-cap .estr-n{margin-left:2px}
+.estr-cap .estr-cat-sel{margin-left:auto;font-size:12.5px;padding:5px 8px;max-width:220px;min-height:32px}
+.estr-cap .btn.sm{min-height:32px}
+.estr-nota{margin:7px 0 9px}
+/* Deu frases i para: la resta, amb la barra de desplaçament de la caixa. */
+.estr-scroll{max-height:400px;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 11px}
 .estr-cat{margin-bottom:12px}
+.estr-cat:last-child{margin-bottom:0}
 .estr-cat-t{display:flex;align-items:baseline;gap:8px;margin:0 0 5px}
 .estr-list{display:flex;flex-direction:column;gap:5px}
 .estr-item{display:flex;align-items:center;gap:9px;flex-wrap:wrap;
-  padding:8px 11px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+  padding:7px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
 .estr-item.ja{border-color:#b9d6cb;background:var(--met-soft)}
-.estr-item .estr-t{flex:1;min-width:190px;font-size:13.5px;line-height:1.45}
+.estr-item .estr-t{flex:1;min-width:190px;font-size:13px;line-height:1.45}
 .estr-item .estr-perf{display:flex;gap:4px;flex-wrap:wrap}
 .estr-item .estr-perf .tag{font-size:10px}
 .estr-item .estr-acc{display:flex;gap:6px;margin-left:auto}
+.estr-item .btn.sm{min-height:30px;padding:3px 9px}
