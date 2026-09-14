@@ -84,6 +84,7 @@ function doc(p, a){
   <section><h2>2. Dades escolars</h2>
   ${kv([["Etapa", esc(etapaPla(p) === "Primària" ? "Educació primària" : "Educació secundària obligatòria")],
        ["Curs", esc(p.de.curs)],["Grup", esc(p.de.grup)],["Tutor/a responsable de coordinar el PI", esc(p.de.tutor)],
+       ["Altres docents i/o especialistes que intervenen", esc(p.de.altresDocents)],
        ["Data d'arribada a Catalunya", dataCat(p.de.dataArribada)],["Data d'incorporació al sistema educatiu català", dataCat(p.de.dataSistema)],
        ["Data d'incorporació al centre actual", dataCat(p.de.dataCentre)],["Escolarització prèvia", esc(p.de.escolaritzacio)],
        ["Centres on ha estat matriculat anteriorment", esc(p.de.centresAnteriors)],["Repeticions de curs", esc(p.de.repeticions)],
@@ -185,6 +186,7 @@ function doc(p, a){
   <section><h2>6. Conformitat del pla de suport individualitzat</h2>
   <p>El pare, la mare o el tutor o tutora legal són informats d'aquest pla de suport individualitzat i n'acorden el seguiment amb el tutor/a de l'alumne/a.
   ${p.conformitat.familia?"<b>Consta la conformitat de la família.</b>":"<b>Pendent de conformitat.</b>"}</p>
+  ${(p.conformitat.acordsFamilia||"").trim()?`<h3>Acords amb la família</h3><p>${esc(p.conformitat.acordsFamilia)}</p>`:""}
   <div class="sig">
     <div>Signatura del pare, mare o tutor/a legal</div>
     <div>Signatura del tutor/a de l'alumne/a<br>${esc(p.conformitat.tutorSig)}</div>

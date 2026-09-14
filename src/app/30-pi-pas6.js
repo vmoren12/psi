@@ -35,7 +35,12 @@ function pas6(p, a){
         <label class="field" style="margin-bottom:9px"><span class="lbl">Matèria</span><select onchange="upR(p=>ob('${o.id}').materia=this.value)"><option value="">—</option>${p.materies.map(m=>`<option ${o.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</select></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Trimestre</span><select onchange="upR(p=>ob('${o.id}').trimestre=this.value)"><option value="">—</option>${TRIMESTRES.map(t=>`<option ${o.trimestre===t?"selected":""}>${t}</option>`).join("")}</select></label>
       </div>
-      <label class="field" style="margin-bottom:9px"><span class="lbl">Conducta observable</span><input type="text" value="${esc(o.conducta)}" onchange="upR(p=>ob('${o.id}').conducta=this.value)" placeholder="identificar la idea principal d'un text expositiu"></label>
+      <div class="field" style="margin-bottom:9px"><span class="lbl">Conducta observable</span>
+        <div class="llista-camp">
+          <input type="text" value="${esc(o.conducta)}" onchange="upR(p=>ob('${o.id}').conducta=this.value)" placeholder="identificar la idea principal d'un text expositiu">
+          <button type="button" class="btn sm ghost" title="Obre el banc de frases per àmbits i el currículum de la matèria" onclick="obreBancConductes('${o.id}')">Banc de frases…</button>
+        </div>
+      </div>
       <div class="row">
         <label class="field" style="margin-bottom:9px"><span class="lbl">Suport o condició</span><input type="text" value="${esc(o.suport)}" onchange="upR(p=>ob('${o.id}').suport=this.value)" placeholder="amb el text en format accessible"></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Context</span><input type="text" value="${esc(o.context)}" onchange="upR(p=>ob('${o.id}').context=this.value)" placeholder="a l'aula ordinària"></label>

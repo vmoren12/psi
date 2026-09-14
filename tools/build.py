@@ -41,6 +41,7 @@ MARCA_ESTILS = "/* <<<INSERTA: estils>>> */"
 MARCA_APLICACIO = "/* <<<INSERTA: aplicacio>>> */"
 MARCA_CURRICULUM = "<!-- <<<INSERTA: curriculum>>> -->"
 MARCA_BANC = "/* <<<INSERTA: banc-mesures>>> */"
+MARCA_ESTRATEGIES = "/* <<<INSERTA: estrategies>>> */"
 MARCA_PERFILS = "/* <<<INSERTA: perfils>>> */"
 
 # Fulls d'estil, en ordre de cascada: primer els testimonis i la base, després
@@ -85,6 +86,7 @@ APLICACIO = [
     "11-vista-alumnat.js",
     "12-vista-banc.js",
     "13-vista-curriculum.js",
+    "14-estrategies.js",
     # editor del pla, pas a pas
     "20-pi-nucli.js",
     "21-pi-pas1.js",
@@ -95,6 +97,7 @@ APLICACIO = [
     "26-pi-pas5.js",
     "27-pi-pas5-sabers.js",
     "28-pi-pas5-primaria.js",
+    "29-pi-conductes.js",
     "30-pi-pas6.js",
     "31-pi-pas7-8.js",
     # seguiment, document i dades
@@ -165,6 +168,23 @@ def bloc_banc() -> str:
             "/* <<<BANC-MESURES-FI>>> */")
 
 
+def bloc_estrategies() -> str:
+    """El banc d'estratègies metodològiques, una frase per línia.
+
+    Mateix criteri que el catàleg de mesures: una línia per entrada, de manera
+    que la diferència d'una revisió ensenyi exactament quines frases han
+    canviat encara que el fitxer estigui generat.
+    """
+    doc = valida.llegeix(rutes.ESTRATEGIES)
+    linies = [" " + json.dumps({c: x[c] for c in valida.CAMPS_ESTRATEGIA}, ensure_ascii=False)
+              for x in valida.ordena_estrategies(doc)]
+    return ("/* <<<ESTRATEGIES-INICI>>> */\n"
+            "const ESTRATEGIES_CATEGORIES = "
+            + _compacte(doc["vocabulari"]["categories"]) + ";\n"
+            "const ESTRATEGIES_BASE = [\n" + ",\n".join(linies) + "\n];\n"
+            "/* <<<ESTRATEGIES-FI>>> */")
+
+
 def bloc_perfils() -> str:
     """Les plantilles de mesures per perfil, una per línia."""
     doc = valida.llegeix(rutes.PERFILS)
@@ -222,6 +242,7 @@ def construeix() -> str:
     estils = _llegeix_parts(rutes.ESTILS, ESTILS, "estils")
     codi = _llegeix_parts(rutes.APLICACIO, APLICACIO, "aplicació")
     codi = _substitueix(codi, MARCA_BANC, bloc_banc(), "src/app/02-banc-mesures.js")
+    codi = _substitueix(codi, MARCA_ESTRATEGIES, bloc_estrategies(), "src/app/02-banc-mesures.js")
     codi = _substitueix(codi, MARCA_PERFILS, bloc_perfils(), "src/app/03-perfils.js")
 
     # Les marques ocupen una línia sencera i el contingut que les substitueix ja
@@ -234,6 +255,7 @@ def construeix() -> str:
 
 def resum(html: str) -> str:
     banc = valida.llegeix(rutes.BANC)
+    estrategies = valida.llegeix(rutes.ESTRATEGIES)
     perfils = valida.llegeix(rutes.PERFILS)
     eso = valida.llegeix(rutes.CURRICULUM_ESO)["materies"]
     prim = valida.llegeix(rutes.CURRICULUM_PRIMARIA)["arees"]
@@ -247,6 +269,9 @@ def resum(html: str) -> str:
         "  %-28s %d fulls, %d mòduls" % ("codi", len(ESTILS), len(APLICACIO)),
         "  %-28s %d matèries d'ESO, %d àrees de primària" % ("currículum", len(eso), len(prim)),
         "  %-28s %d mesures" % ("banc", len(banc["mesures"])),
+        "  %-28s %d frases en %d categories"
+        % ("estratègies", len(estrategies["estrategies"]),
+           len(estrategies["vocabulari"]["categories"])),
         "  %-28s %d de %d perfils" % ("plantilles", len(perfils["perfils"]), len(perfils_app)),
     ]
 

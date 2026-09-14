@@ -34,6 +34,10 @@ function pas8(p){
   <div class="card" data-qc="conformitat"><div class="card-h"><span class="num">6</span><h2>Conformitat del pla</h2></div><div class="card-b">
     <p class="small muted" style="margin-top:0">El pare, la mare o el tutor/a legal són informats d'aquest pla i n'acorden el seguiment amb el tutor/a de l'alumne/a.</p>
     <label class="chk"><input type="checkbox" ${p.conformitat.familia?"checked":""} onchange="up(p=>p.conformitat.familia=this.checked)"><span class="txt">La família ha estat informada i hi dona conformitat</span></label>
+    <label class="field" style="margin-top:12px"><span class="lbl">Acords amb la família</span>
+      <textarea onchange="up(p=>p.conformitat.acordsFamilia=this.value)" placeholder="Compromisos que s'acorden amb la família: seguiment de l'agenda, hàbits i horaris a casa, comunicació amb el centre, autoritzacions, derivacions externes…">${esc(p.conformitat.acordsFamilia)}</textarea>
+      <span class="small muted" style="display:block;margin-top:4px">Camp obert. Surt a l'apartat 6 del document, sota la conformitat. Els acords que es prenguin en una reunió concreta van a l'apartat 7.</span>
+    </label>
     <div class="row" style="margin-top:12px">
       <label class="field"><span class="lbl">Lloc</span><input type="text" value="${esc(p.conformitat.lloc)}" onchange="up(p=>p.conformitat.lloc=this.value)"></label>
       <label class="field"><span class="lbl">Data</span><input type="date" value="${esc(p.conformitat.data)}" onchange="up(p=>p.conformitat.data=this.value)"></label>

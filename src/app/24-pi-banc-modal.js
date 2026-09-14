@@ -97,6 +97,7 @@ function pintaResultatsBanc(){
   if(c) c.textContent = `${llista.length} de ${MESURES().length}` + (state.bm.afegides ? ` · ${state.bm.afegides} afegides` : "");
 
   cos.innerHTML = `
+   ${seccioEstrategies(p, f.q, f.perfil, a ? a.perfils : [])}
    ${sugg.length ? `<div class="bm-sugg">
      <div class="grp-title"><span class="eyebrow">Suggerides pels perfils de ${esc(a.alias)}</span>
        <span class="muted small">${a.perfils.map(esc).join(" · ")}</span></div>

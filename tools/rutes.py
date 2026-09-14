@@ -14,6 +14,7 @@ APLICACIO = SRC / "app"
 
 DADES = ARREL / "data"
 BANC = DADES / "banc-mesures.json"
+ESTRATEGIES = DADES / "estrategies.json"
 PERFILS = DADES / "perfils.json"
 CURRICULUM_ESO = DADES / "curriculum-eso.json"
 CURRICULUM_PRIMARIA = DADES / "curriculum-primaria.json"

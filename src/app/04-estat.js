@@ -7,7 +7,7 @@ function nouPiObj(alumneId){
   return {
     id: uid("PI-"), alumneId, estat:"esborrany", tipus:"metodologic",
     curs: cursActual(),
-    de: {etapa:"ESO", curs:"", grup:"", tutor:"", dataArribada:"", dataSistema:"", dataCentre:"",
+    de: {etapa:"ESO", curs:"", grup:"", tutor:"", altresDocents:"", dataArribada:"", dataSistema:"", dataCentre:"",
          escolaritzacio:"", centresAnteriors:"", repeticions:"", mesuresPrevies:"", altres:""},
     just: {motius:[], caeiProposta:"", caeiMotiu:"", altresMotiu:"", text:"",
            fortaleses:"", dificultats:"", interessos:""},
@@ -21,7 +21,7 @@ function nouPiObj(alumneId){
        Es decideix al pas 6 i, per defecte, hi surten. */
     docObjectius: true,
     dataInici: avui(), proximaRevisio: "",
-    conformitat: {lloc:"", data:"", familia:false, tutorSig:"", director:""},
+    conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},
     reunionsFamilia: [], reunionsProf: [], continuitat: [],
     seguiments: []
   };
@@ -34,8 +34,12 @@ function migraPi(p){
   /* p.de substituiria el bloc sencer: es fusiona per no perdre els camps que
      s'hi han anat afegint (l'etapa, sense anar més lluny). */
   const de = Object.assign({}, base.de, p.de || {});
+  /* Igual que p.de: el bloc de conformitat es fusiona perquè els camps que
+     s'hi han anat afegint (els acords amb la família) no faltin. */
+  const conf = Object.assign({}, base.conformitat, p.conformitat || {});
   const o = Object.assign(base, p);
   o.de = de;
+  o.conformitat = conf;
   if(!o.de.etapa) o.de.etapa = "ESO";
   o.mesures = o.mesures || {};
   /* Els plans desats abans d'aquesta opció duien els objectius al document
@@ -76,6 +80,13 @@ const state = {
   /* Modificacions que el centre ha fet sobre mesures del catàleg oficial:
      {id: {camp: valor}}. Es desen amb la resta de dades i van a la còpia. */
   mesuresEdit: {},
+  /* Banc d'estratègies metodològiques: les frases pròpies del centre i les
+     modificacions que hagi fet sobre les del banc, amb el mateix criteri que
+     les mesures. */
+  estrategiesPropies: [],
+  estrategiesEdit: {},
+  /* Secció d'estratègies dels dos bancs: categoria triada i si està desplegada. */
+  estr: {cat:"", obert:true},
   bankFilters: {q:"", perfil:"", materia:"", tipus:"", bloc:"", intensitat:""},
   bm: {obert:false, q:"", perfil:"", materia:"", bloc:"", intensitat:"", desti:"", afegides:0},
   currFilters: {etapa:"eso", materia:"", q:"", tocat:false},
@@ -89,6 +100,8 @@ const state = {
   sb: null,
   tc: {materia:"", nivell:""},
   sg: {obj:"", camp:"instrument", idx:0, q:""},
+  /* Finestra del banc de frases de conducta observable del pas 6. */
+  bc: {obj:"", mode:"ambits", q:"", materia:"", nomesTriat:false},
   pp: {alumne:"", pi:"", perfils:[], base:true, tria:{}, desti:{}, fitxa:false},
   openAdapt: {},
   /* El camp «Altres perfils» del pas 2 s'obre a demanda. */
@@ -106,7 +119,7 @@ let revisio = 0;
 
 function desa(){
   try{
-    localStorage.setItem(KEY, JSON.stringify({centre:state.centre, logos:state.logos, alumnes:state.alumnes, pis:state.pis, mesuresPropies:state.mesuresPropies, mesuresEdit:state.mesuresEdit}));
+    localStorage.setItem(KEY, JSON.stringify({centre:state.centre, logos:state.logos, alumnes:state.alumnes, pis:state.pis, mesuresPropies:state.mesuresPropies, mesuresEdit:state.mesuresEdit, estrategiesPropies:state.estrategiesPropies, estrategiesEdit:state.estrategiesEdit}));
     revisio++;
     return true;
   }catch(e){ toast("No s'han pogut desar les dades en aquest navegador."); return false; }
@@ -121,6 +134,8 @@ function carrega(){
     state.alumnes = d.alumnes || [];
     state.mesuresPropies = d.mesuresPropies || [];
     state.mesuresEdit = netejaEdicions(d.mesuresEdit);
+    state.estrategiesPropies = d.estrategiesPropies || [];
+    state.estrategiesEdit = netejaEdicionsEstr(d.estrategiesEdit);
     state.pis = (d.pis || []).map(p => migraPi(p));
     return true;
   }catch(e){ return false; }
@@ -138,6 +153,24 @@ function netejaEdicions(o){
     CAMPS_MESURA.forEach(c => {
       if(e[c] === undefined) return;
       if(c === "perfils" || c === "materies") n[c] = Array.isArray(e[c]) ? e[c].slice() : [];
+      else n[c] = String(e[c]);
+    });
+    if(Object.keys(n).length) out[id] = n;
+  });
+  return out;
+}
+
+/* Mateixa neteja per a les frases del banc d'estratègies: només s'accepten
+   identificadors del banc i camps coneguts. */
+function netejaEdicionsEstr(o){
+  const out = {};
+  if(!o || typeof o !== "object") return out;
+  Object.keys(o).forEach(id => {
+    if(!estrategiaOriginal(id)) return;
+    const e = o[id] || {}, n = {};
+    CAMPS_ESTRATEGIA.forEach(c => {
+      if(e[c] === undefined) return;
+      if(c === "perfils") n[c] = Array.isArray(e[c]) ? e[c].slice() : [];
       else n[c] = String(e[c]);
     });
     if(Object.keys(n).length) out[id] = n;
@@ -190,7 +223,9 @@ function exemple(){
   const p = nouPiObj("AL1");
   Object.assign(p, {
     id:"PI-0001", estat:"vigent", tipus:"metodologic",
-    de:{curs:"2n", grup:"2n A", tutor:"Tutoria de 2n A", dataArribada:"", dataSistema:"", dataCentre:"2023-09-12", escolaritzacio:"Regular", centresAnteriors:"Escola pública de primària", repeticions:"Cap", mesuresPrevies:"Suport universal a l'aula ordinària i mesures addicionals de lectura a 6è de primària.", altres:""},
+    de:{curs:"2n", grup:"2n A", tutor:"Tutoria de 2n A",
+        altresDocents:"Docents de Llengua Catalana, Matemàtiques i Llengua Estrangera; mestra de pedagogia terapèutica (dues sessions setmanals); orientació educativa del centre.",
+        dataArribada:"", dataSistema:"", dataCentre:"2023-09-12", escolaritzacio:"Regular", centresAnteriors:"Escola pública de primària", repeticions:"Cap", mesuresPrevies:"Suport universal a l'aula ordinària i mesures addicionals de lectura a 6è de primària.", altres:""},
     just:{motius:["Avaluació psicopedagògica"], caeiProposta:"", caeiMotiu:"", altresMotiu:"", 
       text:"L'avaluació psicopedagògica identifica un trastorn de l'aprenentatge de la lectoescriptura amb dèficit d'atenció associat. Cal ajustar el format dels materials, el temps de les proves i la càrrega de tasques.",
       fortaleses:"Molt bona comprensió oral i raonament matemàtic. Participa quan la tasca és curta i té un final visible.",
@@ -202,7 +237,9 @@ function exemple(){
              "Matemàtiques":"Fragmentació de les tasques, prova en dos blocs i no penalització de l'ortografia (mesures addicionals).",
              "Llengua Estrangera":"Consigna oral verificada i suport visual del vocabulari (mesures universals)."},
     proximaRevisio:"2026-03-20", dataInici:"2025-10-06",
-    conformitat:{lloc:"Sabadell", data:"2025-10-10", familia:true, tutorSig:"Tutoria de 2n A", director:""},
+    conformitat:{lloc:"Sabadell", data:"2025-10-10", familia:true,
+      acordsFamilia:"La família revisa l'agenda cada dia i signa el full de lectura setmanal. El centre avisa amb una setmana d'antelació de les dates de les proves. Es manté el seguiment extern de lectura els dimarts a la tarda.",
+      tutorSig:"Tutoria de 2n A", director:""},
     adaptacions:[
       itemMesura(mesura("U-DUA-02"), "Totes les matèries del PI"),
       itemMesura(mesura("AD11"), "Totes les matèries del PI"),

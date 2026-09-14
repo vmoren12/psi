@@ -70,3 +70,22 @@ details.ce .ceb{padding:6px 14px 12px}
 .pp-peu .mes-f select{min-height:32px;max-width:230px}
 .pp-perfils{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 0}
 
+
+/* ---------- banc d'estratègies metodològiques ----------
+   Encapçala els resultats dels dos bancs. La fitxa és una sola línia —frase,
+   perfils i accions— perquè la gràcia d'aquest banc és poder-ne llegir moltes
+   d'una ullada, al contrari que la fitxa d'una mesura. */
+.estr{margin-bottom:6px}
+.estr-cap{flex-wrap:wrap;gap:8px}
+.estr-cap .estr-cat-sel{margin-left:auto;font-size:12.5px;padding:5px 8px;max-width:230px}
+.estr-nota{margin:0 0 10px}
+.estr-cat{margin-bottom:12px}
+.estr-cat-t{display:flex;align-items:baseline;gap:8px;margin:0 0 5px}
+.estr-list{display:flex;flex-direction:column;gap:5px}
+.estr-item{display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  padding:8px 11px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+.estr-item.ja{border-color:#b9d6cb;background:var(--met-soft)}
+.estr-item .estr-t{flex:1;min-width:190px;font-size:13.5px;line-height:1.45}
+.estr-item .estr-perf{display:flex;gap:4px;flex-wrap:wrap}
+.estr-item .estr-perf .tag{font-size:10px}
+.estr-item .estr-acc{display:flex;gap:6px;margin-left:auto}

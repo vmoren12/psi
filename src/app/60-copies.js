@@ -42,7 +42,8 @@ function horaCat(t){
 /* Sense contingut no hi ha res a protegir: ni es baixen fitxers ni es desen
    instantànies buides. */
 function dadesBuides(){
-  return !state.alumnes.length && !state.pis.length && !(state.mesuresPropies||[]).length;
+  return !state.alumnes.length && !state.pis.length && !(state.mesuresPropies||[]).length
+      && !(state.estrategiesPropies||[]).length && !comptaEstrategiesEditades();
 }
 
 /* ----- Còpia automàtica a la carpeta de baixades -----
@@ -257,6 +258,7 @@ function refrescaDades(){
 function renderDades(){
   const nAl = state.alumnes.length, nPi = state.pis.length, nMe = (state.mesuresPropies||[]).length;
   const nEd = comptaEditades();
+  const nEs = (state.estrategiesPropies||[]).length + comptaEstrategiesEditades();
   const senseP = state.alumnes.filter(a => !a.perfils || !a.perfils.length).length;
   $("#view-dades").innerHTML = `
   <div class="stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px">
@@ -264,6 +266,7 @@ function renderDades(){
     ${statCard("Plans", nPi)}
     ${statCard("Mesures pròpies", nMe)}
     ${statCard("Mesures del catàleg modificades", nEd)}
+    ${statCard("Estratègies pròpies o modificades", nEs)}
     ${statCard("Espai ocupat", midaEmmagatzematge())}
   </div>
 
@@ -280,7 +283,7 @@ function renderDades(){
   </div></div>
 
   <div class="card"><div class="card-h"><h2>Còpia de seguretat completa</h2><span class="tag">${nAl} alumnes · ${nPi} plans</span></div><div class="card-b">
-    <p class="small muted" style="margin-top:0">Inclou el nom del centre, els logos de la capçalera, totes les fitxes d'alumnat, tots els plans amb el seu seguiment, les mesures pròpies del centre i les modificacions fetes sobre les mesures del catàleg. És el format recomanat per traslladar-ho tot a un altre ordinador.</p>
+    <p class="small muted" style="margin-top:0">Inclou el nom del centre, els logos de la capçalera, totes les fitxes d'alumnat, tots els plans amb el seu seguiment, les mesures pròpies del centre, les modificacions fetes sobre les mesures del catàleg i el banc d'estratègies metodològiques del centre. És el format recomanat per traslladar-ho tot a un altre ordinador.</p>
     <div style="display:flex;gap:9px;flex-wrap:wrap">
       <button class="btn primary" onclick="exportaTot()">Descarrega la còpia completa</button>
       <button class="btn" onclick="dialegRestaura()">Restaura una còpia</button>

@@ -82,3 +82,47 @@ function MATERIES_BANC(){
 }
 function mesura(id){ return MESURES().find(x => x.id === id); }
 
+/* ============================================================================
+   BANC D'ESTRATÈGIES METODOLÒGIQUES
+   ----------------------------------------------------------------------------
+   La font d'aquest banc és  data/estrategies.json,  documentat a
+   docs/dades/estrategies.md.  Per afegir-hi, corregir-hi o treure'n frases,
+   editeu aquell fitxer i executeu  python -m tools.build.
+
+   No és el mateix que el catàleg de mesures i per això va a part. Una mesura
+   del Decret 150/2017 és una actuació amb intensitat, bloc i font normativa;
+   una estratègia d'aquí és una frase breu i directa d'ús comú a l'aula
+   —«instruccions clares i curtes», «ús de l'agenda amb seguiment del
+   tutor/a»—, sense norma al darrere, treta de la pràctica docent i de
+   l'evidència sobre què funciona amb cada perfil de necessitats.
+
+   Els perfils marcats a cada frase fan que es proposi a l'alumnat que els té,
+   igual que a les mesures: una frase sense cap perfil marcat surt sempre.
+
+   El centre pot editar qualsevol frase, afegir-ne de pròpies i restaurar les
+   del banc, amb el mateix criteri que les mesures: state.estrategiesEdit desa
+   només els camps canviats sobre la frase original i state.estrategiesPropies
+   les que hagi escrit el centre.
+   ============================================================================ */
+
+/* <<<INSERTA: estrategies>>> */
+
+const CAMPS_ESTRATEGIA = ["text","categoria","perfils"];
+const CAT_ESTR_CENTRE = "Estratègies pròpies del centre";
+/* Categories que pot triar una frase: les del banc més la del centre. */
+function ESTRATEGIES_CATS(){ return ESTRATEGIES_CATEGORIES.concat([CAT_ESTR_CENTRE]); }
+
+/* Banc efectiu = banc de frases (amb el que hi hagi canviat el centre) + les
+   frases pròpies del centre. */
+function ESTRATEGIES(){
+  const ed = state.estrategiesEdit || {};
+  return ESTRATEGIES_BASE.map(e => {
+    const x = ed[e.id];
+    return x ? Object.assign({}, e, x, {editada:true}) : e;
+  }).concat(state.estrategiesPropies || []);
+}
+function estrategiaOriginal(id){ return ESTRATEGIES_BASE.find(x => x.id === id); }
+function estrategia(id){ return ESTRATEGIES().find(x => x.id === id); }
+function esEstrategiaEditada(id){ return !!(state.estrategiesEdit || {})[id]; }
+function comptaEstrategiesEditades(){ return Object.keys(state.estrategiesEdit || {}).length; }
+

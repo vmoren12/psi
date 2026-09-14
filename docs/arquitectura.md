@@ -59,7 +59,7 @@ i la paleta sencera cap en catorze línies.
 
 ## El codi
 
-30 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
+32 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
 Comparteixen, doncs, **un sol àmbit global**, i això té dues conseqüències que
 convé tenir presents abans de tocar res:
 
@@ -84,10 +84,10 @@ segura.
 
 | Blocs | Què hi ha |
 |---|---|
-| `01`–`03` | Currículum, banc de mesures i plantilles de perfil: dades i vocabularis. |
+| `01`–`03` | Currículum, banc de mesures, banc d'estratègies i plantilles de perfil: dades i vocabularis. |
 | `04`–`08` | Estat, persistència, utilitats, navegació, diàlegs i logotips del centre. |
 | `09` | La versió web: manifest, service worker i botó de descàrrega. Amb `file://` no fa res. |
-| `10`–`13` | Vistes de tauler, alumnat, banc i explorador del currículum. |
+| `10`–`14` | Vistes de tauler, alumnat, banc, explorador del currículum i secció d'estratègies. |
 | `20`–`31` | Editor del pla, un mòdul per pas del model oficial. |
 | `40`–`62` | Seguiment, generació del document, còpies de seguretat i importació. |
 | `99` | Arrencada. |
@@ -148,6 +148,7 @@ fitxer del dipòsit no poden divergir. Vegeu
 | `curriculum-primaria.json` | Extret de l'annex 2 del Decret 175/2022. |
 | `equivalencies-primaria.json` | Escrit a mà: matèria d'ESO → àrea de primària. |
 | `banc-mesures.json` | Escrit a mà a partir del Decret 150/2017 i les taules del Departament. |
+| `estrategies.json` | Escrit a mà: frases breus de pràctica docent per perfil, sense cobertura normativa. |
 | `perfils.json` | Escrit a mà: quines mesures proposa cada perfil. |
 | `annex3-glifs.json` | Taula de glifs reconstruïda; permet repetir l'extracció sense les fonts Arial. |
 

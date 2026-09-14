@@ -28,6 +28,10 @@ function pas1(p, a){
       <span class="small muted" style="display:block;margin-top:4px">Surt a la capçalera del document imprès. Pots adaptar-lo a la nomenclatura del centre; ha de ser únic i admet lletres, xifres, espais i els signes . _ - / ·</span>
     </label>
     <label class="field"><span class="lbl">Tutor/a responsable de coordinar l'elaboració del PI</span><input type="text" value="${esc(p.de.tutor)}" onchange="up(p=>p.de.tutor=this.value)"></label>
+    <label class="field"><span class="lbl">Altres docents i/o especialistes que intervenen</span>
+      <textarea onchange="up(p=>p.de.altresDocents=this.value)" placeholder="Docents de matèria, mestre/a de pedagogia terapèutica, especialista d'orientació educativa, educador/a, vetlladora, professionals externs…">${esc(p.de.altresDocents)}</textarea>
+      <span class="small muted" style="display:block;margin-top:4px">Qui més intervé en el pla al costat del tutor/a. Al pas 3 se'n concreten els professionals i serveis responsables de cada actuació.</span>
+    </label>
     <div class="row g3">
       <label class="field"><span class="lbl">Data d'arribada a Catalunya</span><input type="date" value="${esc(p.de.dataArribada)}" onchange="up(p=>p.de.dataArribada=this.value)"></label>
       <label class="field"><span class="lbl">Incorporació al sistema educatiu català</span><input type="date" value="${esc(p.de.dataSistema)}" onchange="up(p=>p.de.dataSistema=this.value)"></label>

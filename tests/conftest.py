@@ -32,6 +32,11 @@ def banc():
 
 
 @pytest.fixture(scope="session")
+def estrategies():
+    return valida.llegeix(rutes.ESTRATEGIES)
+
+
+@pytest.fixture(scope="session")
 def perfils():
     return valida.llegeix(rutes.PERFILS)
 

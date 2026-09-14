@@ -7,6 +7,59 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Afegit
 
+- **Banc d'estratègies metodològiques**, al capdamunt dels resultats del banc
+  de mesures i de la finestra que s'obre des del pas 4. Són **131 frases breus
+  i directes** —«Donar instruccions clares, curtes i d'una sola idea cada
+  vegada», «Ús de l'agenda amb seguiment diari per part del tutor/a»—
+  repartides en **17 categories** (atenció, instruccions, planificació, temps,
+  lectura, escriptura, matemàtiques, llengua, estratègies d'aprenentatge,
+  autonomia, regulació emocional, conducta, relació amb els iguals, motivació,
+  avaluació, entorn i família) i etiquetades pels perfils de necessitats als
+  quals responen.
+
+  Va en una secció a part i no barrejat amb el catàleg perquè són dues coses
+  diferents: una mesura del Decret 150/2017 té intensitat, bloc i font
+  normativa, i una estratègia d'aquí és pràctica docent sense norma al darrere.
+  És el que se sol necessitar per començar a redactar.
+
+  **Tot és editable**: qualsevol frase es pot reescriure o reetiquetar, el
+  centre pot afegir-ne de pròpies i sempre se'n pot recuperar la del banc. Les
+  modificacions i les frases pròpies es desen al navegador, van a la còpia de
+  seguretat i s'exporten amb el fitxer del banc del centre, amb el mateix
+  criteri que ja tenien les mesures. Font a `data/estrategies.json`; vegeu
+  [`docs/dades/estrategies.md`](docs/dades/estrategies.md).
+
+- **Banc de frases per a la conducta observable**, al pas 6. Cada objectiu té
+  un botó **Banc de frases…** que obre una finestra amb dues entrades:
+
+  - **Per àmbits**: 80 frases ja redactades en la forma que demana la frase de
+    l'objectiu, agrupades en dotze àmbits —personal i social, regulació
+    emocional, relació amb els iguals, lingüístic (lectura, escriptura i
+    oralitat), matemàtic, cientificotecnològic, social i humanístic, artístic,
+    educació física i digital.
+  - **Des del currículum**: el currículum sencer de la matèria, competència per
+    competència i criteri per criteri. **S'hi pot entrar encara que al pas 5 no
+    s'hagi triat res**, i es pot canviar de matèria per mirar-ne una altra. El
+    que sí que s'hagi triat al pas 5 surt destacat amb l'etiqueta «Triat al
+    pas 5», i es pot deixar només això amb un filtre.
+
+  En tots dos casos el text no s'insereix i prou: la casella de dalt de la
+  finestra el deixa **adaptar** abans de tancar-la, que és el que sol caldre
+  amb un criteri del decret, escrit per al grup i no per a un alumne/a concret.
+  Si el criteri ja es va adaptar al pas 5, és el text adaptat el que s'ofereix.
+
+- **«Altres docents i/o especialistes que intervenen»** al pas 1, sota del
+  tutor/a responsable. Surt a l'apartat 2 del document.
+
+- **«Acords amb la família»** al pas 8, dins de la conformitat: un camp obert
+  per als compromisos generals que s'acorden amb la família, diferent dels
+  acords de cada reunió de l'apartat 7. Surt a l'apartat 6 del document.
+
+### Canviat
+
+- **Peu de la barra lateral**, ara amb l'autoria, la llicència, la versió i una
+  sola línia sobre les dades.
+
 - **L'aplicació es publica a una adreça web**: <https://vmoren12.github.io/psi/>.
   És exactament el mateix `dist/pi-eso.html`, byte a byte, servit per GitHub
   Pages. La descàrrega del fitxer únic continua igual: la versió web hi suma i

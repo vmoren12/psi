@@ -44,3 +44,11 @@
 .prim-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0 2px;border-bottom:1px solid #ece0bf;margin-bottom:4px}
 .crit.prim .code{color:var(--warn)}
 
+
+/* ---------- banc de frases de conducta observable (pas 6) ----------
+   Al mode «Des del currículum» hi surt tot el currículum de la matèria, s'hagi
+   triat o no res al pas 5. El que sí que s'hi ha triat va destacat: és el
+   referent natural de l'objectiu i ha de saltar a la vista entre la resta. */
+.tc-box.tria{border-color:#b9d6cb}
+.tc-crit.tria{background:var(--met-soft);border-radius:var(--r);padding:8px 9px;margin:2px 0}
+.tc-crit.tria .code{font-weight:500}

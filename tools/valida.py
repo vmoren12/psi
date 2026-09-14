@@ -28,6 +28,10 @@ from . import rutes
 CAMPS_MESURA = ["id", "titol", "desc", "concrecio", "intensitat", "bloc",
                 "tipus", "perfils", "materies", "font"]
 
+# Camps que l'aplicació espera a cada estratègia metodològica del banc de
+# frases. L'ordre és el que tindran dins de `dist/`, com el de les mesures.
+CAMPS_ESTRATEGIA = ["id", "text", "categoria", "perfils"]
+
 PRIORITATS = ["nucli", "complementari"]
 RELACIONS = ["directa", "parcial"]
 
@@ -241,6 +245,58 @@ def valida_banc(doc, materies_eso, perfils_app) -> list:
     return errs
 
 
+def valida_estrategies(doc, perfils_app) -> list:
+    """Banc d'estratègies metodològiques: frases breus, agrupades per categoria.
+
+    No surten de cap norma: són pràctica docent recollida en forma de frase
+    curta. Això no les fa menys exigents de validar, perquè també acaben, tal
+    qual, dins del document que signa el centre.
+    """
+    errs = []
+    cats = doc.get("vocabulari", {}).get("categories")
+    if not cats:
+        return ["el vocabulari no declara «categories»"]
+
+    vistos, textos = set(), {}
+    for x in doc.get("estrategies", []):
+        idx = x.get("id", "(sense id)")
+        falten = [c for c in CAMPS_ESTRATEGIA if c not in x]
+        for c in falten:
+            errs.append("%s: falta el camp «%s»" % (idx, c))
+        if falten:
+            continue
+
+        if idx in vistos:
+            errs.append("id duplicat: " + idx)
+        vistos.add(idx)
+
+        text = str(x["text"]).strip()
+        if not text:
+            errs.append("%s: el camp «text» no pot ser buit" % idx)
+        # Una frase del banc ha de ser breu: si no ho és, és una mesura i el
+        # seu lloc és banc-mesures.json.
+        elif len(text) > 110:
+            errs.append("%s: la frase té %d caràcters; el banc és de frases "
+                        "breus (màxim 110)" % (idx, len(text)))
+        elif text in textos:
+            errs.append("%s: repeteix la frase de %s" % (idx, textos[text]))
+        else:
+            textos[text] = idx
+
+        if x["categoria"] not in cats:
+            errs.append("%s: categoria fora del vocabulari: %r" % (idx, x["categoria"]))
+        for pf in x["perfils"]:
+            if pf not in perfils_app:
+                errs.append("%s: perfil desconegut %r" % (idx, pf))
+    return errs
+
+
+def ordena_estrategies(doc) -> list:
+    """Estratègies en l'ordre estable amb què s'incrusten: per categoria i id."""
+    cats = doc["vocabulari"]["categories"]
+    return sorted(doc["estrategies"], key=lambda x: (cats.index(x["categoria"]), x["id"]))
+
+
 def ordena_mesures(doc) -> list:
     """Mesures en l'ordre estable amb què s'incrusten: per bloc i després per id.
 
@@ -328,6 +384,7 @@ def valida_tot() -> dict:
     curr_prim = llegeix(rutes.CURRICULUM_PRIMARIA)
     equiv = llegeix(rutes.EQUIVALENCIES)["equivalencies"]
     banc = llegeix(rutes.BANC)
+    estrategies = llegeix(rutes.ESTRATEGIES)
     perfils = llegeix(rutes.PERFILS)
 
     materies = materies_de_l_eso(curr_eso)
@@ -337,6 +394,7 @@ def valida_tot() -> dict:
         "currículum de l'ESO": valida_curriculum_eso(curr_eso),
         "currículum de primària": valida_curriculum_primaria(curr_prim, equiv, materies),
         "banc de mesures": valida_banc(banc, materies, perfils_app),
+        "estratègies metodològiques": valida_estrategies(estrategies, perfils_app),
         "plantilles de perfil": valida_perfils(perfils, banc, perfils_app),
     }
 

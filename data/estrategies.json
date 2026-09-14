@@ -1,0 +1,1331 @@
+{
+ "_llegiu_me": "Banc d'estratègies metodològiques del PI. Vegeu docs/dades/estrategies.md. Després d'editar aquest fitxer, executeu: python -m tools.build",
+ "versio": "2026-09-14",
+ "vocabulari": {
+  "categories": [
+   "Atenció i concentració",
+   "Instruccions i consignes",
+   "Planificació i organització",
+   "Gestió del temps i ritme de treball",
+   "Lectura i comprensió de textos",
+   "Escriptura i expressió escrita",
+   "Matemàtiques i raonament",
+   "Llengua i comunicació",
+   "Estratègies d'aprenentatge i memòria",
+   "Autonomia i autoregulació",
+   "Regulació emocional",
+   "Conducta i convivència",
+   "Relació amb els iguals i treball en equip",
+   "Motivació i implicació",
+   "Avaluació i proves",
+   "Aula, entorn i materials",
+   "Coordinació amb la família"
+  ]
+ },
+ "estrategies": [
+  {
+   "id": "E-ATE-01",
+   "text": "Seure a primera fila, a prop del docent i lluny de finestres i portes",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TDAH",
+    "TEA",
+    "Discapacitat auditiva",
+    "Discapacitat visual"
+   ]
+  },
+  {
+   "id": "E-ATE-02",
+   "text": "Fer un senyal discret i acordat prèviament per recuperar l'atenció",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TDAH",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-ATE-03",
+   "text": "Alternar tasques que demanen molta atenció amb tasques més manipulatives",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-ATE-04",
+   "text": "Preveure pauses actives curtes cada 15 o 20 minuts",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TDAH",
+    "Salut mental",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-ATE-05",
+   "text": "Deixar sobre la taula només el material de la tasca que s'està fent",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TDAH",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-ATE-06",
+   "text": "Encarregar-li tasques de moviment permès: repartir material, esborrar la pissarra",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-ATE-07",
+   "text": "Reduir els estímuls visuals de la zona on treballa",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Discapacitat visual"
+   ]
+  },
+  {
+   "id": "E-ATE-08",
+   "text": "Permetre l'ús d'auriculars o taps per a les estones de treball individual",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-ATE-09",
+   "text": "Comprovar amb una mirada o una pregunta breu que ha connectat amb la tasca",
+   "categoria": "Atenció i concentració",
+   "perfils": [
+    "TDAH",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-CON-01",
+   "text": "Donar instruccions clares, curtes i d'una sola idea cada vegada",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "TEL/TDL",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-CON-02",
+   "text": "Donar poques consignes orals seguides: una, i comprovar que s'ha entès",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "TDAH",
+    "TEL/TDL",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-CON-03",
+   "text": "Acompanyar sempre la consigna oral amb la consigna escrita a la pissarra",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "Discapacitat auditiva",
+    "TDAH",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-CON-04",
+   "text": "Demanar-li que repeteixi amb les seves paraules què ha d'anar a fer",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "TEL/TDL",
+    "Discapacitat intel·lectual",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-CON-05",
+   "text": "Numerar els passos de la tasca en un guió visible",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "TDAH",
+    "TEA",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-CON-06",
+   "text": "Subratllar o destacar el verb d'acció de cada enunciat",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "Dislèxia",
+    "TDAH",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-CON-07",
+   "text": "Mirar-lo i dir-li el nom abans de donar-li una indicació",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Discapacitat auditiva"
+   ]
+  },
+  {
+   "id": "E-CON-08",
+   "text": "Evitar les instruccions amb dobles negacions o en sentit figurat",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "TEA",
+    "TEL/TDL",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-CON-09",
+   "text": "Deixar l'enunciat visible mentre dura la tasca",
+   "categoria": "Instruccions i consignes",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-PLA-01",
+   "text": "Ús de l'agenda amb seguiment diari per part del tutor/a",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-PLA-02",
+   "text": "Revisar amb ell/a la motxilla i el material a l'inici i al final del dia",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-PLA-03",
+   "text": "Fer servir un codi de color per matèria a carpetes, llibretes i horari",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-PLA-04",
+   "text": "Penjar l'horari i el calendari de lliuraments en un lloc visible de l'aula",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TEA",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-PLA-05",
+   "text": "Fragmentar els treballs llargs en lliuraments parcials amb data pròpia",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TDAH",
+    "Salut mental",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-PLA-06",
+   "text": "Fer un pla de treball setmanal amb l'alumne/a i revisar-lo cada setmana",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TDAH",
+    "Altes capacitats",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-PLA-07",
+   "text": "Donar-li una llista de comprovació per revisar la feina abans de lliurar-la",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-PLA-08",
+   "text": "Anticipar els canvis d'activitat, d'aula o de docent",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-PLA-09",
+   "text": "Acordar un lloc fix on desar i recollir la feina acabada",
+   "categoria": "Planificació i organització",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-TEM-01",
+   "text": "Donar-li més temps per llegir textos i per fer les activitats",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "Dislèxia",
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "TEL/TDL",
+    "Alumne/a nouvingut",
+    "Discapacitat motriu"
+   ]
+  },
+  {
+   "id": "E-TEM-02",
+   "text": "Reduir la quantitat d'exercicis mantenint-ne la varietat i la dificultat",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Discalcúlia",
+    "Discapacitat motriu",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-TEM-03",
+   "text": "Marcar el temps de la tasca amb un rellotge o un temporitzador visible",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "TDAH",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-TEM-04",
+   "text": "Avisar quan queden cinc minuts per acabar",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "TEA",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-TEM-05",
+   "text": "Prioritzar amb ell/a quins exercicis són imprescindibles i quins són d'ampliació",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-TEM-06",
+   "text": "Acceptar la feina feta encara que no s'hagi acabat dins del temps previst",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat motriu",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-TEM-07",
+   "text": "Ajustar la quantitat de deures al temps real que hi pot dedicar",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Situació socioeconòmica desfavorida",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-TEM-08",
+   "text": "Començar per la part que li resulta més fàcil per activar-se",
+   "categoria": "Gestió del temps i ritme de treball",
+   "perfils": [
+    "Salut mental",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-LEC-01",
+   "text": "Llegir-li l'enunciat en veu alta abans que comenci",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Discapacitat intel·lectual",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-LEC-02",
+   "text": "Textos amb tipografia gran, interlineat ampli i marges generosos",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat visual",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-LEC-03",
+   "text": "No fer-lo llegir en veu alta davant del grup si no s'ofereix ell/a mateix",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Dislèxia",
+    "Salut mental",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-LEC-04",
+   "text": "Permetre l'ús de lectors de text i d'audiollibres",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat visual",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-LEC-05",
+   "text": "Ensenyar-li a subratllar la idea principal de cada paràgraf",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Dislèxia",
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-LEC-06",
+   "text": "Donar-li el vocabulari clau del text abans de llegir-lo",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Alumne/a nouvingut",
+    "Incorporació tardana",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-LEC-07",
+   "text": "Dividir els textos llargs en fragments amb una pregunta a cada tall",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Dislèxia",
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-LEC-08",
+   "text": "Acompanyar el text amb imatges, esquemes o organitzadors gràfics",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "TEL/TDL",
+    "Alumne/a nouvingut",
+    "Discapacitat intel·lectual",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-LEC-09",
+   "text": "Deixar-lo seguir la lectura amb el dit, una regla o una finestra de lectura",
+   "categoria": "Lectura i comprensió de textos",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat visual"
+   ]
+  },
+  {
+   "id": "E-ESC-01",
+   "text": "No penalitzar l'ortografia en les matèries que no avaluen la llengua",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "Alumne/a nouvingut",
+    "TEL/TDL",
+    "Incorporació tardana"
+   ]
+  },
+  {
+   "id": "E-ESC-02",
+   "text": "Admetre respostes breus, esquemes o mapes conceptuals en lloc de text seguit",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Discapacitat motriu",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-ESC-03",
+   "text": "Permetre respondre amb ordinador o tauleta",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat motriu",
+    "Discapacitat visual"
+   ]
+  },
+  {
+   "id": "E-ESC-04",
+   "text": "Donar-li models de text i inicis de frase per començar a escriure",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Alumne/a nouvingut",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-ESC-05",
+   "text": "Reduir la còpia d'enunciats: lliurar-los ja impresos",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat motriu",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-ESC-06",
+   "text": "Corregir un sol aspecte de l'escrit cada vegada, acordat prèviament",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-ESC-07",
+   "text": "Fer servir una pauta de revisió del text: contingut, ordre i ortografia",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-ESC-08",
+   "text": "Valorar la producció oral com a alternativa a l'escrita",
+   "categoria": "Escriptura i expressió escrita",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat motriu",
+    "TEL/TDL",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-MAT-01",
+   "text": "Permetre l'ús de la calculadora en les tasques que no avaluen el càlcul",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "Discapacitat intel·lectual",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-MAT-02",
+   "text": "Deixar a la vista les taules de multiplicar i el formulari de la unitat",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "Discapacitat intel·lectual",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-MAT-03",
+   "text": "Fer servir material manipulatiu i representacions gràfiques abans del símbol",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "Discapacitat intel·lectual",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-MAT-04",
+   "text": "Donar full quadriculat o pautat per alinear les operacions",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "Discapacitat motriu",
+    "Dislèxia"
+   ]
+  },
+  {
+   "id": "E-MAT-05",
+   "text": "Un sol problema per full, amb espai per escriure el procés",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "TDAH",
+    "Dislèxia"
+   ]
+  },
+  {
+   "id": "E-MAT-06",
+   "text": "Separar la comprensió de l'enunciat del càlcul i valorar-les per separat",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "Dislèxia",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-MAT-07",
+   "text": "Donar-li un guió fix per resoldre problemes: què em demanen, què sé, què faig",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-MAT-08",
+   "text": "Reduir la càrrega de còpia de dades i de xifres llargues",
+   "categoria": "Matemàtiques i raonament",
+   "perfils": [
+    "Discalcúlia",
+    "Dislèxia",
+    "Discapacitat motriu"
+   ]
+  },
+  {
+   "id": "E-LLE-01",
+   "text": "Parlar a poc a poc, de cara i amb frases curtes",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "Discapacitat auditiva",
+    "TEL/TDL",
+    "Alumne/a nouvingut",
+    "Incorporació tardana"
+   ]
+  },
+  {
+   "id": "E-LLE-02",
+   "text": "Donar-li temps per respondre sense completar-li les frases",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "TEL/TDL",
+    "TEA",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-LLE-03",
+   "text": "Fer servir suport visual del vocabulari nou de cada unitat",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "Alumne/a nouvingut",
+    "TEL/TDL",
+    "Incorporació tardana",
+    "Discapacitat auditiva"
+   ]
+  },
+  {
+   "id": "E-LLE-04",
+   "text": "Acceptar respostes en la llengua d'origen mentre s'incorpora la llengua del centre",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "Alumne/a nouvingut",
+    "Incorporació tardana"
+   ]
+  },
+  {
+   "id": "E-LLE-05",
+   "text": "Comprovar la comprensió amb preguntes concretes, no amb «ho has entès?»",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "TEL/TDL",
+    "Alumne/a nouvingut",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-LLE-06",
+   "text": "Reformular el que diu en lloc de corregir-lo directament",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "TEL/TDL",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-LLE-07",
+   "text": "Preparar amb ell/a les intervencions orals previstes",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "TEL/TDL",
+    "Salut mental",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-LLE-08",
+   "text": "Assegurar la visió dels llavis i el bon ús de l'equip de freqüència modulada",
+   "categoria": "Llengua i comunicació",
+   "perfils": [
+    "Discapacitat auditiva"
+   ]
+  },
+  {
+   "id": "E-APR-01",
+   "text": "Ensenyar-li explícitament a fer esquemes i mapes conceptuals",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-APR-02",
+   "text": "Treballar les tècniques d'estudi dins de l'horari lectiu, no com a feina per casa",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "TDAH",
+    "Situació socioeconòmica desfavorida",
+    "Dislèxia"
+   ]
+  },
+  {
+   "id": "E-APR-03",
+   "text": "Repassar el contingut clau en sessions curtes i repartides en el temps",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "TDAH",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-APR-04",
+   "text": "Començar cada sessió recordant què es va fer a l'anterior",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "TDAH",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-APR-05",
+   "text": "Donar-li un resum d'una pàgina amb les idees essencials de la unitat",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "Dislèxia",
+    "Discapacitat intel·lectual",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-APR-06",
+   "text": "Fer servir regles mnemotècniques, rimes i suports visuals",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "Dislèxia",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-APR-07",
+   "text": "Ensenyar-li a autopreguntar-se sobre el que acaba de llegir o d'escoltar",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Altes capacitats"
+   ]
+  },
+  {
+   "id": "E-APR-08",
+   "text": "Fer proves d'autoavaluació freqüents i sense nota",
+   "categoria": "Estratègies d'aprenentatge i memòria",
+   "perfils": [
+    "TDAH",
+    "Salut mental",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-AUT-01",
+   "text": "Retirar els suports de manera gradual i planificada, no de cop",
+   "categoria": "Autonomia i autoregulació",
+   "perfils": [
+    "TEA",
+    "Discapacitat intel·lectual",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-AUT-02",
+   "text": "Ensenyar-li a demanar ajuda amb una fórmula o un senyal acordat",
+   "categoria": "Autonomia i autoregulació",
+   "perfils": [
+    "TEA",
+    "TEL/TDL",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-AUT-03",
+   "text": "Donar-li encàrrecs de responsabilitat dins de l'aula",
+   "categoria": "Autonomia i autoregulació",
+   "perfils": [
+    "TEA",
+    "Discapacitat intel·lectual",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-AUT-04",
+   "text": "Acordar una rutina fixa d'inici i de tancament de la sessió",
+   "categoria": "Autonomia i autoregulació",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-AUT-05",
+   "text": "Fer servir una graella d'autoregistre de la feina feta cada dia",
+   "categoria": "Autonomia i autoregulació",
+   "perfils": [
+    "TDAH",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-AUT-06",
+   "text": "Ensenyar-li a revisar la feina amb una pauta abans de donar-la per acabada",
+   "categoria": "Autonomia i autoregulació",
+   "perfils": [
+    "TDAH",
+    "Dislèxia",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-AUT-07",
+   "text": "Donar-li marge per triar entre dues activitats equivalents",
+   "categoria": "Autonomia i autoregulació",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Altes capacitats",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-EMO-01",
+   "text": "Acordar un espai i un senyal per sortir de l'aula i tornar-hi quan es desbordi",
+   "categoria": "Regulació emocional",
+   "perfils": [
+    "Salut mental",
+    "Trastorns de conducta",
+    "TEA",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-EMO-02",
+   "text": "Anticipar les situacions que sol viure amb angoixa: proves, canvis, sortides",
+   "categoria": "Regulació emocional",
+   "perfils": [
+    "TEA",
+    "Salut mental",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-EMO-03",
+   "text": "Fer una acollida breu a l'inici del dia per saber com arriba",
+   "categoria": "Regulació emocional",
+   "perfils": [
+    "Salut mental",
+    "Situació socioeconòmica desfavorida",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-EMO-04",
+   "text": "Ensenyar-li a identificar i anomenar el que sent abans d'actuar",
+   "categoria": "Regulació emocional",
+   "perfils": [
+    "Salut mental",
+    "Trastorns de conducta",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-EMO-05",
+   "text": "Evitar exposar-lo davant del grup quan no domina la tasca",
+   "categoria": "Regulació emocional",
+   "perfils": [
+    "Salut mental",
+    "Dislèxia",
+    "TEL/TDL"
+   ]
+  },
+  {
+   "id": "E-EMO-06",
+   "text": "Donar-li estratègies de calma practicades prèviament: respiració, pausa, compteig",
+   "categoria": "Regulació emocional",
+   "perfils": [
+    "Salut mental",
+    "Trastorns de conducta",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-EMO-07",
+   "text": "Reprendre la conversa sobre l'incident quan ja estigui calmat",
+   "categoria": "Regulació emocional",
+   "perfils": [
+    "Trastorns de conducta",
+    "Salut mental",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-CNV-01",
+   "text": "Reconèixer i anomenar en veu alta les conductes adequades",
+   "categoria": "Conducta i convivència",
+   "perfils": [
+    "Trastorns de conducta",
+    "TDAH",
+    "Discapacitat intel·lectual"
+   ]
+  },
+  {
+   "id": "E-CNV-02",
+   "text": "Acordar poques normes, formulades en positiu i visibles a l'aula",
+   "categoria": "Conducta i convivència",
+   "perfils": [
+    "Trastorns de conducta",
+    "TDAH",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-CNV-03",
+   "text": "Avisar en privat, sense confrontació davant del grup",
+   "categoria": "Conducta i convivència",
+   "perfils": [
+    "Trastorns de conducta",
+    "Salut mental",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-CNV-04",
+   "text": "Aplicar conseqüències previsibles, immediates i acordades prèviament",
+   "categoria": "Conducta i convivència",
+   "perfils": [
+    "Trastorns de conducta",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-CNV-05",
+   "text": "Donar-li una sortida airosa abans que la situació vagi a més",
+   "categoria": "Conducta i convivència",
+   "perfils": [
+    "Trastorns de conducta",
+    "TEA",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-CNV-06",
+   "text": "Registrar antecedent, conducta i conseqüència per trobar-ne el patró",
+   "categoria": "Conducta i convivència",
+   "perfils": [
+    "Trastorns de conducta",
+    "TEA",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-CNV-07",
+   "text": "Mantenir el mateix criteri entre tots els docents que hi intervenen",
+   "categoria": "Conducta i convivència",
+   "perfils": [
+    "Trastorns de conducta",
+    "TEA",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-SOC-01",
+   "text": "Assignar-li el rol dins del grup en lloc de deixar-lo a l'atzar",
+   "categoria": "Relació amb els iguals i treball en equip",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Alumne/a nouvingut",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-SOC-02",
+   "text": "Treballar en parelles estables abans de passar a grups grans",
+   "categoria": "Relació amb els iguals i treball en equip",
+   "perfils": [
+    "TEA",
+    "TEL/TDL",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-SOC-03",
+   "text": "Designar un company o companya de referència per als dubtes del dia a dia",
+   "categoria": "Relació amb els iguals i treball en equip",
+   "perfils": [
+    "Alumne/a nouvingut",
+    "Incorporació tardana",
+    "TEA",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-SOC-04",
+   "text": "Ensenyar de manera explícita com demanar torn, discrepar i demanar ajuda",
+   "categoria": "Relació amb els iguals i treball en equip",
+   "perfils": [
+    "TEA",
+    "TEL/TDL",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-SOC-05",
+   "text": "Preparar i supervisar les estones no estructurades: pati, passadissos i sortides",
+   "categoria": "Relació amb els iguals i treball en equip",
+   "perfils": [
+    "TEA",
+    "Trastorns de conducta",
+    "Alumne/a nouvingut"
+   ]
+  },
+  {
+   "id": "E-SOC-06",
+   "text": "Valorar l'aportació individual dins del treball cooperatiu",
+   "categoria": "Relació amb els iguals i treball en equip",
+   "perfils": [
+    "TEA",
+    "Altes capacitats",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-MOT-01",
+   "text": "Partir dels seus interessos per plantejar els exemples i les tasques",
+   "categoria": "Motivació i implicació",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Altes capacitats",
+    "Situació socioeconòmica desfavorida"
+   ]
+  },
+  {
+   "id": "E-MOT-02",
+   "text": "Fer-li visible el progrés amb registres propis, sense comparar-lo amb el grup",
+   "categoria": "Motivació i implicació",
+   "perfils": [
+    "Salut mental",
+    "Discapacitat intel·lectual",
+    "Dislèxia"
+   ]
+  },
+  {
+   "id": "E-MOT-03",
+   "text": "Donar retorn immediat i concret sobre què ha fet bé",
+   "categoria": "Motivació i implicació",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-MOT-04",
+   "text": "Proposar tasques d'aprofundiment amb sentit, no més quantitat de la mateixa feina",
+   "categoria": "Motivació i implicació",
+   "perfils": [
+    "Altes capacitats"
+   ]
+  },
+  {
+   "id": "E-MOT-05",
+   "text": "Explicitar per a què serveix el que s'està aprenent",
+   "categoria": "Motivació i implicació",
+   "perfils": [
+    "Altes capacitats",
+    "TDAH",
+    "Incorporació tardana"
+   ]
+  },
+  {
+   "id": "E-MOT-06",
+   "text": "Garantir cada dia una tasca que pugui resoldre amb èxit",
+   "categoria": "Motivació i implicació",
+   "perfils": [
+    "Discapacitat intel·lectual",
+    "Salut mental",
+    "Dislèxia"
+   ]
+  },
+  {
+   "id": "E-AVA-01",
+   "text": "Avisar de les dates de les proves amb prou antelació i recordar-les",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "TDAH",
+    "TEA",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-AVA-02",
+   "text": "Dividir la prova en dos blocs amb una pausa entremig",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "TDAH",
+    "Salut mental",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-AVA-03",
+   "text": "Donar més temps i un espai amb menys sorolls per fer la prova",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "TDAH",
+    "TEA",
+    "Dislèxia",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-AVA-04",
+   "text": "Full de prova amb un sol exercici per cara i enunciats curts",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "Dislèxia",
+    "TDAH",
+    "Discalcúlia"
+   ]
+  },
+  {
+   "id": "E-AVA-05",
+   "text": "Llegir-li les preguntes de la prova o permetre'n la lectura amb àudio",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Discapacitat visual"
+   ]
+  },
+  {
+   "id": "E-AVA-06",
+   "text": "Valorar el procés i no només el resultat final",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "Discalcúlia",
+    "Discapacitat intel·lectual",
+    "Dislèxia"
+   ]
+  },
+  {
+   "id": "E-AVA-07",
+   "text": "Variar el format de les proves al llarg del curs: oral, pràctica o de projecte",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "Dislèxia",
+    "TEL/TDL",
+    "Discapacitat motriu"
+   ]
+  },
+  {
+   "id": "E-AVA-08",
+   "text": "Explicar-li els criteris de correcció amb una rúbrica abans de la tasca",
+   "categoria": "Avaluació i proves",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Altes capacitats"
+   ]
+  },
+  {
+   "id": "E-ENT-01",
+   "text": "Situar-lo en un lloc amb bona visibilitat de la pissarra i del docent",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Discapacitat visual",
+    "Discapacitat auditiva",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-ENT-02",
+   "text": "Garantir els passos i els accessos lliures d'obstacles",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Discapacitat motriu",
+    "Discapacitat visual"
+   ]
+  },
+  {
+   "id": "E-ENT-03",
+   "text": "Ampliar la mida dels materials i augmentar-ne el contrast",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Discapacitat visual"
+   ]
+  },
+  {
+   "id": "E-ENT-04",
+   "text": "Facilitar el material digital amb prou antelació per poder-lo adaptar",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Discapacitat visual",
+    "Discapacitat auditiva",
+    "Malaltia prolongada"
+   ]
+  },
+  {
+   "id": "E-ENT-05",
+   "text": "Reduir el soroll ambiental i l'eco de l'aula",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Discapacitat auditiva",
+    "TEA",
+    "TDAH"
+   ]
+  },
+  {
+   "id": "E-ENT-06",
+   "text": "Preveure el material bàsic al centre quan no el pugui portar de casa",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Situació socioeconòmica desfavorida"
+   ]
+  },
+  {
+   "id": "E-ENT-07",
+   "text": "Adaptar el mobiliari i les eines d'escriptura al seu abast motriu",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Discapacitat motriu"
+   ]
+  },
+  {
+   "id": "E-ENT-08",
+   "text": "Mantenir estables l'ordre i la ubicació del material de l'aula",
+   "categoria": "Aula, entorn i materials",
+   "perfils": [
+    "Discapacitat visual",
+    "TEA"
+   ]
+  },
+  {
+   "id": "E-FAM-01",
+   "text": "Acordar un canal i una freqüència fixos de comunicació amb la família",
+   "categoria": "Coordinació amb la família",
+   "perfils": [
+    "TDAH",
+    "TEA",
+    "Trastorns de conducta",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-FAM-02",
+   "text": "Compartir amb la família les mateixes pautes que s'apliquen a l'aula",
+   "categoria": "Coordinació amb la família",
+   "perfils": [
+    "TEA",
+    "TDAH",
+    "Trastorns de conducta"
+   ]
+  },
+  {
+   "id": "E-FAM-03",
+   "text": "Comunicar també els avenços, no només les incidències",
+   "categoria": "Coordinació amb la família",
+   "perfils": [
+    "Trastorns de conducta",
+    "TDAH",
+    "Salut mental"
+   ]
+  },
+  {
+   "id": "E-FAM-04",
+   "text": "Revisar conjuntament l'agenda i la feina per a casa",
+   "categoria": "Coordinació amb la família",
+   "perfils": [
+    "TDAH",
+    "Discapacitat intel·lectual",
+    "Situació socioeconòmica desfavorida"
+   ]
+  },
+  {
+   "id": "E-FAM-05",
+   "text": "Acordar amb la família una rutina d'estudi realista a casa",
+   "categoria": "Coordinació amb la família",
+   "perfils": [
+    "TDAH",
+    "Situació socioeconòmica desfavorida",
+    "Dislèxia"
+   ]
+  },
+  {
+   "id": "E-FAM-06",
+   "text": "Coordinar-se amb els professionals externs que atenen l'alumne/a",
+   "categoria": "Coordinació amb la família",
+   "perfils": [
+    "Salut mental",
+    "TEA",
+    "TEL/TDL",
+    "Malaltia prolongada"
+   ]
+  }
+ ]
+}

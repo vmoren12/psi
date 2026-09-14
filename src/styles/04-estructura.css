@@ -10,7 +10,10 @@
 .nav button[aria-current="true"]{background:#22303a;color:#fff}
 .nav .ic{display:none}
 .nav .cnt{font-family:var(--mono);font-size:11px;color:#7f9098}
-.rail-foot{padding:14px 20px 18px;border-top:1px solid #26323a;font-size:11px;color:#7f9098;line-height:1.45}
+.rail-foot{padding:16px 20px 18px;border-top:1px solid #26323a;font-size:11px;color:#7f9098;line-height:1.5;display:flex;flex-direction:column;gap:2px}
+.rail-foot .nom{font-family:var(--serif);font-weight:500;font-size:13.5px;color:#c9d2d6;letter-spacing:.005em}
+.rail-foot .carrec{margin-bottom:9px}
+.rail-foot .linia+.linia{margin-top:7px}
 .rail-foot a{color:#9db0b8}
 
 .main{min-width:0;display:flex;flex-direction:column}

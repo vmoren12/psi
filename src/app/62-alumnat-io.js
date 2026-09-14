@@ -139,7 +139,8 @@ async function esborraTot(){
   await instantania("abans d'esborrar-ho tot");
   localStorage.removeItem(KEY);
   state.centre = ""; state.logos = []; state.alumnes = []; state.pis = []; state.mesuresPropies = [];
-  state.mesuresEdit = {}; state.currentPi = null;
+  state.mesuresEdit = {}; state.estrategiesPropies = []; state.estrategiesEdit = {};
+  state.currentPi = null;
   closeModal(); go("dashboard"); toast("Dades esborrades.");
 }
 

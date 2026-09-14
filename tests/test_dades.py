@@ -12,10 +12,12 @@ import pytest
 from tools import rutes, valida
 
 RE_ID_MESURA = re.compile(r"^(?:U|AD|IN)-[A-Z]{3}-\d{2}$|^AD\d{2}$")
+RE_ID_ESTRATEGIA = re.compile(r"^E-[A-Z]{3}-\d{2}$")
 
 
 @pytest.mark.parametrize("ambit", ["currículum de l'ESO", "currículum de primària",
-                                   "banc de mesures", "plantilles de perfil"])
+                                   "banc de mesures", "estratègies metodològiques",
+                                   "plantilles de perfil"])
 def test_les_dades_passen_la_validacio(ambit):
     errs = valida.valida_tot()[ambit]
     assert errs == [], "%s: %s" % (ambit, "; ".join(errs))
@@ -73,6 +75,48 @@ def test_tota_mesura_diu_d_on_surt(banc):
     """El camp `font` és el que permet a un centre defensar la mesura davant d'una inspecció."""
     for x in banc["mesures"]:
         assert x["font"].strip(), "%s no diu de quin document surt" % x["id"]
+
+
+def test_els_identificadors_d_estrategia_segueixen_la_convencio(estrategies):
+    dolents = [x["id"] for x in estrategies["estrategies"]
+               if not RE_ID_ESTRATEGIA.match(x["id"])]
+    assert dolents == [], "identificadors fora de convenció: %s" % dolents
+
+
+def test_cap_estrategia_repeteix_la_frase(estrategies):
+    """Dues frases iguals són indistingibles dins de la secció del banc."""
+    textos = [x["text"].strip().lower() for x in estrategies["estrategies"]]
+    repetits = sorted({t for t in textos if textos.count(t) > 1})
+    assert repetits == [], "frases repetides: %s" % repetits
+
+
+def test_les_estrategies_son_frases_breus(estrategies):
+    """El sentit d'aquest banc és que es puguin llegir moltes d'una ullada.
+
+    Una frase llarga no hi pinta res: si cal explicar-la, és una mesura i el
+    seu lloc és `banc-mesures.json`, amb intensitat i font normativa.
+    """
+    llargues = ["%s (%d)" % (x["id"], len(x["text"])) for x in estrategies["estrategies"]
+                if len(x["text"]) > 110]
+    assert llargues == [], "frases massa llargues: %s" % llargues
+
+
+def test_cap_categoria_d_estrategies_es_queda_buida(estrategies):
+    """Una categoria declarada i sense cap frase surt al selector i no filtra res."""
+    usades = {x["categoria"] for x in estrategies["estrategies"]}
+    buides = [c for c in estrategies["vocabulari"]["categories"] if c not in usades]
+    assert buides == [], "categories sense cap frase: %s" % buides
+
+
+def test_les_estrategies_cobreixen_tots_els_perfils(estrategies):
+    """Cada perfil ha de tenir estratègies proposades.
+
+    És el motiu d'aquest banc: qui obre el PI d'un alumne/a amb un perfil
+    concret hi ha de trobar frases pensades per a aquell perfil.
+    """
+    etiquetats = {p for x in estrategies["estrategies"] for p in x["perfils"]}
+    sense = [p for p in valida.perfils_de_l_aplicacio() if p not in etiquetats]
+    assert sense == [], "perfils sense cap estratègia: %s" % sense
 
 
 def test_les_plantilles_cobreixen_tots_els_perfils(perfils):

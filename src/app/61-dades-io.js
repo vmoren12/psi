@@ -3,8 +3,9 @@
    còpia automàtica i cada instantània de l'historial: tots tres produeixen
    exactament el mateix fitxer i, per tant, es restauren igual. */
 function dadesCopia(){
-  return {v:4, data:avui(), centre:state.centre, logos:state.logos, alumnes:state.alumnes, pis:state.pis,
-          mesuresPropies:state.mesuresPropies, mesuresEdit:state.mesuresEdit};
+  return {v:5, data:avui(), centre:state.centre, logos:state.logos, alumnes:state.alumnes, pis:state.pis,
+          mesuresPropies:state.mesuresPropies, mesuresEdit:state.mesuresEdit,
+          estrategiesPropies:state.estrategiesPropies, estrategiesEdit:state.estrategiesEdit};
 }
 /* Deixa el contingut d'una còpia com a únic contingut de l'aplicació. */
 function substitueixDades(d){
@@ -13,6 +14,8 @@ function substitueixDades(d){
   state.alumnes = d.alumnes || [];
   state.mesuresPropies = d.mesuresPropies || [];
   state.mesuresEdit = netejaEdicions(d.mesuresEdit);
+  state.estrategiesPropies = d.estrategiesPropies || [];
+  state.estrategiesEdit = netejaEdicionsEstr(d.estrategiesEdit);
   state.pis = (d.pis || []).map(p => migraPi(p));
 }
 function exportaTot(){
@@ -96,5 +99,22 @@ function fusiona(d){
   const ed = netejaEdicions(d.mesuresEdit);
   state.mesuresEdit = state.mesuresEdit || {};
   Object.keys(ed).forEach(id => { if(!state.mesuresEdit[id]) state.mesuresEdit[id] = ed[id]; });
+  fusionaEstrategies(d);
+}
+/* El banc d'estratègies segueix el mateix criteri que el de mesures: les
+   frases pròpies s'afegeixen amb identificador nou si el seu xoca, i les
+   modificacions que ja tingués el centre manen sobre les del fitxer. */
+function fusionaEstrategies(d){
+  const ids = new Set((state.estrategiesPropies||[]).map(x => x.id));
+  state.estrategiesPropies = state.estrategiesPropies || [];
+  (d.estrategiesPropies||[]).forEach(x => {
+    const nou = Object.assign({}, x);
+    if(!nou.id || ids.has(nou.id)) nou.id = uid("CE-");
+    ids.add(nou.id);
+    state.estrategiesPropies.push(nou);
+  });
+  const ed = netejaEdicionsEstr(d.estrategiesEdit);
+  state.estrategiesEdit = state.estrategiesEdit || {};
+  Object.keys(ed).forEach(id => { if(!state.estrategiesEdit[id]) state.estrategiesEdit[id] = ed[id]; });
 }
 

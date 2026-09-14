@@ -36,6 +36,8 @@ function renderBanc(){
     <button class="btn sm ghost" onclick="importaMesuresDialog()">Importa</button>
   </div></div>
 
+  ${seccioEstrategies(p, f.q, f.perfil, a ? a.perfils : [])}
+
   ${p ? `<div class="note info" style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
     <span style="flex:1;min-width:220px">Tens obert el PI de <b>${esc(alumne(p.alumneId).alias)}</b>. Les mesures que afegeixis aniran a <b>${esc(DEST_TOTES)}</b>; des del pas 4 les pots reassignar a una matèria concreta.</span>
     <button class="btn sm" onclick="go('pi')">Vés al pla</button>
@@ -213,10 +215,13 @@ async function esborraMesuraCentre(id){
   desa(); tancaEditorMesura(); render(); toast("Mesura eliminada del banc.");
 }
 function exportaMesures(){
-  /* Es descarrega tot el que el centre ha afegit al banc: les mesures pròpies
-     i les modificacions fetes sobre mesures del catàleg del Departament. */
-  const d = {v:2, tipus:"banc-mesures-centre", mesures:state.mesuresPropies||[],
-             edicions:state.mesuresEdit||{}};
+  /* Es descarrega tot el que el centre ha afegit als bancs: les mesures i les
+     estratègies pròpies, i les modificacions fetes sobre les del Departament
+     i sobre les del banc de frases. */
+  const d = {v:3, tipus:"banc-mesures-centre", mesures:state.mesuresPropies||[],
+             edicions:state.mesuresEdit||{},
+             estrategies:state.estrategiesPropies||[],
+             edicionsEstrategies:state.estrategiesEdit||{}};
   const blob = new Blob([JSON.stringify(d, null, 1)], {type:"application/json"});
   const u = URL.createObjectURL(blob), a = document.createElement("a");
   a.href = u; a.download = "mesures-del-centre.json"; a.click();
@@ -224,10 +229,27 @@ function exportaMesures(){
 }
 function importaMesuresDialog(){
   openModal("Importa mesures del centre", `<div style="padding:20px 22px 26px">
-    <p class="small muted" style="margin-top:0">Tria un fitxer exportat prèviament amb el botó «Exporta». Les mesures pròpies s'afegiran a les que ja tinguis i les modificacions del catàleg substituiran les que hi hagi de la mateixa mesura.</p>
+    <p class="small muted" style="margin-top:0">Tria un fitxer exportat prèviament amb el botó «Exporta». Les mesures i les estratègies pròpies s'afegiran a les que ja tinguis, i les modificacions substituiran les que hi hagi de la mateixa mesura o estratègia.</p>
     <input type="file" id="im-file" accept="application/json,.json">
     <div style="display:flex;gap:9px;margin-top:16px"><button class="btn primary" onclick="importaMesures()">Importa</button>
     <button class="btn ghost" onclick="closeModal()">Cancel·la</button></div></div>`);
+}
+/* Les estratègies d'un fitxer exportat: les pròpies s'afegeixen amb
+   identificador nou si el seu ja existeix i les modificacions manen sobre les
+   que hi hagi per a la mateixa frase. Retorna quantes n'han entrat. */
+function importaEstrategiesDe(d){
+  state.estrategiesPropies = state.estrategiesPropies || [];
+  const ids = new Set(state.estrategiesPropies.map(x => x.id));
+  const noves = (d.estrategies||[]).filter(x => x && String(x.text||"").trim());
+  noves.forEach(x => {
+    const e = Object.assign({perfils:[], categoria:CAT_ESTR_CENTRE}, x);
+    if(!e.id || ids.has(e.id)) e.id = uid("CE-");
+    ids.add(e.id);
+    state.estrategiesPropies.push(e);
+  });
+  const ed = netejaEdicionsEstr(d.edicionsEstrategies);
+  state.estrategiesEdit = Object.assign(state.estrategiesEdit || {}, ed);
+  return noves.length + Object.keys(ed).length;
 }
 function importaMesures(){
   const f = $("#im-file").files[0];
@@ -252,8 +274,11 @@ function importaMesures(){
       const ed = netejaEdicions(d.edicions);
       state.mesuresEdit = Object.assign(state.mesuresEdit || {}, ed);
       const nEd = Object.keys(ed).length;
+      const nEs = importaEstrategiesDe(d);
       desa(); closeModal(); render();
-      toast(`${noves.length} mesures importades` + (nEd ? ` i ${nEd} mesur${nEd===1?"a":"es"} del catàleg modificad${nEd===1?"a":"es"}.` : "."));
+      toast(`${noves.length} mesures importades`
+        + (nEd ? `, ${nEd} del catàleg modificad${nEd===1?"a":"es"}` : "")
+        + (nEs ? ` i ${nEs} estratègi${nEs===1?"a":"es"}` : "") + ".");
     }catch(e){ toast("El fitxer no és vàlid."); }
   };
   r.readAsText(f);
