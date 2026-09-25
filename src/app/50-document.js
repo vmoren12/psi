@@ -19,11 +19,16 @@ function cellaMesuresDoc(p, dest, etiqueta){
   const items = p.adaptacions.filter(x => x.materia===dest);
   const txt = (p.mesures[dest]||"").trim();
   if(!items.length && !txt) return "";
-  /* Graella simplificada: només el títol de cada mesura. */
+  /* Graella simplificada: només el títol de cada mesura, agrupades per
+     intensitat sota un petit títol. */
   if(p.docMesuresSimples){
     if(!items.length) return "";
-    return `<tr><td class="k">${esc(etiqueta)}</td><td><ul style="margin:0;padding-left:16px">${
-      items.map(x => `<li>${esc(x.titol)}</li>`).join("")}</ul></td></tr>`;
+    const grups = INTENSITATS.map(i => [i, items.filter(x => x.intensitat===i)])
+      .concat([["", items.filter(x => !INTENSITATS.includes(x.intensitat))]])
+      .filter(([, l]) => l.length);
+    return `<tr><td class="k">${esc(etiqueta)}</td><td>${grups.map(([i, l], n) =>
+      `<div class="mes-grup"${n ? "" : ' style="margin-top:0"'}>Mesures i suports ${esc(i ? INTENSITAT_PLURAL[i] : "sense intensitat")}</div>
+      <ul style="margin:0;padding-left:16px">${l.map(x => `<li>${esc(x.titol)}</li>`).join("")}</ul>`).join("")}</td></tr>`;
   }
   return `<tr><td class="k">${esc(etiqueta)}</td><td>
     ${items.length ? `<ul style="margin:0 0 ${txt?"8px":"0"};padding-left:16px">${items.map(x=>

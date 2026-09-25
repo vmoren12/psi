@@ -14,7 +14,9 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   fins que es fa **Descarta les edicions**. El text desat es neteja d'elements
   actius abans de tornar-lo a pintar.
 - **Graella de mesures simplificada** a l'apartat 5 del document: un botó hi
-  deixa només els títols de les mesures, i un altre torna a la redacció completa.
+  deixa només els títols de les mesures, agrupats sota un petit títol per
+  intensitat (universals, addicionals, intensius), i un altre torna a la
+  redacció completa.
 - **Columna «Avaluació»** a la taula d'objectius del document, amb el grau
   d'assoliment de cada valoració registrada al seguiment (trimestre i data).
   L'annex ja no les repeteix: hi queden la decisió i les observacions de cada
