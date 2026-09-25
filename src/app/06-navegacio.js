@@ -77,7 +77,7 @@ function capsaleraNavegador(on){
 }
 function closeModal(){
   /* Si es tanca el document a mig editar, el que s'hi ha escrit no es perd. */
-  if(docEditant){ clearTimeout(desaDocTimer); desaEdicioDoc(true); docEditant = false; }
+  if(docEditant){ buidaEdicioDoc(); docEditant = false; }
   tornaDeModal = null;
   $("#modal").classList.remove("on");
   document.body.style.overflow = "";

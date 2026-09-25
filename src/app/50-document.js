@@ -88,7 +88,7 @@ function doc(p, a){
   <thead><tr><td><div class="marge-dalt"></div>${corrents.length ? filaLogos(corrents) : ""}</td></tr></thead>
   <tbody><tr><td>
   ${pag1.length ? filaLogos(pag1, corrents.length ? "" : "puja") : ""}
-  <div class="doc-cos" id="doc-cos">${p.docEdit && p.docEdit.html ? netejaHtmlDoc(p.docEdit.html) : docCos(p, a)}</div>
+  <div class="doc-cos" id="doc-cos">${muntaDocCos(p, a)}</div>
   </td></tr></tbody>
   <tfoot><tr><td><div class="marge-baix"></div></td></tr></tfoot>
   </table>
@@ -111,7 +111,7 @@ function docCos(p, a){
   const ambObjectius = p.objectius.length && p.docObjectius!==false;
   const ambAval = ambObjectius && p.objectius.some(o => valoracionsObj(p, o).length);
   return `
-  <div class="head">
+  <div class="head" data-sec="cap">
     <div style="flex:1;min-width:200px">
       <div class="centre">${esc(state.centre||"[Centre educatiu]")}</div>
       <h1>Pla de suport individualitzat</h1>
@@ -120,7 +120,7 @@ function docCos(p, a){
     <div class="centre" style="text-align:right">${esc(p.id)}<br>${p.tipus==="continguts"?"Curricular · amb adaptació de criteris":"Metodològic i d'accés"}</div>
   </div>
 
-  <section><h2>1. Dades personals</h2>
+  <section data-sec="dades"><h2>Dades personals</h2>
   ${kv([["Nom i cognoms de l'alumne/a", esc(a.alias)],["Data de naixement", dataCat(a.naixement)],["Lloc de naixement", esc(a.lloc)],["Adreça", esc(a.adreca)],
         ["Nom i cognoms del pare, mare o tutor/a legal", esc(a.tutorLegal)],
         ["Telèfon del pare, mare o tutor/a legal", esc(a.telefon)],
@@ -131,7 +131,7 @@ function docCos(p, a){
         ["Correu electrònic del segon/a tutor/a legal", esc(a.correu2)]] : [])
        .concat([["Llengua d'ús habitual", esc(a.llengua)],["Altres llengües que coneix", esc(a.altresLlengues)]]))}</section>
 
-  <section><h2>2. Dades escolars</h2>
+  <section data-sec="escolars"><h2>Dades escolars</h2>
   ${kv([["Etapa", esc(etapaPla(p) === "Primària" ? "Educació primària" : "Educació secundària obligatòria")],
        ["Curs", esc(p.de.curs)],["Grup", esc(p.de.grup)],["Tutor/a responsable de coordinar el PI", esc(p.de.tutor)],
        ["Data d'arribada a Catalunya", dataCat(p.de.dataArribada)],["Data d'incorporació al sistema educatiu català", dataCat(p.de.dataSistema)],
@@ -139,7 +139,7 @@ function docCos(p, a){
        ["Centres on ha estat matriculat anteriorment", esc(p.de.centresAnteriors)],["Repeticions de curs", esc(p.de.repeticions)],
        ["Mesures i suports rebuts fins a l'actualitat", esc(p.de.mesuresPrevies)],["Altres informacions d'interès", esc(p.de.altres)]])}</section>
 
-  <section><h2>3. Justificació</h2>
+  <section data-sec="justificacio"><h2>Justificació</h2>
   <h3>Motivat per</h3>
   <ul>${p.just.motius.map(m=>{
     let ex = "";
@@ -151,10 +151,10 @@ function docCos(p, a){
   <p>${esc(p.just.text)||"—"}</p>
   ${kv([["Capacitats, potencialitats i punts forts", esc(p.just.fortaleses)],["Punts febles i barreres", esc(p.just.dificultats)],["Interessos i motivacions", esc(p.just.interessos)],["Perfils de necessitats", a.perfils.map(esc).join(", ")]])}</section>
 
-  <section><h2>4. Professionals i serveis que hi intervenen</h2>
+  <section data-sec="professionals"><h2>Professionals i serveis que hi intervenen</h2>
   <ul>${prof || "<li>—</li>"}</ul></section>
 
-  <section><h2>5. Proposta educativa · Mesures i suports</h2>
+  <section data-sec="mesures"><h2>Proposta educativa · Mesures i suports</h2>
   <table data-doc="mesures"><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
   <tbody>${filesMesuresDoc(p)}</tbody></table>
   <p class="legal">Intensitat de les mesures d'aquest pla: ${(()=>{const c=comptaIntensitats(p);return `${c.Universal} universals, ${c.Addicional} addicionals i ${c.Intensiva} intensives`;})()}. Decret 150/2017, de 17 d'octubre, de l'atenció educativa a l'alumnat en el marc d'un sistema educatiu inclusiu.</p></section>
@@ -185,7 +185,7 @@ function docCos(p, a){
       : "—";
     const baixos = sabersInferiors(p, nom);
     const critBaixos = criterisInferiors(p, nom);
-    return `<section><h2>5. Proposta educativa · ${esc(nom)}</h2>
+    return `<section data-sec="curr:${esc(nom)}"><h2>Proposta educativa · ${esc(nom)}</h2>
     <table><thead><tr><th style="width:24%">Competències específiques</th><th style="width:32%">Criteris d'avaluació</th><th>Sabers</th><th style="width:14%">Etapa i curs del criteri</th></tr></thead>
     <tbody>${grups.map(fila=>{
       const u = unitat(fila.font), prim = esInferior(p, fila.font);
@@ -212,24 +212,24 @@ function docCos(p, a){
     ${(st.prim||[]).length?`<p class="legal">Aquesta matèria incorpora elements curriculars d'educació primària (annex 2 del Decret 175/2022): ${esc(st.prim.join(", "))}. L'alumne/a s'avalua d'acord amb els criteris que consten en aquest pla, cosa que en cap cas pot suposar una limitació en les seves qualificacions.</p>`:""}</section>`;
   }).join("")}
 
-  ${p.transv.length?`<section><h2>5. Proposta educativa · Competències transversals</h2>
+  ${p.transv.length?`<section data-sec="transversals"><h2>Proposta educativa · Competències transversals</h2>
   <table><thead><tr><th style="width:30%">Competència transversal</th><th>Competències específiques</th><th>Criteris d'avaluació</th><th style="width:18%">Etapa i curs</th></tr></thead>
   <tbody>${p.transv.map(t=>{
     const c = COMP_TRANSVERSALS.find(x=>x.id===t.id);
     return `<tr><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
   }).join("")}</tbody></table></section>`:""}
 
-  ${ambObjectius?`<section><h2>5. Proposta educativa · Objectius i avaluació</h2>
-  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%">Avaluació</th>`:""}</tr></thead>
-  <tbody>${p.objectius.map(o=>`<tr><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td>${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
+  ${ambObjectius?`<section data-sec="objectius"><h2>Proposta educativa · Objectius i avaluació</h2>
+  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%" data-aval="">Avaluació</th>`:""}</tr></thead>
+  <tbody>${p.objectius.map(o=>`<tr data-obj="${esc(o.id)}"><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td data-aval="">${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
 
-  ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section><h2>5. Proposta educativa · Horari</h2>
+  ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section data-sec="horari"><h2>Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>
   <tbody>${p.franges.map((fr,fi)=>`<tr><td class="k">${esc(fr==="ESBARJO"?"Esbarjo":fr)}</td>
     ${DIES.map((d,di)=>{const v=p.horari[fi+"-"+di]||{};
       return `<td style="font-size:11.5px">${esc(v.m||"")}${v.d?`<br><i>${esc(v.d)}</i>`:""}${v.e?`<br>${esc(v.e)}`:""}</td>`;}).join("")}</tr>`).join("")}</tbody></table></section>`:""}
 
-  <section><h2>6. Conformitat del pla de suport individualitzat</h2>
+  <section data-sec="conformitat"><h2>Conformitat del pla de suport individualitzat</h2>
   <p>El pare, la mare o el tutor o tutora legal són informats d'aquest pla de suport individualitzat i n'acorden el seguiment amb el tutor/a de l'alumne/a.
   ${p.conformitat.familia?"<b>Consta la conformitat de la família.</b>":"<b>Pendent de conformitat.</b>"}</p>
   ${(p.conformitat.acordsFamilia||"").trim()?`<h3>Acords amb la família</h3><p>${esc(p.conformitat.acordsFamilia)}</p>`:""}
@@ -247,24 +247,24 @@ function docCos(p, a){
   </div>
   </section>
 
-  ${taulaDocReunions("7. Reunions de seguiment i acords amb l'alumne/a, el pare, la mare o el tutor o tutora legal", p.reunionsFamilia)}
-  ${taulaDocReunions("8. Reunions de seguiment i avaluació del PI amb els professionals implicats", p.reunionsProf)}
+  ${taulaDocReunions("reunions-familia", "Reunions de seguiment i acords amb l'alumne/a, el pare, la mare o el tutor o tutora legal", p.reunionsFamilia)}
+  ${taulaDocReunions("reunions-prof", "Reunions de seguiment i avaluació del PI amb els professionals implicats", p.reunionsProf)}
 
-  <section><h2>9. Acords sobre la continuïtat del pla de suport individualitzat</h2>
+  <section data-sec="continuitat"><h2>Acords sobre la continuïtat del pla de suport individualitzat</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:28%">Agents participants</th><th style="width:18%">Acord</th><th>Observacions</th></tr></thead>
   <tbody>${p.continuitat.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>
 
-  ${p.seguiments.length?`<section><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
+  ${p.seguiments.length?`<section data-sec="annex" data-annex="1"><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
   ${p.seguiments.map(s=>`<h3>${esc(s.trimestre)} — ${dataCat(s.data)} · ${esc(s.decisio)}</h3>
     ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(fraseText(o, a.alias))}</li>`:"";}).join("")}</ul>`}
     ${s.observacions?`<p>${esc(s.observacions)}</p>`:(ambObjectius?`<p class="orig">Sense observacions.</p>`:"")}`).join("")}</section>`:""}
 
-  <div class="foot">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
+  <div class="foot" data-sec="peu">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
   Elements curriculars extrets del Decret 175/2022, de 27 de setembre, d'ordenació dels ensenyaments de l'educació bàsica.</div>`;
 }
-function taulaDocReunions(titol, arr){
-  return `<section><h2>${titol}</h2>
+function taulaDocReunions(clau, titol, arr){
+  return `<section data-sec="${clau}"><h2>${titol}</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:24%">Agents participants</th><th>Temes tractats</th><th style="width:28%">Acords</th></tr></thead>
   <tbody>${arr.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.temes)}</td><td>${esc(r.acords)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>`;

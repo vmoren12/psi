@@ -21,7 +21,8 @@ function nouPiObj(alumneId){
        Es decideix al pas 6 i, per defecte, hi surten. */
     docObjectius: true,
     /* Graella de mesures del document amb només els títols, i document
-       editat a mà a la previsualització ({html, data}) o null si no n'hi ha. */
+       editat a mà a la previsualització ({seccions, trets, data}) o null si
+       no n'hi ha. Vegeu 51-document-edicio.js. */
     docMesuresSimples: false, docEdit: null,
     dataInici: avui(), proximaRevisio: "",
     conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},

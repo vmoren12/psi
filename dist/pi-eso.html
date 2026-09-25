@@ -530,6 +530,7 @@ details.ce .ceb{padding:6px 14px 12px}
 .doc-treu:hover{background:#fbeceb}
 .doc .mes-grup{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3f8c9e;margin:8px 0 2px}
 .doc-mesures-eina{font-family:var(--sans);margin:0 0 6px;display:flex;justify-content:flex-end}
+.doc-edits{flex-basis:100%;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 /* ---------- avís permanent: l'aplicació no és oficial ----------
    Barra fixa a baix de tot. Es pot amagar, però no desapareix mai del tot:
    en queda el botó rodó de la dreta, que la torna a obrir. L'alçada que ocupa
@@ -1497,7 +1498,8 @@ function nouPiObj(alumneId){
        Es decideix al pas 6 i, per defecte, hi surten. */
     docObjectius: true,
     /* Graella de mesures del document amb només els títols, i document
-       editat a mà a la previsualització ({html, data}) o null si no n'hi ha. */
+       editat a mà a la previsualització ({seccions, trets, data}) o null si
+       no n'hi ha. Vegeu 51-document-edicio.js. */
     docMesuresSimples: false, docEdit: null,
     dataInici: avui(), proximaRevisio: "",
     conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},
@@ -1912,7 +1914,7 @@ function capsaleraNavegador(on){
 }
 function closeModal(){
   /* Si es tanca el document a mig editar, el que s'hi ha escrit no es perd. */
-  if(docEditant){ clearTimeout(desaDocTimer); desaEdicioDoc(true); docEditant = false; }
+  if(docEditant){ buidaEdicioDoc(); docEditant = false; }
   tornaDeModal = null;
   $("#modal").classList.remove("on");
   document.body.style.overflow = "";
@@ -6214,7 +6216,7 @@ function doc(p, a){
   <thead><tr><td><div class="marge-dalt"></div>${corrents.length ? filaLogos(corrents) : ""}</td></tr></thead>
   <tbody><tr><td>
   ${pag1.length ? filaLogos(pag1, corrents.length ? "" : "puja") : ""}
-  <div class="doc-cos" id="doc-cos">${p.docEdit && p.docEdit.html ? netejaHtmlDoc(p.docEdit.html) : docCos(p, a)}</div>
+  <div class="doc-cos" id="doc-cos">${muntaDocCos(p, a)}</div>
   </td></tr></tbody>
   <tfoot><tr><td><div class="marge-baix"></div></td></tr></tfoot>
   </table>
@@ -6237,7 +6239,7 @@ function docCos(p, a){
   const ambObjectius = p.objectius.length && p.docObjectius!==false;
   const ambAval = ambObjectius && p.objectius.some(o => valoracionsObj(p, o).length);
   return `
-  <div class="head">
+  <div class="head" data-sec="cap">
     <div style="flex:1;min-width:200px">
       <div class="centre">${esc(state.centre||"[Centre educatiu]")}</div>
       <h1>Pla de suport individualitzat</h1>
@@ -6246,7 +6248,7 @@ function docCos(p, a){
     <div class="centre" style="text-align:right">${esc(p.id)}<br>${p.tipus==="continguts"?"Curricular · amb adaptació de criteris":"Metodològic i d'accés"}</div>
   </div>
 
-  <section><h2>1. Dades personals</h2>
+  <section data-sec="dades"><h2>Dades personals</h2>
   ${kv([["Nom i cognoms de l'alumne/a", esc(a.alias)],["Data de naixement", dataCat(a.naixement)],["Lloc de naixement", esc(a.lloc)],["Adreça", esc(a.adreca)],
         ["Nom i cognoms del pare, mare o tutor/a legal", esc(a.tutorLegal)],
         ["Telèfon del pare, mare o tutor/a legal", esc(a.telefon)],
@@ -6257,7 +6259,7 @@ function docCos(p, a){
         ["Correu electrònic del segon/a tutor/a legal", esc(a.correu2)]] : [])
        .concat([["Llengua d'ús habitual", esc(a.llengua)],["Altres llengües que coneix", esc(a.altresLlengues)]]))}</section>
 
-  <section><h2>2. Dades escolars</h2>
+  <section data-sec="escolars"><h2>Dades escolars</h2>
   ${kv([["Etapa", esc(etapaPla(p) === "Primària" ? "Educació primària" : "Educació secundària obligatòria")],
        ["Curs", esc(p.de.curs)],["Grup", esc(p.de.grup)],["Tutor/a responsable de coordinar el PI", esc(p.de.tutor)],
        ["Data d'arribada a Catalunya", dataCat(p.de.dataArribada)],["Data d'incorporació al sistema educatiu català", dataCat(p.de.dataSistema)],
@@ -6265,7 +6267,7 @@ function docCos(p, a){
        ["Centres on ha estat matriculat anteriorment", esc(p.de.centresAnteriors)],["Repeticions de curs", esc(p.de.repeticions)],
        ["Mesures i suports rebuts fins a l'actualitat", esc(p.de.mesuresPrevies)],["Altres informacions d'interès", esc(p.de.altres)]])}</section>
 
-  <section><h2>3. Justificació</h2>
+  <section data-sec="justificacio"><h2>Justificació</h2>
   <h3>Motivat per</h3>
   <ul>${p.just.motius.map(m=>{
     let ex = "";
@@ -6277,10 +6279,10 @@ function docCos(p, a){
   <p>${esc(p.just.text)||"—"}</p>
   ${kv([["Capacitats, potencialitats i punts forts", esc(p.just.fortaleses)],["Punts febles i barreres", esc(p.just.dificultats)],["Interessos i motivacions", esc(p.just.interessos)],["Perfils de necessitats", a.perfils.map(esc).join(", ")]])}</section>
 
-  <section><h2>4. Professionals i serveis que hi intervenen</h2>
+  <section data-sec="professionals"><h2>Professionals i serveis que hi intervenen</h2>
   <ul>${prof || "<li>—</li>"}</ul></section>
 
-  <section><h2>5. Proposta educativa · Mesures i suports</h2>
+  <section data-sec="mesures"><h2>Proposta educativa · Mesures i suports</h2>
   <table data-doc="mesures"><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
   <tbody>${filesMesuresDoc(p)}</tbody></table>
   <p class="legal">Intensitat de les mesures d'aquest pla: ${(()=>{const c=comptaIntensitats(p);return `${c.Universal} universals, ${c.Addicional} addicionals i ${c.Intensiva} intensives`;})()}. Decret 150/2017, de 17 d'octubre, de l'atenció educativa a l'alumnat en el marc d'un sistema educatiu inclusiu.</p></section>
@@ -6311,7 +6313,7 @@ function docCos(p, a){
       : "—";
     const baixos = sabersInferiors(p, nom);
     const critBaixos = criterisInferiors(p, nom);
-    return `<section><h2>5. Proposta educativa · ${esc(nom)}</h2>
+    return `<section data-sec="curr:${esc(nom)}"><h2>Proposta educativa · ${esc(nom)}</h2>
     <table><thead><tr><th style="width:24%">Competències específiques</th><th style="width:32%">Criteris d'avaluació</th><th>Sabers</th><th style="width:14%">Etapa i curs del criteri</th></tr></thead>
     <tbody>${grups.map(fila=>{
       const u = unitat(fila.font), prim = esInferior(p, fila.font);
@@ -6338,24 +6340,24 @@ function docCos(p, a){
     ${(st.prim||[]).length?`<p class="legal">Aquesta matèria incorpora elements curriculars d'educació primària (annex 2 del Decret 175/2022): ${esc(st.prim.join(", "))}. L'alumne/a s'avalua d'acord amb els criteris que consten en aquest pla, cosa que en cap cas pot suposar una limitació en les seves qualificacions.</p>`:""}</section>`;
   }).join("")}
 
-  ${p.transv.length?`<section><h2>5. Proposta educativa · Competències transversals</h2>
+  ${p.transv.length?`<section data-sec="transversals"><h2>Proposta educativa · Competències transversals</h2>
   <table><thead><tr><th style="width:30%">Competència transversal</th><th>Competències específiques</th><th>Criteris d'avaluació</th><th style="width:18%">Etapa i curs</th></tr></thead>
   <tbody>${p.transv.map(t=>{
     const c = COMP_TRANSVERSALS.find(x=>x.id===t.id);
     return `<tr><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
   }).join("")}</tbody></table></section>`:""}
 
-  ${ambObjectius?`<section><h2>5. Proposta educativa · Objectius i avaluació</h2>
-  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%">Avaluació</th>`:""}</tr></thead>
-  <tbody>${p.objectius.map(o=>`<tr><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td>${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
+  ${ambObjectius?`<section data-sec="objectius"><h2>Proposta educativa · Objectius i avaluació</h2>
+  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%" data-aval="">Avaluació</th>`:""}</tr></thead>
+  <tbody>${p.objectius.map(o=>`<tr data-obj="${esc(o.id)}"><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td data-aval="">${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
 
-  ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section><h2>5. Proposta educativa · Horari</h2>
+  ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section data-sec="horari"><h2>Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>
   <tbody>${p.franges.map((fr,fi)=>`<tr><td class="k">${esc(fr==="ESBARJO"?"Esbarjo":fr)}</td>
     ${DIES.map((d,di)=>{const v=p.horari[fi+"-"+di]||{};
       return `<td style="font-size:11.5px">${esc(v.m||"")}${v.d?`<br><i>${esc(v.d)}</i>`:""}${v.e?`<br>${esc(v.e)}`:""}</td>`;}).join("")}</tr>`).join("")}</tbody></table></section>`:""}
 
-  <section><h2>6. Conformitat del pla de suport individualitzat</h2>
+  <section data-sec="conformitat"><h2>Conformitat del pla de suport individualitzat</h2>
   <p>El pare, la mare o el tutor o tutora legal són informats d'aquest pla de suport individualitzat i n'acorden el seguiment amb el tutor/a de l'alumne/a.
   ${p.conformitat.familia?"<b>Consta la conformitat de la família.</b>":"<b>Pendent de conformitat.</b>"}</p>
   ${(p.conformitat.acordsFamilia||"").trim()?`<h3>Acords amb la família</h3><p>${esc(p.conformitat.acordsFamilia)}</p>`:""}
@@ -6373,24 +6375,24 @@ function docCos(p, a){
   </div>
   </section>
 
-  ${taulaDocReunions("7. Reunions de seguiment i acords amb l'alumne/a, el pare, la mare o el tutor o tutora legal", p.reunionsFamilia)}
-  ${taulaDocReunions("8. Reunions de seguiment i avaluació del PI amb els professionals implicats", p.reunionsProf)}
+  ${taulaDocReunions("reunions-familia", "Reunions de seguiment i acords amb l'alumne/a, el pare, la mare o el tutor o tutora legal", p.reunionsFamilia)}
+  ${taulaDocReunions("reunions-prof", "Reunions de seguiment i avaluació del PI amb els professionals implicats", p.reunionsProf)}
 
-  <section><h2>9. Acords sobre la continuïtat del pla de suport individualitzat</h2>
+  <section data-sec="continuitat"><h2>Acords sobre la continuïtat del pla de suport individualitzat</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:28%">Agents participants</th><th style="width:18%">Acord</th><th>Observacions</th></tr></thead>
   <tbody>${p.continuitat.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>
 
-  ${p.seguiments.length?`<section><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
+  ${p.seguiments.length?`<section data-sec="annex" data-annex="1"><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
   ${p.seguiments.map(s=>`<h3>${esc(s.trimestre)} — ${dataCat(s.data)} · ${esc(s.decisio)}</h3>
     ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(fraseText(o, a.alias))}</li>`:"";}).join("")}</ul>`}
     ${s.observacions?`<p>${esc(s.observacions)}</p>`:(ambObjectius?`<p class="orig">Sense observacions.</p>`:"")}`).join("")}</section>`:""}
 
-  <div class="foot">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
+  <div class="foot" data-sec="peu">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
   Elements curriculars extrets del Decret 175/2022, de 27 de setembre, d'ordenació dels ensenyaments de l'educació bàsica.</div>`;
 }
-function taulaDocReunions(titol, arr){
-  return `<section><h2>${titol}</h2>
+function taulaDocReunions(clau, titol, arr){
+  return `<section data-sec="${clau}"><h2>${titol}</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:24%">Agents participants</th><th>Temes tractats</th><th style="width:28%">Acords</th></tr></thead>
   <tbody>${arr.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.temes)}</td><td>${esc(r.acords)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>`;
@@ -6402,30 +6404,163 @@ function taulaDocReunions(titol, arr){
    a cap pas. En mode d'edició, el cos del document és editable directament i
    cada apartat porta un botó per eliminar-lo.
 
-   El resultat es desa al pla (p.docEdit) i, a partir d'aquí, el document és
-   el text editat: els canvis que es facin després als passos del pla ja no hi
-   arriben fins que es descarten les edicions. La franja d'eines ho recorda
-   sempre, perquè ningú no imprimeixi una versió antiga sense saber-ho.
+   Les edicions es desen per apartats (p.docEdit):
+     seccions  {clau: html}  apartats retocats a mà, tal com han quedat
+     trets     [clau]        apartats eliminats del document
+   Cada apartat del document porta la seva clau a data-sec. Un apartat que no
+   s'ha tocat continua viu i reflecteix sempre el pla; un de retocat queda fix
+   fins que es restaura. L'única excepció és la columna «Avaluació» dels
+   objectius, que ve del seguiment i es refà sempre, també en un apartat
+   retocat.
+
+   Els números dels apartats no es desen enlloc: es posen en muntar el
+   document, per ordre, de manera que són consecutius encara que se n'eliminin
+   o se n'hi afegeixin. L'annex no es numera.
 
    Tot el que és eina (botons, avisos) porta la classe doc-eina i no s'imprimeix
    ni es desa. */
 let docEditant = false;
 let desaDocTimer = null;
 
+const NUM_APARTAT = /^\s*\d+\s*[.)]\s*/;
+const NOM_SECCIO_FIX = {cap:"Capçalera del document", peu:"Peu del document"};
+
+/* Cos del document: el generat a partir del pla, amb les edicions a sobre i
+   els apartats numerats. */
+function muntaDocCos(p, a){
+  const t = document.createElement("template");
+  t.innerHTML = docCos(p, a);
+  migraDocEdit(p, t.content);
+  const ed = p.docEdit;
+  if(ed){
+    [...t.content.querySelectorAll("[data-sec]")].forEach(el => {
+      const k = el.dataset.sec;
+      if((ed.trets || []).includes(k)) el.remove();
+      else if((ed.seccions || {})[k] != null){
+        el.innerHTML = netejaHtmlDoc(ed.seccions[k]);
+        el.dataset.editat = "1";
+      }
+    });
+    const so = t.content.querySelector('[data-sec="objectius"][data-editat]');
+    if(so) refrescaAvaluacio(so, p);
+  }
+  numeraDoc(t.content);
+  return t.innerHTML;
+}
+
+/* Numera els apartats per ordre: 1, 2, 3… L'annex queda sense número. */
+function numeraDoc(arrel){
+  let n = 0;
+  arrel.querySelectorAll("section[data-sec]").forEach(sec => {
+    const h = sec.querySelector("h2");
+    if(!h) return;
+    const text = h.textContent.replace(NUM_APARTAT, "");
+    h.textContent = sec.dataset.annex ? text : `${++n}. ${text}`;
+  });
+}
+
+/* Contingut d'un apartat tal com es desa: sense eines ni número. */
+function htmlSeccio(el){
+  const c = el.cloneNode(true);
+  c.querySelectorAll(".doc-eina").forEach(x => x.remove());
+  [c, ...c.querySelectorAll("*")].forEach(x => { x.removeAttribute("contenteditable"); x.removeAttribute("spellcheck"); });
+  const h = c.querySelector("h2");
+  if(h) h.textContent = h.textContent.replace(NUM_APARTAT, "");
+  return c.innerHTML;
+}
+
+/* Apartats del document generat ara mateix, per clau. */
+function seccionsFresques(p){
+  const t = document.createElement("template");
+  t.innerHTML = docCos(p, alumne(p.alumneId));
+  const out = {};
+  t.content.querySelectorAll("[data-sec]").forEach(el => {
+    const h = el.querySelector("h2");
+    out[el.dataset.sec] = {html: htmlSeccio(el),
+      nom: NOM_SECCIO_FIX[el.dataset.sec] || (h ? h.textContent.replace(NUM_APARTAT, "") : el.dataset.sec)};
+  });
+  return out;
+}
+
+/* Els documents editats amb la primera versió d'aquesta eina es desaven
+   sencers, en un sol bloc (docEdit.html). Es reparteixen per apartats
+   reconeixent-los pel títol; els que no hi són es donen per eliminats. Els
+   objectius i l'annex es tornen a generar perquè hi arribi el seguiment. */
+function migraDocEdit(p, fresc){
+  const ed = p.docEdit;
+  if(!ed || ed.html == null) return;
+  const vell = document.createElement("template");
+  vell.innerHTML = netejaHtmlDoc(ed.html);
+  const perTitol = {};
+  vell.content.querySelectorAll("section").forEach(sec => {
+    const h = sec.querySelector("h2");
+    if(h) perTitol[h.textContent.replace(NUM_APARTAT, "").trim()] = sec;
+  });
+  const nou = {seccions:{}, trets:[], data: ed.data || avui()};
+  fresc.querySelectorAll("[data-sec]").forEach(el => {
+    const k = el.dataset.sec, h = el.querySelector("h2");
+    if(k === "objectius" || k === "annex") return;
+    const v = k === "cap" ? vell.content.querySelector(".head")
+            : k === "peu" ? vell.content.querySelector(".foot")
+            : perTitol[h ? h.textContent.replace(NUM_APARTAT, "").trim() : ""];
+    if(!v){ if(k !== "cap" && k !== "peu") nou.trets.push(k); return; }
+    const hv = htmlSeccio(v);
+    if(hv !== htmlSeccio(el)) nou.seccions[k] = hv;
+  });
+  p.docEdit = (Object.keys(nou.seccions).length || nou.trets.length) ? nou : null;
+  desa();
+}
+
+/* La columna «Avaluació» d'un apartat d'objectius retocat a mà: es refà
+   amb el seguiment d'ara, fila per fila. */
+function refrescaAvaluacio(sec, p){
+  const taula = sec.querySelector("table");
+  if(!taula) return;
+  const amb = p.objectius.some(o => valoracionsObj(p, o).length);
+  const fc = taula.querySelector("thead tr");
+  let th = fc && fc.querySelector("th[data-aval]");
+  if(amb && fc && !th){
+    th = document.createElement("th");
+    th.dataset.aval = ""; th.style.width = "17%"; th.textContent = "Avaluació";
+    fc.appendChild(th);
+  }
+  if(!amb && th) th.remove();
+  taula.querySelectorAll("tbody tr[data-obj]").forEach(tr => {
+    const o = p.objectius.find(x => x.id === tr.dataset.obj);
+    let td = tr.querySelector("td[data-aval]");
+    if(!amb){ if(td) td.remove(); return; }
+    if(!td){ td = document.createElement("td"); td.dataset.aval = ""; tr.appendChild(td); }
+    td.innerHTML = o ? cellaAssolimentDoc(p, o) : "—";
+  });
+}
+
 /* Franja d'eines del document: no s'imprimeix. */
 function einesDoc(p){
-  const ed = p.docEdit && p.docEdit.html;
+  if(p.docEdit && p.docEdit.html != null){
+    const t = document.createElement("template");
+    t.innerHTML = docCos(p, alumne(p.alumneId));
+    migraDocEdit(p, t.content);
+  }
+  const ed = p.docEdit && p.docEdit.html == null ? p.docEdit : null;
+  const noms = ed ? seccionsFresques(p) : {};
+  const nom = k => esc((noms[k] && noms[k].nom) || k);
+  const editats = ed ? Object.keys(ed.seccions || {}).filter(k => noms[k]) : [];
+  const trets = ed ? (ed.trets || []).filter(k => noms[k]) : [];
   return `<div class="doc-tools no-print">
     <span class="eyebrow">Edició del document</span>
     ${docEditant
       ? `<button class="btn sm primary" onclick="commutaEdicioDoc(false)">Acaba l'edició</button>`
       : `<button class="btn sm" onclick="commutaEdicioDoc(true)">Edita el document</button>`}
-    ${ed ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta les edicions</button>` : ""}
+    ${editats.length || trets.length ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta totes les edicions</button>` : ""}
     <span class="legal" style="flex-basis:100%;margin:0">${docEditant
-      ? "Clica qualsevol text per canviar-lo. Amb el botó <b>×</b> de cada apartat l'elimines sencer. Els canvis es desen sols."
-      : ed
-        ? `<b>Aquest document té edicions fetes a mà</b> (${dataCat(p.docEdit.data)}). Els canvis que facis ara als passos del pla o al seguiment <b>no s'hi reflecteixen</b> fins que descartis les edicions.`
-        : "Pots retocar qualsevol text del document, o eliminar-ne apartats, abans d'imprimir-lo. Les edicions es desen amb el pla."}</span>
+      ? "Clica qualsevol text per canviar-lo. Amb el botó <b>×</b> de cada apartat l'elimines sencer. Els canvis es desen sols, i els números dels apartats es refan sols."
+      : "Pots retocar qualsevol text del document, o eliminar-ne apartats, abans d'imprimir-lo. Les edicions es desen amb el pla."}</span>
+    ${editats.length ? `<div class="doc-edits"><span class="small"><b>Retocats a mà</b> (no reflecteixen els canvis posteriors del pla, tret de la columna «Avaluació»):</span>
+      ${editats.map(k => `<span class="logo-chip"><span class="small">${nom(k)}</span>
+        <button class="btn sm ghost pag" title="Torna a generar aquest apartat a partir del pla" onclick="restauraSeccio(${jq(k)})">Restaura</button></span>`).join("")}</div>` : ""}
+    ${trets.length ? `<div class="doc-edits"><span class="small"><b>Eliminats:</b></span>
+      ${trets.map(k => `<span class="logo-chip"><span class="small">${nom(k)}</span>
+        <button class="btn sm ghost pag" title="Torna a posar aquest apartat al document" onclick="restauraSeccio(${jq(k)})">Recupera</button></span>`).join("")}</div>` : ""}
   </div>`;
 }
 
@@ -6477,43 +6612,73 @@ function aplicaEdicioDoc(){
 }
 
 function commutaEdicioDoc(on){
-  if(!on){ clearTimeout(desaDocTimer); desaEdicioDoc(true); }
+  if(!on) buidaEdicioDoc();
   docEditant = !!on;
   refrescaDoc();
   if(on) toast("Mode d'edició: clica qualsevol text del document per canviar-lo.");
   else toast("Edició acabada.");
 }
 
-/* Desa el cos del document tal com és ara, sense les eines. Si no s'hi ha
-   tocat res, no es desa res: el document continua viu. */
-function desaEdicioDoc(nomesSiCanvia){
+/* Desa com a retocats els apartats que ara no coincideixen amb el que es
+   generaria a partir del pla. Un apartat que es torna a deixar igual deixa de
+   comptar com a retocat. */
+function desaEdicioDoc(){
   const p = pi(state.docPi), cos = $("#doc-cos");
-  if(!p || !cos || (nomesSiCanvia && !cos.dataset.tocat && !(p.docEdit && p.docEdit.html))) return;
-  const c = cos.cloneNode(true);
-  c.querySelectorAll(".doc-eina").forEach(x => x.remove());
-  p.docEdit = {html: c.innerHTML, data: avui()};
-  cos.dataset.tocat = "1";
+  if(!p || !cos || !cos.dataset.tocat) return;
+  const fresc = seccionsFresques(p);
+  const ed = (p.docEdit && p.docEdit.html == null) ? p.docEdit : {seccions:{}, trets:[]};
+  ed.seccions = ed.seccions || {}; ed.trets = ed.trets || [];
+  cos.querySelectorAll("[data-sec]").forEach(el => {
+    const k = el.dataset.sec, h = htmlSeccio(el);
+    if(fresc[k] && h === fresc[k].html) delete ed.seccions[k];
+    else ed.seccions[k] = h;
+  });
+  ed.data = avui();
+  p.docEdit = (Object.keys(ed.seccions).length || ed.trets.length) ? ed : null;
   desa();
 }
+/* Desa el que hi hagi pendent de l'edició en curs. */
+function buidaEdicioDoc(){ clearTimeout(desaDocTimer); desaEdicioDoc(); }
 
 async function treuApartatDoc(s){
   const h = s.querySelector("h2");
   const ok = await confirma("Elimina l'apartat",
-    `Es traurà del document l'apartat <b>${esc(h ? h.textContent : "")}</b>. El pla no canvia: si més endavant descartes les edicions, hi tornarà.`,
+    `Es traurà del document l'apartat <b>${esc(h ? h.textContent : "")}</b>. El pla no canvia, i el pots recuperar des de la franja d'edició.`,
     {confirma:"Elimina'l", perillos:true});
   if(!ok) return;
-  s.remove();
-  desaEdicioDoc();
+  buidaEdicioDoc();
+  const p = pi(state.docPi);
+  const ed = p.docEdit = (p.docEdit && p.docEdit.html == null) ? p.docEdit : {seccions:{}, trets:[]};
+  ed.trets = ed.trets || [];
+  if(!ed.trets.includes(s.dataset.sec)) ed.trets.push(s.dataset.sec);
+  ed.data = avui();
+  desa();
   refrescaDoc();
+}
+
+/* Torna un apartat al que es genera a partir del pla, tant si s'havia
+   retocat com si s'havia eliminat. */
+function restauraSeccio(k){
+  const p = pi(state.docPi);
+  if(!p || !p.docEdit) return;
+  buidaEdicioDoc();
+  const ed = p.docEdit;
+  if(ed.seccions) delete ed.seccions[k];
+  ed.trets = (ed.trets || []).filter(x => x !== k);
+  if(!Object.keys(ed.seccions || {}).length && !ed.trets.length) p.docEdit = null;
+  desa();
+  refrescaDoc();
+  toast("Apartat restaurat a partir del pla.");
 }
 
 async function descartaEdicioDoc(){
   const p = pi(state.docPi);
   if(!p || !p.docEdit) return;
-  const ok = await confirma("Descarta les edicions",
-    "El document tornarà a generar-se a partir del pla i es perdran tots els canvis fets a mà a la previsualització, inclosos els apartats eliminats.",
+  const ok = await confirma("Descarta totes les edicions",
+    "El document tornarà a generar-se sencer a partir del pla i es perdran tots els canvis fets a mà a la previsualització, inclosos els apartats eliminats.",
     {confirma:"Descarta-les", perillos:true});
   if(!ok) return;
+  clearTimeout(desaDocTimer);
   p.docEdit = null;
   docEditant = false;
   desa();
@@ -6521,30 +6686,30 @@ async function descartaEdicioDoc(){
   toast("Edicions descartades. El document torna a reflectir el pla.");
 }
 
-/* Commuta la graella de mesures de l'apartat 5 entre la completa i la que
-   només en porta els títols. El botó el posa posaBotoMesures() a cada
-   repintat, perquè hi sigui sempre, també mentre s'edita. En un document
-   editat a mà només es refà aquesta graella: la resta d'edicions es respecten. */
+/* Commuta la graella de mesures entre la completa i la que només en porta els
+   títols. El botó el posa posaBotoMesures() a cada repintat, perquè hi sigui
+   sempre, també mentre s'edita. Si l'apartat s'ha retocat a mà, només se'n
+   refà la graella: la resta del text es respecta. */
 function commutaMesuresSimples(){
   const p = pi(state.docPi);
   if(!p) return;
-  if(docEditant){ clearTimeout(desaDocTimer); desaEdicioDoc(true); }
+  if(docEditant) buidaEdicioDoc();
   p.docMesuresSimples = !p.docMesuresSimples;
-  let avis = p.docMesuresSimples ? "Graella de mesures amb només els títols." : "Graella de mesures amb la redacció completa.";
-  if(p.docEdit && p.docEdit.html){
+  const ed = p.docEdit;
+  if(ed && ed.seccions && ed.seccions.mesures != null){
     const t = document.createElement("template");
-    t.innerHTML = p.docEdit.html;
+    t.innerHTML = ed.seccions.mesures;
     const taula = graellaMesuresDe(t.content);
     if(taula){
       let tb = taula.querySelector("tbody");
       if(!tb){ tb = document.createElement("tbody"); taula.appendChild(tb); }
       tb.innerHTML = filesMesuresDoc(p);
-      p.docEdit.html = t.innerHTML;
-    } else avis = "L'apartat de mesures s'ha eliminat del document editat: el canvi s'aplicarà si descartes les edicions.";
+      ed.seccions.mesures = t.innerHTML;
+    }
   }
   desa();
   refrescaDoc();
-  toast(avis);
+  toast(p.docMesuresSimples ? "Graella de mesures amb només els títols." : "Graella de mesures amb la redacció completa.");
 }
 /* La graella de mesures dins d'un document desat. Els documents editats abans
    que la taula portés la marca data-doc es reconeixen pel títol de l'apartat. */

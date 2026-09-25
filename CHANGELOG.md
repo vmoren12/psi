@@ -9,10 +9,15 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 - **Edició del document a la previsualització.** Amb **Edita el document** es
   pot retocar qualsevol text directament sobre el document i eliminar apartats
-  sencers amb el botó **×** de cadascun. Les edicions es desen amb el pla; mentre
-  n'hi ha, una franja recorda que els canvis posteriors als passos no hi arriben
-  fins que es fa **Descarta les edicions**. El text desat es neteja d'elements
-  actius abans de tornar-lo a pintar.
+  sencers amb el botó **×** de cadascun. Les edicions es desen **per apartats**:
+  només queden fixos els apartats retocats a mà, i la resta continua reflectint
+  el pla. La franja d'edició llista els apartats retocats i els eliminats, amb
+  un botó per restaurar-ne o recuperar-ne cadascun, i un per descartar-ho tot.
+  El text desat es neteja d'elements actius abans de tornar-lo a pintar.
+- **Numeració consecutiva dels apartats del document**: cada apartat porta el
+  seu número (els objectius, per exemple, passen a ser un apartat numerat propi
+  en lloc d'un «5.» repetit) i la numeració es refà sola quan se n'elimina o
+  se n'hi afegeix algun. L'annex no es numera.
 - **Graella de mesures simplificada** a l'apartat 5 del document: un botó hi
   deixa només els títols de les mesures, agrupats sota un petit títol per
   intensitat (universals, addicionals, intensius), i un altre torna a la
@@ -21,6 +26,8 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   graella i es respecten la resta d'edicions.
 - **Columna «Avaluació»** a la taula d'objectius del document, amb el grau
   d'assoliment de cada valoració registrada al seguiment (trimestre i data).
+  La columna es refà sempre a partir del seguiment, també si l'apartat
+  d'objectius s'ha retocat a mà.
   L'annex ja no les repeteix: hi queden la decisió i les observacions de cada
   seguiment. Si els objectius no surten al document, l'annex les manté com fins
   ara.
