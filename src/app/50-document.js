@@ -62,16 +62,53 @@ function cellaAvaluacioDoc(o){
 }
 
 /* Valoracions registrades al seguiment per a un objectiu, per ordre. */
+/* Taula d'objectius del document: una fila per objectiu, ordenades per
+   matèria i trimestre. La matèria i el trimestre surten dels camps de
+   l'objectiu (pas 6), encara que s'hagi redactat en text lliure, i les
+   caselles repetides es fusionen amb rowspan perquè cada matèria i cada
+   trimestre hi constin un sol cop. */
+function taulaObjectiusDoc(p, a, ambAval){
+  const ordM = m => { const i = p.materies.indexOf(m); return i < 0 ? (m ? 900 : 999) : i; };
+  const ordT = t => { const i = TRIMESTRES.indexOf(t); return i < 0 ? 99 : i; };
+  const obs = p.objectius.map((o, i) => ({o, i})).sort((x, y) =>
+    ordM(x.o.materia) - ordM(y.o.materia) || String(x.o.materia||"").localeCompare(String(y.o.materia||""), "ca")
+    || ordT(x.o.trimestre) - ordT(y.o.trimestre) || x.i - y.i).map(x => x.o);
+  const mat = o => o.materia || "", tri = o => o.trimestre || "";
+  const files = obs.map((o, i) => {
+    let cel = "";
+    if(i === 0 || mat(obs[i-1]) !== mat(o)){
+      let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o)) n++;
+      cel += `<td class="k" rowspan="${n}">${esc(mat(o) || "—")}</td>`;
+    }
+    if(i === 0 || mat(obs[i-1]) !== mat(o) || tri(obs[i-1]) !== tri(o)){
+      let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o) && tri(obs[i+n]) === tri(o)) n++;
+      cel += `<td rowspan="${n}">${esc(tri(o) || "—")}</td>`;
+    }
+    return `<tr data-obj="${esc(o.id)}">${cel}<td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${
+      ambAval ? `<td data-aval="">${cellaAssolimentDoc(p, o)}</td>` : ""}</tr>`;
+  }).join("");
+  return `<table><thead><tr><th style="width:15%">Matèria</th><th style="width:11%">Trimestre</th><th>Objectiu</th>
+    <th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:13%" data-aval="">Avaluació</th>`:""}</tr></thead>
+    <tbody>${files}</tbody></table>`;
+}
+
+/* Valoració que val per a un objectiu: la darrera registrada en un seguiment
+   del mateix trimestre que l'objectiu i, si no n'hi ha, la darrera de totes. */
+function valoracioObj(p, o){
+  const l = valoracionsObj(p, o);
+  if(!l.length) return null;
+  const mateix = l.filter(x => o.trimestre && x.trimestre === o.trimestre);
+  return (mateix.length ? mateix : l)[(mateix.length ? mateix : l).length - 1];
+}
 function valoracionsObj(p, o){
   return p.seguiments.filter(s => (s.valoracions||{})[o.id])
     .map(s => ({v:s.valoracions[o.id], trimestre:s.trimestre, data:s.data}));
 }
-/* Casella «Avaluació»: el grau d'assoliment de cada valoració registrada. */
+/* Casella «Avaluació»: el grau d'assoliment, sense trimestre ni data, que ja
+   consten a la fila. */
 function cellaAssolimentDoc(p, o){
-  const l = valoracionsObj(p, o);
-  if(!l.length) return "—";
-  return l.map(x => `<div><b>${esc(x.v)}</b><br><span class="orig">${esc(x.trimestre)} · ${dataCat(x.data)}</span></div>`)
-    .join('<div style="height:5px"></div>');
+  const v = valoracioObj(p, o);
+  return v ? `<b>${esc(v.v)}</b>` : "—";
 }
 
 function kv(rows){
@@ -220,8 +257,7 @@ function docCos(p, a){
   }).join("")}</tbody></table></section>`:""}
 
   ${ambObjectius?`<section data-sec="objectius"><h2>Proposta educativa · Objectius i avaluació</h2>
-  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%" data-aval="">Avaluació</th>`:""}</tr></thead>
-  <tbody>${p.objectius.map(o=>`<tr data-obj="${esc(o.id)}"><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td data-aval="">${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
+  ${taulaObjectiusDoc(p, a, ambAval)}</section>`:""}
 
   ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section data-sec="horari"><h2>Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>

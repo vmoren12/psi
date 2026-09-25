@@ -162,14 +162,19 @@ function detallSeguiment(sel){
     </div>` : ""}
 
     <div class="row g3">
-      <label class="field"><span class="lbl">Trimestre</span><select onchange="draft(${jq(sel.id)}).trimestre=this.value">${TRIMESTRES.map(t=>`<option ${d.trimestre===t?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
+      <label class="field"><span class="lbl">Trimestre</span><select onchange="draft(${jq(sel.id)}).trimestre=this.value;renderSeguiment()">${TRIMESTRES.map(t=>`<option ${d.trimestre===t?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
       <label class="field"><span class="lbl">Decisió</span><select onchange="draft(${jq(sel.id)}).decisio=this.value">${["Continuïtat","Revisió","Finalització"].map(t=>`<option ${d.decisio===t?"selected":""}>${t}</option>`).join("")}</select></label>
       <label class="field"><span class="lbl">Responsable</span><input type="text" value="${esc(d.autor)}" onchange="draft(${jq(sel.id)}).autor=this.value"></label>
     </div>
 
-    ${sel.objectius.map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)">
-      <div class="small" style="margin-bottom:7px">${esc(fraseText(o, a.alias))}</div>
-      <div class="scale">${ESCALA.map(e=>`<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`).join("")}</div>
+    ${grupsTrimestre(sel.objectius).map(([t, obs]) => `<div class="seg-tri${t===d.trimestre?" actual":""}">
+      <div class="grp-title"><span class="eyebrow">${esc(t || "Sense trimestre assignat")}</span>
+        <span class="muted small">${obs.length} objectiu${obs.length===1?"":"s"}</span>
+        ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>` : ""}</div>
+      ${obs.map(o=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)">
+        <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${esc(fraseText(o, a.alias))}</div>
+        <div class="scale">${ESCALA.map(e=>`<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`).join("")}</div>
+      </div>`).join("")}
     </div>`).join("")}
 
     <label class="field" style="margin-top:14px"><span class="lbl">Observacions i notes de seguiment</span>
@@ -191,7 +196,7 @@ function detallSeguiment(sel){
     `<div class="timeline">${sel.seguiments.slice().reverse().map(s=>{
       const items = Object.entries(s.valoracions||{}).map(kv=>{
         const o = sel.objectius.find(x=>x.id===kv[0]);
-        return o ? `<li class="small">${esc(o.materia||"—")}: <b>${esc(kv[1])}</b></li>` : "";
+        return o ? `<li class="small">${esc(o.materia||"—")} · ${esc(o.trimestre||"sense trimestre")}: <b>${esc(kv[1])}</b></li>` : "";
       }).filter(Boolean);
       return `<div class="ev">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b>${esc(s.trimestre)}</b><span class="muted small">${dataCat(s.data)}</span>
@@ -202,6 +207,14 @@ function detallSeguiment(sel){
       <div class="muted small mono">${esc(s.autor||"")}</div></div>`;
     }).join("")}</div>`}
   </div></div>`;
+}
+
+/* Objectius agrupats pel trimestre que tenen assignat al pas 6, en l'ordre
+   dels trimestres; els que no en tenen, al final. */
+function grupsTrimestre(obs){
+  const g = TRIMESTRES.map(t => [t, obs.filter(o => o.trimestre === t)]);
+  g.push(["", obs.filter(o => !TRIMESTRES.includes(o.trimestre))]);
+  return g.filter(([, l]) => l.length);
 }
 
 /* Es registra una entrada si hi ha alguna cosa a deixar constància: objectius

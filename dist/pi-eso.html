@@ -347,6 +347,10 @@ details.ce .ceb{padding:6px 14px 12px}
 .scale button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 
 
+/* Seguiment: objectius agrupats per trimestre; el del formulari es destaca. */
+.seg-tri{padding:2px 12px 4px;margin:0 -12px 10px;border-radius:var(--r)}
+.seg-tri.actual{background:var(--met-soft)}
+.seg-tri .grp-title{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
 /* ---------- mesures i suports (pas 4) ---------- */
 .note.alert{background:var(--alert-soft);border-color:#e2bfb3;color:#7a2d1d}
 .mes-item{border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:0 var(--r) var(--r) 0;padding:12px 13px;margin-bottom:10px;background:var(--surface)}
@@ -6059,14 +6063,19 @@ function detallSeguiment(sel){
     </div>` : ""}
 
     <div class="row g3">
-      <label class="field"><span class="lbl">Trimestre</span><select onchange="draft(${jq(sel.id)}).trimestre=this.value">${TRIMESTRES.map(t=>`<option ${d.trimestre===t?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
+      <label class="field"><span class="lbl">Trimestre</span><select onchange="draft(${jq(sel.id)}).trimestre=this.value;renderSeguiment()">${TRIMESTRES.map(t=>`<option ${d.trimestre===t?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
       <label class="field"><span class="lbl">Decisió</span><select onchange="draft(${jq(sel.id)}).decisio=this.value">${["Continuïtat","Revisió","Finalització"].map(t=>`<option ${d.decisio===t?"selected":""}>${t}</option>`).join("")}</select></label>
       <label class="field"><span class="lbl">Responsable</span><input type="text" value="${esc(d.autor)}" onchange="draft(${jq(sel.id)}).autor=this.value"></label>
     </div>
 
-    ${sel.objectius.map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)">
-      <div class="small" style="margin-bottom:7px">${esc(fraseText(o, a.alias))}</div>
-      <div class="scale">${ESCALA.map(e=>`<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`).join("")}</div>
+    ${grupsTrimestre(sel.objectius).map(([t, obs]) => `<div class="seg-tri${t===d.trimestre?" actual":""}">
+      <div class="grp-title"><span class="eyebrow">${esc(t || "Sense trimestre assignat")}</span>
+        <span class="muted small">${obs.length} objectiu${obs.length===1?"":"s"}</span>
+        ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>` : ""}</div>
+      ${obs.map(o=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)">
+        <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${esc(fraseText(o, a.alias))}</div>
+        <div class="scale">${ESCALA.map(e=>`<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`).join("")}</div>
+      </div>`).join("")}
     </div>`).join("")}
 
     <label class="field" style="margin-top:14px"><span class="lbl">Observacions i notes de seguiment</span>
@@ -6088,7 +6097,7 @@ function detallSeguiment(sel){
     `<div class="timeline">${sel.seguiments.slice().reverse().map(s=>{
       const items = Object.entries(s.valoracions||{}).map(kv=>{
         const o = sel.objectius.find(x=>x.id===kv[0]);
-        return o ? `<li class="small">${esc(o.materia||"—")}: <b>${esc(kv[1])}</b></li>` : "";
+        return o ? `<li class="small">${esc(o.materia||"—")} · ${esc(o.trimestre||"sense trimestre")}: <b>${esc(kv[1])}</b></li>` : "";
       }).filter(Boolean);
       return `<div class="ev">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b>${esc(s.trimestre)}</b><span class="muted small">${dataCat(s.data)}</span>
@@ -6099,6 +6108,14 @@ function detallSeguiment(sel){
       <div class="muted small mono">${esc(s.autor||"")}</div></div>`;
     }).join("")}</div>`}
   </div></div>`;
+}
+
+/* Objectius agrupats pel trimestre que tenen assignat al pas 6, en l'ordre
+   dels trimestres; els que no en tenen, al final. */
+function grupsTrimestre(obs){
+  const g = TRIMESTRES.map(t => [t, obs.filter(o => o.trimestre === t)]);
+  g.push(["", obs.filter(o => !TRIMESTRES.includes(o.trimestre))]);
+  return g.filter(([, l]) => l.length);
 }
 
 /* Es registra una entrada si hi ha alguna cosa a deixar constància: objectius
@@ -6190,16 +6207,53 @@ function cellaAvaluacioDoc(o){
 }
 
 /* Valoracions registrades al seguiment per a un objectiu, per ordre. */
+/* Taula d'objectius del document: una fila per objectiu, ordenades per
+   matèria i trimestre. La matèria i el trimestre surten dels camps de
+   l'objectiu (pas 6), encara que s'hagi redactat en text lliure, i les
+   caselles repetides es fusionen amb rowspan perquè cada matèria i cada
+   trimestre hi constin un sol cop. */
+function taulaObjectiusDoc(p, a, ambAval){
+  const ordM = m => { const i = p.materies.indexOf(m); return i < 0 ? (m ? 900 : 999) : i; };
+  const ordT = t => { const i = TRIMESTRES.indexOf(t); return i < 0 ? 99 : i; };
+  const obs = p.objectius.map((o, i) => ({o, i})).sort((x, y) =>
+    ordM(x.o.materia) - ordM(y.o.materia) || String(x.o.materia||"").localeCompare(String(y.o.materia||""), "ca")
+    || ordT(x.o.trimestre) - ordT(y.o.trimestre) || x.i - y.i).map(x => x.o);
+  const mat = o => o.materia || "", tri = o => o.trimestre || "";
+  const files = obs.map((o, i) => {
+    let cel = "";
+    if(i === 0 || mat(obs[i-1]) !== mat(o)){
+      let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o)) n++;
+      cel += `<td class="k" rowspan="${n}">${esc(mat(o) || "—")}</td>`;
+    }
+    if(i === 0 || mat(obs[i-1]) !== mat(o) || tri(obs[i-1]) !== tri(o)){
+      let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o) && tri(obs[i+n]) === tri(o)) n++;
+      cel += `<td rowspan="${n}">${esc(tri(o) || "—")}</td>`;
+    }
+    return `<tr data-obj="${esc(o.id)}">${cel}<td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${
+      ambAval ? `<td data-aval="">${cellaAssolimentDoc(p, o)}</td>` : ""}</tr>`;
+  }).join("");
+  return `<table><thead><tr><th style="width:15%">Matèria</th><th style="width:11%">Trimestre</th><th>Objectiu</th>
+    <th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:13%" data-aval="">Avaluació</th>`:""}</tr></thead>
+    <tbody>${files}</tbody></table>`;
+}
+
+/* Valoració que val per a un objectiu: la darrera registrada en un seguiment
+   del mateix trimestre que l'objectiu i, si no n'hi ha, la darrera de totes. */
+function valoracioObj(p, o){
+  const l = valoracionsObj(p, o);
+  if(!l.length) return null;
+  const mateix = l.filter(x => o.trimestre && x.trimestre === o.trimestre);
+  return (mateix.length ? mateix : l)[(mateix.length ? mateix : l).length - 1];
+}
 function valoracionsObj(p, o){
   return p.seguiments.filter(s => (s.valoracions||{})[o.id])
     .map(s => ({v:s.valoracions[o.id], trimestre:s.trimestre, data:s.data}));
 }
-/* Casella «Avaluació»: el grau d'assoliment de cada valoració registrada. */
+/* Casella «Avaluació»: el grau d'assoliment, sense trimestre ni data, que ja
+   consten a la fila. */
 function cellaAssolimentDoc(p, o){
-  const l = valoracionsObj(p, o);
-  if(!l.length) return "—";
-  return l.map(x => `<div><b>${esc(x.v)}</b><br><span class="orig">${esc(x.trimestre)} · ${dataCat(x.data)}</span></div>`)
-    .join('<div style="height:5px"></div>');
+  const v = valoracioObj(p, o);
+  return v ? `<b>${esc(v.v)}</b>` : "—";
 }
 
 function kv(rows){
@@ -6348,8 +6402,7 @@ function docCos(p, a){
   }).join("")}</tbody></table></section>`:""}
 
   ${ambObjectius?`<section data-sec="objectius"><h2>Proposta educativa · Objectius i avaluació</h2>
-  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%" data-aval="">Avaluació</th>`:""}</tr></thead>
-  <tbody>${p.objectius.map(o=>`<tr data-obj="${esc(o.id)}"><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td data-aval="">${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
+  ${taulaObjectiusDoc(p, a, ambAval)}</section>`:""}
 
   ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section data-sec="horari"><h2>Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>

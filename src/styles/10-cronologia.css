@@ -7,3 +7,7 @@
 .scale button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 
 
+/* Seguiment: objectius agrupats per trimestre; el del formulari es destaca. */
+.seg-tri{padding:2px 12px 4px;margin:0 -12px 10px;border-radius:var(--r)}
+.seg-tri.actual{background:var(--met-soft)}
+.seg-tri .grp-title{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}

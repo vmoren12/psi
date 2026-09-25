@@ -24,13 +24,21 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   redacció completa. El botó surt sempre just a sota del títol de l'apartat 5, també
   mentre s'edita, i no s'imprimeix; en un document editat a mà només es refà la
   graella i es respecten la resta d'edicions.
-- **Columna «Avaluació»** a la taula d'objectius del document, amb el grau
-  d'assoliment de cada valoració registrada al seguiment (trimestre i data).
-  La columna es refà sempre a partir del seguiment, també si l'apartat
-  d'objectius s'ha retocat a mà.
-  L'annex ja no les repeteix: hi queden la decisió i les observacions de cada
-  seguiment. Si els objectius no surten al document, l'annex les manté com fins
-  ara.
+- **Taula d'objectius del document reorganitzada**: columnes Matèria,
+  **Trimestre**, Objectiu, Instrument i evidència i **Avaluació**. Les files
+  s'ordenen per matèria i trimestre, i les caselles repetides de matèria i de
+  trimestre es fusionen. La matèria i el trimestre surten dels camps de
+  l'objectiu del pas 6, encara que estigui redactat en text lliure. La columna
+  Avaluació només porta el grau d'assoliment: el de la darrera valoració
+  registrada en un seguiment del mateix trimestre que l'objectiu o, si no n'hi
+  ha, el de la darrera de totes. Es refà sempre a partir del seguiment, també
+  si l'apartat s'ha retocat a mà. L'annex ja no repeteix les valoracions: hi
+  queden la decisió i les observacions de cada seguiment. Si els objectius no
+  surten al document, l'annex les manté com fins ara.
+- **Seguiment per trimestres**: a la fitxa de valoració, els objectius
+  s'agrupen pel trimestre que tenen assignat al pas 6, amb la matèria de
+  cadascun, i es destaca el grup del trimestre que s'està valorant. L'històric
+  indica el trimestre de cada objectiu valorat.
 - **Text lliure de l'objectiu** al pas 6: si s'escriu, substitueix la frase
   construïda amb els camps al document, al seguiment i al control de qualitat.
 - **Neteja totes les mesures** al pas 4, amb confirmació. Es mantenen les
