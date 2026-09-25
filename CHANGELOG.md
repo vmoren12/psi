@@ -27,7 +27,7 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 - **Taula d'objectius del document reorganitzada**: columnes Matèria,
   **Trimestre**, Objectiu, Instrument i evidència i **Avaluació**. Les files
   s'ordenen per matèria i trimestre, i les caselles repetides de matèria i de
-  trimestre es fusionen. La matèria i el trimestre surten dels camps de
+  trimestre es fusionen i queden centrades verticalment. La matèria i el trimestre surten dels camps de
   l'objectiu del pas 6, encara que estigui redactat en text lliure. La columna
   Avaluació només porta el grau d'assoliment: el de la darrera valoració
   registrada en un seguiment del mateix trimestre que l'objectiu o, si no n'hi
@@ -95,6 +95,9 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Canviat
 
+- La franja de passos de l'editor de PI **ja no s'encongeix** en desplaçar-se
+  cap avall: es manté sempre desplegada, amb el nom de cada pas, i només hi
+  apareix una ombra quan queda enganxada a dalt.
 - Carregar la proposta de mesures segons el perfil **ja no obre el pas 4**:
   des de la fitxa de l'alumne/a s'hi torna amb un avís de les mesures
   carregades, i des de qualsevol altre lloc es queda on era.

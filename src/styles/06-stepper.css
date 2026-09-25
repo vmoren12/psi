@@ -9,15 +9,9 @@
 .pi-ident{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
 .pi-ident .alias{font-family:var(--serif);font-size:19px}
 .pi-ident .pi-accions{display:flex;gap:7px;align-items:center}
-/* Enganxada: el bloc d'identitat es manté sencer i els passos es redueixen a
-   l'etiqueta «Pas N», que és l'única cosa que cal per moure's mentre es llegeix. */
+/* Enganxada: només una ombra que la separa del contingut. Els passos es
+   mantenen sempre sencers, amb el número i el nom. */
 .pi-bar.enganxada{border-bottom-color:var(--line);box-shadow:0 8px 14px -14px rgba(20,32,38,.55)}
-.pi-bar.enganxada .pi-ident{margin-bottom:3px}
-.pi-bar.enganxada .stepper{margin-bottom:10px;gap:5px}
-.pi-bar.enganxada .stepper button{min-height:0;padding:5px 11px}
-.pi-bar.enganxada .stepper .t{display:none}
-.pi-bar.enganxada .stepper .n{font-size:11.5px;text-transform:none;letter-spacing:.02em}
-.pi-bar.enganxada .stepper button[aria-current="true"] .n{color:#fff;font-weight:500}
 
 .stepper{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
 .stepper button{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);cursor:pointer;padding:8px 12px;text-align:left;transition:background .12s;min-height:46px}

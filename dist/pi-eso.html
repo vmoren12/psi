@@ -164,15 +164,9 @@ tbody tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--met)}
 .pi-ident{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
 .pi-ident .alias{font-family:var(--serif);font-size:19px}
 .pi-ident .pi-accions{display:flex;gap:7px;align-items:center}
-/* Enganxada: el bloc d'identitat es manté sencer i els passos es redueixen a
-   l'etiqueta «Pas N», que és l'única cosa que cal per moure's mentre es llegeix. */
+/* Enganxada: només una ombra que la separa del contingut. Els passos es
+   mantenen sempre sencers, amb el número i el nom. */
 .pi-bar.enganxada{border-bottom-color:var(--line);box-shadow:0 8px 14px -14px rgba(20,32,38,.55)}
-.pi-bar.enganxada .pi-ident{margin-bottom:3px}
-.pi-bar.enganxada .stepper{margin-bottom:10px;gap:5px}
-.pi-bar.enganxada .stepper button{min-height:0;padding:5px 11px}
-.pi-bar.enganxada .stepper .t{display:none}
-.pi-bar.enganxada .stepper .n{font-size:11.5px;text-transform:none;letter-spacing:.02em}
-.pi-bar.enganxada .stepper button[aria-current="true"] .n{color:#fff;font-weight:500}
 
 .stepper{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
 .stepper button{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);cursor:pointer;padding:8px 12px;text-align:left;transition:background .12s;min-height:46px}
@@ -535,6 +529,8 @@ details.ce .ceb{padding:6px 14px 12px}
 .doc .mes-grup{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3f8c9e;margin:8px 0 2px}
 .doc-mesures-eina{font-family:var(--sans);margin:0 0 6px;display:flex;justify-content:flex-end}
 .doc-edits{flex-basis:100%;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+/* Caselles fusionades (rowspan) de la taula d'objectius: centrades verticalment. */
+.doc [data-sec="objectius"] td[rowspan]{vertical-align:middle}
 /* ---------- avís permanent: l'aplicació no és oficial ----------
    Barra fixa a baix de tot. Es pot amagar, però no desapareix mai del tot:
    en queda el botó rodó de la dreta, que la torna a obrir. L'alçada que ocupa
@@ -636,8 +632,6 @@ details.ce .ceb{padding:6px 14px 12px}
   .nav .lb{display:block}
   .rail-foot{display:none}
   .topbar{padding:13px 16px 11px;position:sticky}
-  .pi-bar.enganxada .pi-ident .curs-grup,
-  .pi-bar.enganxada .pi-ident .codi-pi{display:none}
   .topbar h1{font-size:20px}
   .topbar .sub{display:none}
   .topbar .actions{margin-left:0;width:100%;order:3}
@@ -3434,67 +3428,18 @@ function mesuraBarres(){
   const t = $(".topbar");
   if(t) arrel.style.setProperty("--topbar-h", t.offsetHeight + "px");
   const b = $("#pi-bar");
-  /* Es mesura sempre desplegada, que és quan és més alta: així el panell de
-     control de qualitat no li queda mai a sota, i quan la franja es compacta
-     només hi guanya una mica d'aire. */
-  if(b){
-    const era = b.classList.contains("enganxada");
-    if(era) b.classList.remove("enganxada");
-    arrel.style.setProperty("--pibar-h", b.offsetHeight + "px");
-    if(era) b.classList.add("enganxada");
-  } else arrel.style.setProperty("--pibar-h", "0px");
-  /* Un frame de marge: qui pinta sovint desplaça la pàgina tot seguit
-     (go(), els botons dels passos) i el mode compacte depèn d'on s'ha
-     quedat el desplaçament, no d'on era abans. */
+  if(b) arrel.style.setProperty("--pibar-h", b.offsetHeight + "px");
+  else arrel.style.setProperty("--pibar-h", "0px");
   marcaBarraPi();
-  requestAnimationFrame(marcaBarraPi);
 }
-/* La franja passa a mode compacte quan toca la barra superior i s'hi continua
-   baixant: els passos hi queden com a etiquetes «Pas N» i deixen lloc al
-   contingut. Es torna a desplegar tan bon punt es puja, sense haver d'arribar
-   fins a dalt de tot: qui puja sol anar a buscar els passos.
-
-   Es mira el recorregut seguit en una mateixa direcció, no cada esdeveniment
-   solt: així un dit o una rodeta imprecisos no la fan parpellejar. Cap amunt
-   n'hi ha prou amb un gest mínim, i cap avall se'n demana un de decidit,
-   perquè en cas de dubte val més ensenyar els passos que amagar-los. */
-const PUJA_BARRA = 5;    /* píxels seguits cap amunt que la despleguen */
-const BAIXA_BARRA = 20;  /* píxels seguits cap avall que la compacten */
-let ultimaYBarra = -1;   /* on era el desplaçament a l'última comprovació */
-let recorregutBarra = 0; /* píxels seguits en la mateixa direcció */
-let barraOcupada = false;
-
-/* Canviar l'alçada de la franja mou tot el que té a sota, i el navegador ho
-   compensa desplaçant la pàgina pel seu compte. Aquest desplaçament no és el
-   gest de ningú: si es comptessin, la franja es tornaria a canviar tot sola i no
-   pararia mai. Per això es deixa passar un frame i es torna a prendre la
-   referència abans de decidir res més. */
-function commutaBarra(b, compacta){
-  if(b.classList.contains("enganxada") === compacta) return;
-  b.classList.toggle("enganxada", compacta);
-  recorregutBarra = 0;
-  barraOcupada = true;
-  const allibera = () => {
-    ultimaYBarra = Math.max(0, window.scrollY || window.pageYOffset || 0);
-    barraOcupada = false;
-  };
-  requestAnimationFrame(allibera);
-  setTimeout(allibera, 300);   /* xarxa per si la pestanya no pinta (segon pla) */
-}
+/* La franja va sempre desplegada, amb el nom de cada pas visible. Quan toca
+   la barra superior només hi apareix una ombra que la separa del contingut
+   que hi passa per sota; no canvia d'alçada, de manera que res no es mou. */
 function marcaBarraPi(){
-  const b = $("#pi-bar"); if(!b || barraOcupada) return;
+  const b = $("#pi-bar"); if(!b) return;
   const t = $(".topbar");
   const lim = (t ? t.offsetHeight : 92) + 1;
-  const y = Math.max(0, window.scrollY || window.pageYOffset || 0);
-  const pas = ultimaYBarra < 0 ? 0 : y - ultimaYBarra;
-  ultimaYBarra = y;
-  if(pas > 0) recorregutBarra = recorregutBarra > 0 ? recorregutBarra + pas : pas;
-  else if(pas < 0) recorregutBarra = recorregutBarra < 0 ? recorregutBarra + pas : pas;
-  /* Mentre la franja és al seu lloc, sense tocar la barra superior, sempre va
-     desplegada: no hi ha res a guanyar amagant els passos. */
-  if(b.getBoundingClientRect().top > lim){ recorregutBarra = 0; commutaBarra(b, false); return; }
-  if(recorregutBarra <= -PUJA_BARRA) commutaBarra(b, false);
-  else if(recorregutBarra >= BAIXA_BARRA) commutaBarra(b, true);
+  b.classList.toggle("enganxada", b.getBoundingClientRect().top <= lim && (window.scrollY || 0) > 0);
 }
 window.addEventListener("scroll", marcaBarraPi, {passive:true});
 window.addEventListener("resize", mesuraBarres);

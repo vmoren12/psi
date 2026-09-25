@@ -18,8 +18,6 @@
   .nav .lb{display:block}
   .rail-foot{display:none}
   .topbar{padding:13px 16px 11px;position:sticky}
-  .pi-bar.enganxada .pi-ident .curs-grup,
-  .pi-bar.enganxada .pi-ident .codi-pi{display:none}
   .topbar h1{font-size:20px}
   .topbar .sub{display:none}
   .topbar .actions{margin-left:0;width:100%;order:3}

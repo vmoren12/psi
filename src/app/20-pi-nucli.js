@@ -166,67 +166,18 @@ function mesuraBarres(){
   const t = $(".topbar");
   if(t) arrel.style.setProperty("--topbar-h", t.offsetHeight + "px");
   const b = $("#pi-bar");
-  /* Es mesura sempre desplegada, que és quan és més alta: així el panell de
-     control de qualitat no li queda mai a sota, i quan la franja es compacta
-     només hi guanya una mica d'aire. */
-  if(b){
-    const era = b.classList.contains("enganxada");
-    if(era) b.classList.remove("enganxada");
-    arrel.style.setProperty("--pibar-h", b.offsetHeight + "px");
-    if(era) b.classList.add("enganxada");
-  } else arrel.style.setProperty("--pibar-h", "0px");
-  /* Un frame de marge: qui pinta sovint desplaça la pàgina tot seguit
-     (go(), els botons dels passos) i el mode compacte depèn d'on s'ha
-     quedat el desplaçament, no d'on era abans. */
+  if(b) arrel.style.setProperty("--pibar-h", b.offsetHeight + "px");
+  else arrel.style.setProperty("--pibar-h", "0px");
   marcaBarraPi();
-  requestAnimationFrame(marcaBarraPi);
 }
-/* La franja passa a mode compacte quan toca la barra superior i s'hi continua
-   baixant: els passos hi queden com a etiquetes «Pas N» i deixen lloc al
-   contingut. Es torna a desplegar tan bon punt es puja, sense haver d'arribar
-   fins a dalt de tot: qui puja sol anar a buscar els passos.
-
-   Es mira el recorregut seguit en una mateixa direcció, no cada esdeveniment
-   solt: així un dit o una rodeta imprecisos no la fan parpellejar. Cap amunt
-   n'hi ha prou amb un gest mínim, i cap avall se'n demana un de decidit,
-   perquè en cas de dubte val més ensenyar els passos que amagar-los. */
-const PUJA_BARRA = 5;    /* píxels seguits cap amunt que la despleguen */
-const BAIXA_BARRA = 20;  /* píxels seguits cap avall que la compacten */
-let ultimaYBarra = -1;   /* on era el desplaçament a l'última comprovació */
-let recorregutBarra = 0; /* píxels seguits en la mateixa direcció */
-let barraOcupada = false;
-
-/* Canviar l'alçada de la franja mou tot el que té a sota, i el navegador ho
-   compensa desplaçant la pàgina pel seu compte. Aquest desplaçament no és el
-   gest de ningú: si es comptessin, la franja es tornaria a canviar tot sola i no
-   pararia mai. Per això es deixa passar un frame i es torna a prendre la
-   referència abans de decidir res més. */
-function commutaBarra(b, compacta){
-  if(b.classList.contains("enganxada") === compacta) return;
-  b.classList.toggle("enganxada", compacta);
-  recorregutBarra = 0;
-  barraOcupada = true;
-  const allibera = () => {
-    ultimaYBarra = Math.max(0, window.scrollY || window.pageYOffset || 0);
-    barraOcupada = false;
-  };
-  requestAnimationFrame(allibera);
-  setTimeout(allibera, 300);   /* xarxa per si la pestanya no pinta (segon pla) */
-}
+/* La franja va sempre desplegada, amb el nom de cada pas visible. Quan toca
+   la barra superior només hi apareix una ombra que la separa del contingut
+   que hi passa per sota; no canvia d'alçada, de manera que res no es mou. */
 function marcaBarraPi(){
-  const b = $("#pi-bar"); if(!b || barraOcupada) return;
+  const b = $("#pi-bar"); if(!b) return;
   const t = $(".topbar");
   const lim = (t ? t.offsetHeight : 92) + 1;
-  const y = Math.max(0, window.scrollY || window.pageYOffset || 0);
-  const pas = ultimaYBarra < 0 ? 0 : y - ultimaYBarra;
-  ultimaYBarra = y;
-  if(pas > 0) recorregutBarra = recorregutBarra > 0 ? recorregutBarra + pas : pas;
-  else if(pas < 0) recorregutBarra = recorregutBarra < 0 ? recorregutBarra + pas : pas;
-  /* Mentre la franja és al seu lloc, sense tocar la barra superior, sempre va
-     desplegada: no hi ha res a guanyar amagant els passos. */
-  if(b.getBoundingClientRect().top > lim){ recorregutBarra = 0; commutaBarra(b, false); return; }
-  if(recorregutBarra <= -PUJA_BARRA) commutaBarra(b, false);
-  else if(recorregutBarra >= BAIXA_BARRA) commutaBarra(b, true);
+  b.classList.toggle("enganxada", b.getBoundingClientRect().top <= lim && (window.scrollY || 0) > 0);
 }
 window.addEventListener("scroll", marcaBarraPi, {passive:true});
 window.addEventListener("resize", mesuraBarres);
