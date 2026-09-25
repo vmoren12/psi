@@ -1,7 +1,7 @@
 /* ---------------------------------------------------------------------------
    Proposta de mesures a partir dels perfils de l'alumne/a
    ---------------------------------------------------------------------------
-   Carrega al pas 4 la suma de les plantilles dels perfils marcats a la fitxa.
+   Carrega al pla la suma de les plantilles dels perfils marcats a la fitxa.
    És una proposta professional de partida, no una prescripció: tot arriba com
    a llista marcable i editable, i cap mesura entra al pla sense validar-la.
    Els suports intensius s'ofereixen sempre desmarcats perquè requereixen
@@ -75,7 +75,7 @@ function propostaModalHTML(){
            ${seus.map(x=>`<option value="${x.id}" ${pp.pi===x.id?"selected":""}>${esc(x.id)} · ${esc(x.curs)} · ${esc(x.tipus==="continguts"?"curricular":"metodològic")}</option>`).join("")}</select></label>
        <span class="bm-count" id="pp-count"></span>
        <button class="btn sm ghost" onclick="closeModal()">Cancel·la</button>
-       <button class="btn sm primary" id="pp-ok" onclick="aplicaProposta()">Carrega-les al pas 4</button>
+       <button class="btn sm primary" id="pp-ok" onclick="aplicaProposta()">Carrega-les al pla</button>
      </div>` : `<div class="bm-dest">
        <span class="muted small" style="flex:1;min-width:200px">${esc(a.alias)} encara no té cap pla. Cal crear-lo per poder-hi carregar la proposta.</span>
        <span class="bm-count" id="pp-count"></span>
@@ -101,8 +101,11 @@ async function creaPiPerProposta(){
   closeModal();
   render();
   const n = items.length;
-  toast(n ? `Pla creat amb ${n===1 ? "una mesura" : n + " mesures"} de la proposta.`
-          : "Pla creat, sense cap mesura de la proposta.");
+  const msg = n ? `Pla ${p.id} creat amb ${n===1 ? "una mesura" : n + " mesures"} de la proposta.`
+                : `Pla ${p.id} creat, sense cap mesura de la proposta.`;
+  /* Des de la fitxa, s'hi torna sempre: és on era l'usuari. */
+  if(pp.fitxa){ editaAlumne(pp.alumne); toast(msg); return; }
+  toast(msg);
   const on = await obreDlg("Pla creat",
     `<p>S'ha creat el pla <b>${esc(p.id)}</b> de <b>${esc(a.alias)}</b>${
       n ? ` amb <b>${n===1 ? "una mesura" : n + " mesures"}</b> de la proposta, ja carregades al pas 4` : ""
@@ -169,7 +172,7 @@ function comptaProposta(){
   const c = $("#pp-count");
   if(c) c.textContent = n + (n===1 ? " mesura marcada" : " mesures marcades");
   const b = $("#pp-ok");
-  if(b){ b.textContent = n ? `Carrega ${n===1?"la mesura":"les "+n+" mesures"} al pas 4` : "Carrega-les al pas 4"; b.disabled = !n; }
+  if(b){ b.textContent = n ? `Carrega ${n===1?"la mesura":"les "+n+" mesures"} al pla` : "Carrega-les al pla"; b.disabled = !n; }
 }
 
 function aplicaProposta(){
@@ -185,10 +188,11 @@ function aplicaProposta(){
   });
   desa();
   closeModal();
-  state.currentPi = p.id;
-  state.step = 4;
-  go("pi");
-  toast(n ? `${n} mesur${n===1?"a incorporada":"es incorporades"} al pla. Revisa-les i concreta-les.`
-          : "Les mesures marcades ja constaven al pla.");
+  const msg = n ? `${n===1 ? "Una mesura carregada" : n + " mesures carregades"} al pla ${p.id}.`
+                : "Les mesures marcades ja constaven al pla.";
+  /* Carregar la proposta no fa navegar enlloc: des de la fitxa de l'alumne/a
+     s'hi torna, i des de qualsevol altre lloc es queda on era, repintat. */
+  if(pp.fitxa){ render(); editaAlumne(pp.alumne); }
+  else render();
+  toast(msg);
 }
-

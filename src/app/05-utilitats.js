@@ -39,11 +39,15 @@ function frase(o, alias){
   const crit = (o.valor && o.unitat) ? `<span class="fill">${esc(o.valor)} ${esc(o.unitat)}</span>` : '<span class="blank">criteri d\u2019assoliment</span>';
   return `Al final del ${b(o.trimestre,"trimestre")}, ${esc(alias||"l\u2019alumne/a")} serà capaç de ${b(o.conducta,"conducta observable")} ${b(o.suport,"suport o condició")} ${b(o.context,"context")}, assolint ${crit}.`;
 }
+/* Text lliure de l'objectiu: si s'ha escrit, substitueix la frase construïda
+   amb els camps a tot arreu (document, seguiment i control de qualitat). */
+const textLliure = o => (o.lliure || "").trim();
 function fraseText(o, alias){
+  if(textLliure(o)) return textLliure(o);
   const d = document.createElement("div"); d.innerHTML = frase(o, alias);
   return d.textContent.replace(/\s+/g," ").trim();
 }
-const objCompleta = o => o.conducta && o.valor && o.unitat && o.trimestre;
+const objCompleta = o => !!textLliure(o) || !!(o.conducta && o.valor && o.unitat && o.trimestre);
 
 /* Els camps «Instrument d'avaluació» i «Evidència» d'un objectiu admeten més
    d'una entrada i es desen com a llista (instruments[] i evidencies[]). Els

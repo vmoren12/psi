@@ -20,6 +20,9 @@ function nouPiObj(alumneId){
     /* Si els objectius mesurables surten a l'apartat 5 del document del PI.
        Es decideix al pas 6 i, per defecte, hi surten. */
     docObjectius: true,
+    /* Graella de mesures del document amb només els títols, i document
+       editat a mà a la previsualització ({html, data}) o null si no n'hi ha. */
+    docMesuresSimples: false, docEdit: null,
     dataInici: avui(), proximaRevisio: "",
     conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},
     reunionsFamilia: [], reunionsProf: [], continuitat: [],

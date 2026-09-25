@@ -2,13 +2,16 @@
 function obreDoc(id){
   const p = pi(id), a = alumne(p.alumneId);
   state.docPi = id;
+  docEditant = false;
   openModal("PI · " + a.alias, doc(p, a), false, true);
 }
 /* Repinta el document obert sense perdre la posició de lectura. */
 function refrescaDoc(){
   if(!state.docPi || !$("#modal").classList.contains("on")) return;
   const p = pi(state.docPi);
-  if(p) $("#modal-body").innerHTML = doc(p, alumne(p.alumneId));
+  if(!p) return;
+  $("#modal-body").innerHTML = doc(p, alumne(p.alumneId));
+  aplicaEdicioDoc();
 }
 /* Una fila de la taula de mesures del document oficial: agrupa les mesures
    triades per a una destinació i hi afegeix la concreció escrita. */
@@ -16,6 +19,12 @@ function cellaMesuresDoc(p, dest, etiqueta){
   const items = p.adaptacions.filter(x => x.materia===dest);
   const txt = (p.mesures[dest]||"").trim();
   if(!items.length && !txt) return "";
+  /* Graella simplificada: només el títol de cada mesura. */
+  if(p.docMesuresSimples){
+    if(!items.length) return "";
+    return `<tr><td class="k">${esc(etiqueta)}</td><td><ul style="margin:0;padding-left:16px">${
+      items.map(x => `<li>${esc(x.titol)}</li>`).join("")}</ul></td></tr>`;
+  }
   return `<tr><td class="k">${esc(etiqueta)}</td><td>
     ${items.length ? `<ul style="margin:0 0 ${txt?"8px":"0"};padding-left:16px">${items.map(x=>
       `<li><b>${esc(x.titol)}</b> <i>(${esc(x.intensitat)})</i>${x.text?`<br>${esc(x.text)}`:""}</li>`).join("")}</ul>` : ""}
@@ -38,10 +47,43 @@ function cellaAvaluacioDoc(o){
   return parts.length ? parts.join('<div style="height:6px"></div>') : "—";
 }
 
+/* Valoracions registrades al seguiment per a un objectiu, per ordre. */
+function valoracionsObj(p, o){
+  return p.seguiments.filter(s => (s.valoracions||{})[o.id])
+    .map(s => ({v:s.valoracions[o.id], trimestre:s.trimestre, data:s.data}));
+}
+/* Casella «Avaluació»: el grau d'assoliment de cada valoració registrada. */
+function cellaAssolimentDoc(p, o){
+  const l = valoracionsObj(p, o);
+  if(!l.length) return "—";
+  return l.map(x => `<div><b>${esc(x.v)}</b><br><span class="orig">${esc(x.trimestre)} · ${dataCat(x.data)}</span></div>`)
+    .join('<div style="height:5px"></div>');
+}
+
 function kv(rows){
   return `<table><tbody>${rows.map(([k,v])=>`<tr><td class="k">${k}</td><td>${v||"—"}</td></tr>`).join("")}</tbody></table>`;
 }
 function doc(p, a){
+  const logos = state.logos || [];
+  const corrents = logos.filter(l => l.totes), pag1 = logos.filter(l => !l.totes);
+  const filaLogos = (arr, cls) => `<div class="logos${cls?" "+cls:""}">${arr.map(l=>`<img src="${esc(l.src)}" alt="${esc(l.nom||"Logo del centre")}">`).join("")}</div>`;
+  return `<div class="doc${corrents.length ? " cap-corrent" : ""}">
+  ${einesLogos()}
+  ${einesDoc(p)}
+  <table class="fulls">
+  <thead><tr><td><div class="marge-dalt"></div>${corrents.length ? filaLogos(corrents) : ""}</td></tr></thead>
+  <tbody><tr><td>
+  ${pag1.length ? filaLogos(pag1, corrents.length ? "" : "puja") : ""}
+  <div class="doc-cos" id="doc-cos">${p.docEdit && p.docEdit.html ? netejaHtmlDoc(p.docEdit.html) : docCos(p, a)}</div>
+  </td></tr></tbody>
+  <tfoot><tr><td><div class="marge-baix"></div></td></tr></tfoot>
+  </table>
+  </div>`;
+}
+
+/* Contingut del document generat a partir del pla. És la part que es pot
+   editar a mà des de la previsualització (vegeu 51-document-edicio.js). */
+function docCos(p, a){
   const prof = Object.entries(p.prof).filter(([i,v])=>v && v.on).map(([i,v])=>`<li>${esc(PROFESSIONALS[i])}${v.detall?": "+esc(v.detall):""}</li>`).join("");
   /* Una matèria surt al document si s'hi ha prioritzat algun criteri o saber,
      si s'hi han escrit criteris propis o si s'hi ha adaptat una competència
@@ -52,15 +94,9 @@ function doc(p, a){
         || (st.sabersSense||[]).length || (st.sabers||[]).length || st.propis
         || Object.values(st.adaptCE||{}).some(v => (v||"").trim());
   });
-  const logos = state.logos || [];
-  const corrents = logos.filter(l => l.totes), pag1 = logos.filter(l => !l.totes);
-  const filaLogos = (arr, cls) => `<div class="logos${cls?" "+cls:""}">${arr.map(l=>`<img src="${esc(l.src)}" alt="${esc(l.nom||"Logo del centre")}">`).join("")}</div>`;
-  return `<div class="doc${corrents.length ? " cap-corrent" : ""}">
-  ${einesLogos()}
-  <table class="fulls">
-  <thead><tr><td><div class="marge-dalt"></div>${corrents.length ? filaLogos(corrents) : ""}</td></tr></thead>
-  <tbody><tr><td>
-  ${pag1.length ? filaLogos(pag1, corrents.length ? "" : "puja") : ""}
+  const ambObjectius = p.objectius.length && p.docObjectius!==false;
+  const ambAval = ambObjectius && p.objectius.some(o => valoracionsObj(p, o).length);
+  return `
   <div class="head">
     <div style="flex:1;min-width:200px">
       <div class="centre">${esc(state.centre||"[Centre educatiu]")}</div>
@@ -105,6 +141,7 @@ function doc(p, a){
   <ul>${prof || "<li>—</li>"}</ul></section>
 
   <section><h2>5. Proposta educativa · Mesures i suports</h2>
+  ${p.adaptacions.length ? `<div class="doc-eina no-print" contenteditable="false"><button class="btn sm ghost" onclick="commutaMesuresSimples()">${p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button></div>` : ""}
   <table><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
   <tbody>
   ${cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")}
@@ -172,9 +209,9 @@ function doc(p, a){
     return `<tr><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
   }).join("")}</tbody></table></section>`:""}
 
-  ${p.objectius.length && p.docObjectius!==false?`<section><h2>5. Proposta educativa · Objectius i avaluació</h2>
-  <table><thead><tr><th style="width:22%">Matèria</th><th>Objectiu</th><th style="width:24%">Instrument i evidència</th></tr></thead>
-  <tbody>${p.objectius.map(o=>`<tr><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td></tr>`).join("")}</tbody></table></section>`:""}
+  ${ambObjectius?`<section><h2>5. Proposta educativa · Objectius i avaluació</h2>
+  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%">Avaluació</th>`:""}</tr></thead>
+  <tbody>${p.objectius.map(o=>`<tr><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td>${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
 
   ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section><h2>5. Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>
@@ -208,17 +245,13 @@ function doc(p, a){
   <tbody>${p.continuitat.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>
 
-  ${p.seguiments.length?`<section><h2>Annex · Valoració del grau d'assoliment dels objectius</h2>
+  ${p.seguiments.length?`<section><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
   ${p.seguiments.map(s=>`<h3>${esc(s.trimestre)} — ${dataCat(s.data)} · ${esc(s.decisio)}</h3>
-    <ul>${Object.entries(s.valoracions).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(o.conducta)}</li>`:"";}).join("")}</ul>
-    ${s.observacions?`<p>${esc(s.observacions)}</p>`:""}`).join("")}</section>`:""}
+    ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(fraseText(o, a.alias))}</li>`:"";}).join("")}</ul>`}
+    ${s.observacions?`<p>${esc(s.observacions)}</p>`:(ambObjectius?`<p class="orig">Sense observacions.</p>`:"")}`).join("")}</section>`:""}
 
   <div class="foot">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
-  Elements curriculars extrets del Decret 175/2022, de 27 de setembre, d'ordenació dels ensenyaments de l'educació bàsica.</div>
-  </td></tr></tbody>
-  <tfoot><tr><td><div class="marge-baix"></div></td></tr></tfoot>
-  </table>
-  </div>`;
+  Elements curriculars extrets del Decret 175/2022, de 27 de setembre, d'ordenació dels ensenyaments de l'educació bàsica.</div>`;
 }
 function taulaDocReunions(titol, arr){
   return `<section><h2>${titol}</h2>

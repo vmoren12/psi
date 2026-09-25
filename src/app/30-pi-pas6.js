@@ -30,7 +30,9 @@ function pas6(p, a){
     ${p.objectius.length===0 ? `<div class="empty" style="padding:26px 14px"><b>Encara no hi ha cap objectiu</b>Afegeix-ne un i completa la frase; es construeix sola a mesura que omples els camps.</div>` : ""}
 
     ${p.objectius.map(o=>`<div class="obj-item">
-      <div class="composer">${frase(o, a.alias)}</div>
+      <div class="composer">${textLliure(o)
+        ? `${esc(textLliure(o))}<div class="small muted" style="margin-top:6px;font-family:var(--sans)">S'usa el <b>text lliure</b>. Esborra'l per tornar a la frase construïda amb els camps.</div>`
+        : frase(o, a.alias)}</div>
       <div class="row g3">
         <label class="field" style="margin-bottom:9px"><span class="lbl">Matèria</span><select onchange="upR(p=>ob('${o.id}').materia=this.value)"><option value="">—</option>${p.materies.map(m=>`<option ${o.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</select></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Trimestre</span><select onchange="upR(p=>ob('${o.id}').trimestre=this.value)"><option value="">—</option>${TRIMESTRES.map(t=>`<option ${o.trimestre===t?"selected":""}>${t}</option>`).join("")}</select></label>
@@ -49,6 +51,8 @@ function pas6(p, a){
         <label class="field" style="margin-bottom:9px"><span class="lbl">Valor</span><input type="text" value="${esc(o.valor)}" onchange="upR(p=>ob('${o.id}').valor=this.value)" placeholder="4"></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Unitat</span><input type="text" value="${esc(o.unitat)}" onchange="upR(p=>ob('${o.id}').unitat=this.value)" placeholder="de cada 5 textos"></label>
       </div>
+      <label class="field" style="margin-bottom:9px"><span class="lbl">Text lliure de l'objectiu (opcional)</span>
+        <textarea rows="2" onchange="upR(p=>ob('${o.id}').lliure=this.value)" placeholder="Si ho escrius aquí, aquest text substitueix la frase construïda amb els camps d'aquest objectiu.">${esc(o.lliure||"")}</textarea></label>
       ${campLlistaObj(o, "instrument", "Instruments d'avaluació", "Registre de lectura setmanal")}
       ${campLlistaObj(o, "evidencia", "Evidències", "Full de lectura amb la frase resum")}
       <button class="btn sm ghost danger" onclick="upR(p=>p.objectius=p.objectius.filter(x=>x.id!=='${o.id}'))">Elimina l'objectiu</button>
@@ -290,6 +294,6 @@ function triaSuggeriment(text){
 function ob(id){ return P().objectius.find(o=>o.id===id); }
 function afegeixObjectiu(){
   upR(p => p.objectius.push({id:uid('OB'), materia:p.materies[0]||'', conducta:'', suport:'', context:'',
-                             valor:'', unitat:'', trimestre:'', instruments:[''], evidencies:['']}));
+                             valor:'', unitat:'', trimestre:'', lliure:'', instruments:[''], evidencies:['']}));
 }
 

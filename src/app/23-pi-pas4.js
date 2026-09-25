@@ -32,7 +32,8 @@ function pas4(p, a){
   <div class="card"><div class="card-h"><span class="num">5</span><h2>Proposta educativa · Mesures i suports</h2>
     ${(a.perfils||[]).some(x => plantillaPerfil(x))
       ? `<button class="btn sm" onclick="dialegProposta('${p.alumneId}')">Proposta segons el perfil</button>` : ""}
-    <button class="btn primary sm" onclick="obreBanc('${esc(DEST_TOTES)}')">Banc de mesures</button></div><div class="card-b">
+    <button class="btn primary sm" onclick="obreBanc('${esc(DEST_TOTES)}')">Banc de mesures</button>
+    ${total ? `<button class="btn sm ghost danger" onclick="netejaMesures()">Neteja totes les mesures</button>` : ""}</div><div class="card-b">
     <div class="note info" style="margin-bottom:14px">Selecciona ${prim?"les àrees":"les matèries, àmbits o projectes"} ${prim?"afectades":"afectats"} pel pla. Per a cadascuna, descriu les mesures i els suports <b>universals, addicionals i/o intensius</b> que es preveuen utilitzar. Pots triar-los del banc de mesures del Departament o escriure'n de propis.</div>
     <div class="field" data-qc="materies"><span class="lbl">${prim?"Àrees d'educació primària (annex 2 del Decret 175/2022)":"Matèries del currículum (Decret 175/2022)"}</span>
       <div class="chips">${matsEtapa(p).map(m=>`<button type="button" class="chip" aria-pressed="${sel.includes(m)}" onclick="toggleMateria(${jq(m)})">${esc(m)}</button>`).join("")}</div>
@@ -111,6 +112,24 @@ function fitxaMesuraPI(p, x){
 
 function itemMes(id){ return P().adaptacions.find(x => x.id===id); }
 function treuMesura(id){ upR(p => p.adaptacions = p.adaptacions.filter(x => x.id!==id)); toast("Mesura treta del pla."); }
+/* Treu d'una tirada totes les mesures carregades al pla. Les concrecions
+   escrites per matèria i la selecció de matèries es mantenen: són feina
+   pròpia i no depenen de les mesures triades. */
+async function netejaMesures(){
+  const p = P(), n = p.adaptacions.length;
+  if(!n) return;
+  const c = comptaIntensitats(p);
+  const ok = await confirmaEsborrat("Neteja totes les mesures",
+    `Es trauran del pla <b>${esc(p.id)}</b> ${n===1 ? "la mesura carregada" : `les <b>${n}</b> mesures carregades`}:`,
+    [c.Universal ? `${c.Universal} universal${c.Universal===1?"":"s"}` : "",
+     c.Addicional ? `${c.Addicional} addicional${c.Addicional===1?"":"s"}` : "",
+     c.Intensiva ? `${c.Intensiva} intensiv${c.Intensiva===1?"a":"es"}` : ""].filter(Boolean),
+    {peu:"Les matèries seleccionades i els textos de concreció de cada matèria es mantenen. No es pot desfer.",
+     confirma:"Neteja-les"});
+  if(!ok) return;
+  upR(p => p.adaptacions = []);
+  toast(n===1 ? "S'ha tret la mesura del pla." : `S'han tret les ${n} mesures del pla.`);
+}
 function mesuraLliure(dest){
   upR(p => p.adaptacions.push({id:uid("A"), adId:"", titol:"Mesura pròpia", text:"",
       materia:dest||DEST_TOTES, tipus:TIPUS_MESURA[0], bloc:"", intensitat:"Universal", concrecio:""}));

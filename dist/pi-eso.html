@@ -519,6 +519,16 @@ details.ce .ceb{padding:6px 14px 12px}
 .doc .cloenda .segell{margin:0 auto}
 .doc .segell{width:48mm;min-height:36mm;border:1px dashed #a9b2b7;border-radius:4px;display:flex;align-items:flex-end;justify-content:center;padding:0 6px 6px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#939ca1}
 .doc .foot{margin-top:34px;border-top:1px solid #d9dedb;padding-top:8px;font-family:var(--mono);font-size:10px;color:#8b959a;letter-spacing:.06em}
+
+/* Edició del document a la previsualització */
+.doc-cos[contenteditable="true"]{outline:2px dashed #b9d6cb;outline-offset:8px;border-radius:2px}
+.doc-cos[contenteditable="true"] section{position:relative}
+.doc-cos[contenteditable="true"] section:hover{box-shadow:0 0 0 1px #d9dedb}
+.doc-treu{position:absolute;top:-2px;right:-4px;z-index:1;min-height:26px;min-width:26px;padding:0 7px;
+  font:600 15px/1 var(--sans);color:var(--alert);background:var(--surface);border:1px solid var(--line2);
+  border-radius:var(--r);cursor:pointer}
+.doc-treu:hover{background:#fbeceb}
+.doc-eina{font-family:var(--sans);margin:0 0 6px;display:flex;justify-content:flex-end}
 /* ---------- avís permanent: l'aplicació no és oficial ----------
    Barra fixa a baix de tot. Es pot amagar, però no desapareix mai del tot:
    en queda el botó rodó de la dreta, que la torna a obrir. L'alçada que ocupa
@@ -1485,6 +1495,9 @@ function nouPiObj(alumneId){
     /* Si els objectius mesurables surten a l'apartat 5 del document del PI.
        Es decideix al pas 6 i, per defecte, hi surten. */
     docObjectius: true,
+    /* Graella de mesures del document amb només els títols, i document
+       editat a mà a la previsualització ({html, data}) o null si no n'hi ha. */
+    docMesuresSimples: false, docEdit: null,
     dataInici: avui(), proximaRevisio: "",
     conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},
     reunionsFamilia: [], reunionsProf: [], continuitat: [],
@@ -1763,11 +1776,15 @@ function frase(o, alias){
   const crit = (o.valor && o.unitat) ? `<span class="fill">${esc(o.valor)} ${esc(o.unitat)}</span>` : '<span class="blank">criteri d\u2019assoliment</span>';
   return `Al final del ${b(o.trimestre,"trimestre")}, ${esc(alias||"l\u2019alumne/a")} serà capaç de ${b(o.conducta,"conducta observable")} ${b(o.suport,"suport o condició")} ${b(o.context,"context")}, assolint ${crit}.`;
 }
+/* Text lliure de l'objectiu: si s'ha escrit, substitueix la frase construïda
+   amb els camps a tot arreu (document, seguiment i control de qualitat). */
+const textLliure = o => (o.lliure || "").trim();
 function fraseText(o, alias){
+  if(textLliure(o)) return textLliure(o);
   const d = document.createElement("div"); d.innerHTML = frase(o, alias);
   return d.textContent.replace(/\s+/g," ").trim();
 }
-const objCompleta = o => o.conducta && o.valor && o.unitat && o.trimestre;
+const objCompleta = o => !!textLliure(o) || !!(o.conducta && o.valor && o.unitat && o.trimestre);
 
 /* Els camps «Instrument d'avaluació» i «Evidència» d'un objectiu admeten més
    d'una entrada i es desen com a llista (instruments[] i evidencies[]). Els
@@ -1893,6 +1910,8 @@ function capsaleraNavegador(on){
     : "@media print{@page{margin:0}.doc{padding:0 15mm;--m-dalt:20mm;--m-cap:8mm;--m-baix:14mm}}";
 }
 function closeModal(){
+  /* Si es tanca el document a mig editar, el que s'hi ha escrit no es perd. */
+  if(docEditant){ clearTimeout(desaDocTimer); desaEdicioDoc(true); docEditant = false; }
   tornaDeModal = null;
   $("#modal").classList.remove("on");
   document.body.style.overflow = "";
@@ -3741,7 +3760,8 @@ function pas4(p, a){
   <div class="card"><div class="card-h"><span class="num">5</span><h2>Proposta educativa · Mesures i suports</h2>
     ${(a.perfils||[]).some(x => plantillaPerfil(x))
       ? `<button class="btn sm" onclick="dialegProposta('${p.alumneId}')">Proposta segons el perfil</button>` : ""}
-    <button class="btn primary sm" onclick="obreBanc('${esc(DEST_TOTES)}')">Banc de mesures</button></div><div class="card-b">
+    <button class="btn primary sm" onclick="obreBanc('${esc(DEST_TOTES)}')">Banc de mesures</button>
+    ${total ? `<button class="btn sm ghost danger" onclick="netejaMesures()">Neteja totes les mesures</button>` : ""}</div><div class="card-b">
     <div class="note info" style="margin-bottom:14px">Selecciona ${prim?"les àrees":"les matèries, àmbits o projectes"} ${prim?"afectades":"afectats"} pel pla. Per a cadascuna, descriu les mesures i els suports <b>universals, addicionals i/o intensius</b> que es preveuen utilitzar. Pots triar-los del banc de mesures del Departament o escriure'n de propis.</div>
     <div class="field" data-qc="materies"><span class="lbl">${prim?"Àrees d'educació primària (annex 2 del Decret 175/2022)":"Matèries del currículum (Decret 175/2022)"}</span>
       <div class="chips">${matsEtapa(p).map(m=>`<button type="button" class="chip" aria-pressed="${sel.includes(m)}" onclick="toggleMateria(${jq(m)})">${esc(m)}</button>`).join("")}</div>
@@ -3820,6 +3840,24 @@ function fitxaMesuraPI(p, x){
 
 function itemMes(id){ return P().adaptacions.find(x => x.id===id); }
 function treuMesura(id){ upR(p => p.adaptacions = p.adaptacions.filter(x => x.id!==id)); toast("Mesura treta del pla."); }
+/* Treu d'una tirada totes les mesures carregades al pla. Les concrecions
+   escrites per matèria i la selecció de matèries es mantenen: són feina
+   pròpia i no depenen de les mesures triades. */
+async function netejaMesures(){
+  const p = P(), n = p.adaptacions.length;
+  if(!n) return;
+  const c = comptaIntensitats(p);
+  const ok = await confirmaEsborrat("Neteja totes les mesures",
+    `Es trauran del pla <b>${esc(p.id)}</b> ${n===1 ? "la mesura carregada" : `les <b>${n}</b> mesures carregades`}:`,
+    [c.Universal ? `${c.Universal} universal${c.Universal===1?"":"s"}` : "",
+     c.Addicional ? `${c.Addicional} addicional${c.Addicional===1?"":"s"}` : "",
+     c.Intensiva ? `${c.Intensiva} intensiv${c.Intensiva===1?"a":"es"}` : ""].filter(Boolean),
+    {peu:"Les matèries seleccionades i els textos de concreció de cada matèria es mantenen. No es pot desfer.",
+     confirma:"Neteja-les"});
+  if(!ok) return;
+  upR(p => p.adaptacions = []);
+  toast(n===1 ? "S'ha tret la mesura del pla." : `S'han tret les ${n} mesures del pla.`);
+}
 function mesuraLliure(dest){
   upR(p => p.adaptacions.push({id:uid("A"), adId:"", titol:"Mesura pròpia", text:"",
       materia:dest||DEST_TOTES, tipus:TIPUS_MESURA[0], bloc:"", intensitat:"Universal", concrecio:""}));
@@ -3996,7 +4034,7 @@ function afegeixMesura(id){
 /* ---------------------------------------------------------------------------
    Proposta de mesures a partir dels perfils de l'alumne/a
    ---------------------------------------------------------------------------
-   Carrega al pas 4 la suma de les plantilles dels perfils marcats a la fitxa.
+   Carrega al pla la suma de les plantilles dels perfils marcats a la fitxa.
    És una proposta professional de partida, no una prescripció: tot arriba com
    a llista marcable i editable, i cap mesura entra al pla sense validar-la.
    Els suports intensius s'ofereixen sempre desmarcats perquè requereixen
@@ -4070,7 +4108,7 @@ function propostaModalHTML(){
            ${seus.map(x=>`<option value="${x.id}" ${pp.pi===x.id?"selected":""}>${esc(x.id)} · ${esc(x.curs)} · ${esc(x.tipus==="continguts"?"curricular":"metodològic")}</option>`).join("")}</select></label>
        <span class="bm-count" id="pp-count"></span>
        <button class="btn sm ghost" onclick="closeModal()">Cancel·la</button>
-       <button class="btn sm primary" id="pp-ok" onclick="aplicaProposta()">Carrega-les al pas 4</button>
+       <button class="btn sm primary" id="pp-ok" onclick="aplicaProposta()">Carrega-les al pla</button>
      </div>` : `<div class="bm-dest">
        <span class="muted small" style="flex:1;min-width:200px">${esc(a.alias)} encara no té cap pla. Cal crear-lo per poder-hi carregar la proposta.</span>
        <span class="bm-count" id="pp-count"></span>
@@ -4096,8 +4134,11 @@ async function creaPiPerProposta(){
   closeModal();
   render();
   const n = items.length;
-  toast(n ? `Pla creat amb ${n===1 ? "una mesura" : n + " mesures"} de la proposta.`
-          : "Pla creat, sense cap mesura de la proposta.");
+  const msg = n ? `Pla ${p.id} creat amb ${n===1 ? "una mesura" : n + " mesures"} de la proposta.`
+                : `Pla ${p.id} creat, sense cap mesura de la proposta.`;
+  /* Des de la fitxa, s'hi torna sempre: és on era l'usuari. */
+  if(pp.fitxa){ editaAlumne(pp.alumne); toast(msg); return; }
+  toast(msg);
   const on = await obreDlg("Pla creat",
     `<p>S'ha creat el pla <b>${esc(p.id)}</b> de <b>${esc(a.alias)}</b>${
       n ? ` amb <b>${n===1 ? "una mesura" : n + " mesures"}</b> de la proposta, ja carregades al pas 4` : ""
@@ -4164,7 +4205,7 @@ function comptaProposta(){
   const c = $("#pp-count");
   if(c) c.textContent = n + (n===1 ? " mesura marcada" : " mesures marcades");
   const b = $("#pp-ok");
-  if(b){ b.textContent = n ? `Carrega ${n===1?"la mesura":"les "+n+" mesures"} al pas 4` : "Carrega-les al pas 4"; b.disabled = !n; }
+  if(b){ b.textContent = n ? `Carrega ${n===1?"la mesura":"les "+n+" mesures"} al pla` : "Carrega-les al pla"; b.disabled = !n; }
 }
 
 function aplicaProposta(){
@@ -4180,13 +4221,14 @@ function aplicaProposta(){
   });
   desa();
   closeModal();
-  state.currentPi = p.id;
-  state.step = 4;
-  go("pi");
-  toast(n ? `${n} mesur${n===1?"a incorporada":"es incorporades"} al pla. Revisa-les i concreta-les.`
-          : "Les mesures marcades ja constaven al pla.");
+  const msg = n ? `${n===1 ? "Una mesura carregada" : n + " mesures carregades"} al pla ${p.id}.`
+                : "Les mesures marcades ja constaven al pla.";
+  /* Carregar la proposta no fa navegar enlloc: des de la fitxa de l'alumne/a
+     s'hi torna, i des de qualsevol altre lloc es queda on era, repintat. */
+  if(pp.fitxa){ render(); editaAlumne(pp.alumne); }
+  else render();
+  toast(msg);
 }
-
 /* ----- Pas 5: currículum (secció 5, quadres de matèria i transversals) -----
    Els codis 1.1, 1.2, 2.1… són els criteris d'avaluació de l'annex 3 del
    Decret 175/2022. Adaptar-ne el text (o el d'una competència específica)
@@ -5497,7 +5539,9 @@ function pas6(p, a){
     ${p.objectius.length===0 ? `<div class="empty" style="padding:26px 14px"><b>Encara no hi ha cap objectiu</b>Afegeix-ne un i completa la frase; es construeix sola a mesura que omples els camps.</div>` : ""}
 
     ${p.objectius.map(o=>`<div class="obj-item">
-      <div class="composer">${frase(o, a.alias)}</div>
+      <div class="composer">${textLliure(o)
+        ? `${esc(textLliure(o))}<div class="small muted" style="margin-top:6px;font-family:var(--sans)">S'usa el <b>text lliure</b>. Esborra'l per tornar a la frase construïda amb els camps.</div>`
+        : frase(o, a.alias)}</div>
       <div class="row g3">
         <label class="field" style="margin-bottom:9px"><span class="lbl">Matèria</span><select onchange="upR(p=>ob('${o.id}').materia=this.value)"><option value="">—</option>${p.materies.map(m=>`<option ${o.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</select></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Trimestre</span><select onchange="upR(p=>ob('${o.id}').trimestre=this.value)"><option value="">—</option>${TRIMESTRES.map(t=>`<option ${o.trimestre===t?"selected":""}>${t}</option>`).join("")}</select></label>
@@ -5516,6 +5560,8 @@ function pas6(p, a){
         <label class="field" style="margin-bottom:9px"><span class="lbl">Valor</span><input type="text" value="${esc(o.valor)}" onchange="upR(p=>ob('${o.id}').valor=this.value)" placeholder="4"></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Unitat</span><input type="text" value="${esc(o.unitat)}" onchange="upR(p=>ob('${o.id}').unitat=this.value)" placeholder="de cada 5 textos"></label>
       </div>
+      <label class="field" style="margin-bottom:9px"><span class="lbl">Text lliure de l'objectiu (opcional)</span>
+        <textarea rows="2" onchange="upR(p=>ob('${o.id}').lliure=this.value)" placeholder="Si ho escrius aquí, aquest text substitueix la frase construïda amb els camps d'aquest objectiu.">${esc(o.lliure||"")}</textarea></label>
       ${campLlistaObj(o, "instrument", "Instruments d'avaluació", "Registre de lectura setmanal")}
       ${campLlistaObj(o, "evidencia", "Evidències", "Full de lectura amb la frase resum")}
       <button class="btn sm ghost danger" onclick="upR(p=>p.objectius=p.objectius.filter(x=>x.id!=='${o.id}'))">Elimina l'objectiu</button>
@@ -5757,7 +5803,7 @@ function triaSuggeriment(text){
 function ob(id){ return P().objectius.find(o=>o.id===id); }
 function afegeixObjectiu(){
   upR(p => p.objectius.push({id:uid('OB'), materia:p.materies[0]||'', conducta:'', suport:'', context:'',
-                             valor:'', unitat:'', trimestre:'', instruments:[''], evidencies:['']}));
+                             valor:'', unitat:'', trimestre:'', lliure:'', instruments:[''], evidencies:['']}));
 }
 
 /* ----- Pas 7: horari (secció 5) ----- */
@@ -6081,13 +6127,16 @@ function registraSeguiment(id){
 function obreDoc(id){
   const p = pi(id), a = alumne(p.alumneId);
   state.docPi = id;
+  docEditant = false;
   openModal("PI · " + a.alias, doc(p, a), false, true);
 }
 /* Repinta el document obert sense perdre la posició de lectura. */
 function refrescaDoc(){
   if(!state.docPi || !$("#modal").classList.contains("on")) return;
   const p = pi(state.docPi);
-  if(p) $("#modal-body").innerHTML = doc(p, alumne(p.alumneId));
+  if(!p) return;
+  $("#modal-body").innerHTML = doc(p, alumne(p.alumneId));
+  aplicaEdicioDoc();
 }
 /* Una fila de la taula de mesures del document oficial: agrupa les mesures
    triades per a una destinació i hi afegeix la concreció escrita. */
@@ -6095,6 +6144,12 @@ function cellaMesuresDoc(p, dest, etiqueta){
   const items = p.adaptacions.filter(x => x.materia===dest);
   const txt = (p.mesures[dest]||"").trim();
   if(!items.length && !txt) return "";
+  /* Graella simplificada: només el títol de cada mesura. */
+  if(p.docMesuresSimples){
+    if(!items.length) return "";
+    return `<tr><td class="k">${esc(etiqueta)}</td><td><ul style="margin:0;padding-left:16px">${
+      items.map(x => `<li>${esc(x.titol)}</li>`).join("")}</ul></td></tr>`;
+  }
   return `<tr><td class="k">${esc(etiqueta)}</td><td>
     ${items.length ? `<ul style="margin:0 0 ${txt?"8px":"0"};padding-left:16px">${items.map(x=>
       `<li><b>${esc(x.titol)}</b> <i>(${esc(x.intensitat)})</i>${x.text?`<br>${esc(x.text)}`:""}</li>`).join("")}</ul>` : ""}
@@ -6117,10 +6172,43 @@ function cellaAvaluacioDoc(o){
   return parts.length ? parts.join('<div style="height:6px"></div>') : "—";
 }
 
+/* Valoracions registrades al seguiment per a un objectiu, per ordre. */
+function valoracionsObj(p, o){
+  return p.seguiments.filter(s => (s.valoracions||{})[o.id])
+    .map(s => ({v:s.valoracions[o.id], trimestre:s.trimestre, data:s.data}));
+}
+/* Casella «Avaluació»: el grau d'assoliment de cada valoració registrada. */
+function cellaAssolimentDoc(p, o){
+  const l = valoracionsObj(p, o);
+  if(!l.length) return "—";
+  return l.map(x => `<div><b>${esc(x.v)}</b><br><span class="orig">${esc(x.trimestre)} · ${dataCat(x.data)}</span></div>`)
+    .join('<div style="height:5px"></div>');
+}
+
 function kv(rows){
   return `<table><tbody>${rows.map(([k,v])=>`<tr><td class="k">${k}</td><td>${v||"—"}</td></tr>`).join("")}</tbody></table>`;
 }
 function doc(p, a){
+  const logos = state.logos || [];
+  const corrents = logos.filter(l => l.totes), pag1 = logos.filter(l => !l.totes);
+  const filaLogos = (arr, cls) => `<div class="logos${cls?" "+cls:""}">${arr.map(l=>`<img src="${esc(l.src)}" alt="${esc(l.nom||"Logo del centre")}">`).join("")}</div>`;
+  return `<div class="doc${corrents.length ? " cap-corrent" : ""}">
+  ${einesLogos()}
+  ${einesDoc(p)}
+  <table class="fulls">
+  <thead><tr><td><div class="marge-dalt"></div>${corrents.length ? filaLogos(corrents) : ""}</td></tr></thead>
+  <tbody><tr><td>
+  ${pag1.length ? filaLogos(pag1, corrents.length ? "" : "puja") : ""}
+  <div class="doc-cos" id="doc-cos">${p.docEdit && p.docEdit.html ? netejaHtmlDoc(p.docEdit.html) : docCos(p, a)}</div>
+  </td></tr></tbody>
+  <tfoot><tr><td><div class="marge-baix"></div></td></tr></tfoot>
+  </table>
+  </div>`;
+}
+
+/* Contingut del document generat a partir del pla. És la part que es pot
+   editar a mà des de la previsualització (vegeu 51-document-edicio.js). */
+function docCos(p, a){
   const prof = Object.entries(p.prof).filter(([i,v])=>v && v.on).map(([i,v])=>`<li>${esc(PROFESSIONALS[i])}${v.detall?": "+esc(v.detall):""}</li>`).join("");
   /* Una matèria surt al document si s'hi ha prioritzat algun criteri o saber,
      si s'hi han escrit criteris propis o si s'hi ha adaptat una competència
@@ -6131,15 +6219,9 @@ function doc(p, a){
         || (st.sabersSense||[]).length || (st.sabers||[]).length || st.propis
         || Object.values(st.adaptCE||{}).some(v => (v||"").trim());
   });
-  const logos = state.logos || [];
-  const corrents = logos.filter(l => l.totes), pag1 = logos.filter(l => !l.totes);
-  const filaLogos = (arr, cls) => `<div class="logos${cls?" "+cls:""}">${arr.map(l=>`<img src="${esc(l.src)}" alt="${esc(l.nom||"Logo del centre")}">`).join("")}</div>`;
-  return `<div class="doc${corrents.length ? " cap-corrent" : ""}">
-  ${einesLogos()}
-  <table class="fulls">
-  <thead><tr><td><div class="marge-dalt"></div>${corrents.length ? filaLogos(corrents) : ""}</td></tr></thead>
-  <tbody><tr><td>
-  ${pag1.length ? filaLogos(pag1, corrents.length ? "" : "puja") : ""}
+  const ambObjectius = p.objectius.length && p.docObjectius!==false;
+  const ambAval = ambObjectius && p.objectius.some(o => valoracionsObj(p, o).length);
+  return `
   <div class="head">
     <div style="flex:1;min-width:200px">
       <div class="centre">${esc(state.centre||"[Centre educatiu]")}</div>
@@ -6184,6 +6266,7 @@ function doc(p, a){
   <ul>${prof || "<li>—</li>"}</ul></section>
 
   <section><h2>5. Proposta educativa · Mesures i suports</h2>
+  ${p.adaptacions.length ? `<div class="doc-eina no-print" contenteditable="false"><button class="btn sm ghost" onclick="commutaMesuresSimples()">${p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button></div>` : ""}
   <table><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
   <tbody>
   ${cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")}
@@ -6251,9 +6334,9 @@ function doc(p, a){
     return `<tr><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
   }).join("")}</tbody></table></section>`:""}
 
-  ${p.objectius.length && p.docObjectius!==false?`<section><h2>5. Proposta educativa · Objectius i avaluació</h2>
-  <table><thead><tr><th style="width:22%">Matèria</th><th>Objectiu</th><th style="width:24%">Instrument i evidència</th></tr></thead>
-  <tbody>${p.objectius.map(o=>`<tr><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td></tr>`).join("")}</tbody></table></section>`:""}
+  ${ambObjectius?`<section><h2>5. Proposta educativa · Objectius i avaluació</h2>
+  <table><thead><tr><th style="width:${ambAval?18:22}%">Matèria</th><th>Objectiu</th><th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:17%">Avaluació</th>`:""}</tr></thead>
+  <tbody>${p.objectius.map(o=>`<tr><td class="k">${esc(o.materia)}</td><td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${ambAval?`<td>${cellaAssolimentDoc(p, o)}</td>`:""}</tr>`).join("")}</tbody></table></section>`:""}
 
   ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section><h2>5. Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>
@@ -6287,17 +6370,13 @@ function doc(p, a){
   <tbody>${p.continuitat.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>
 
-  ${p.seguiments.length?`<section><h2>Annex · Valoració del grau d'assoliment dels objectius</h2>
+  ${p.seguiments.length?`<section><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
   ${p.seguiments.map(s=>`<h3>${esc(s.trimestre)} — ${dataCat(s.data)} · ${esc(s.decisio)}</h3>
-    <ul>${Object.entries(s.valoracions).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(o.conducta)}</li>`:"";}).join("")}</ul>
-    ${s.observacions?`<p>${esc(s.observacions)}</p>`:""}`).join("")}</section>`:""}
+    ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(fraseText(o, a.alias))}</li>`:"";}).join("")}</ul>`}
+    ${s.observacions?`<p>${esc(s.observacions)}</p>`:(ambObjectius?`<p class="orig">Sense observacions.</p>`:"")}`).join("")}</section>`:""}
 
   <div class="foot">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
-  Elements curriculars extrets del Decret 175/2022, de 27 de setembre, d'ordenació dels ensenyaments de l'educació bàsica.</div>
-  </td></tr></tbody>
-  <tfoot><tr><td><div class="marge-baix"></div></td></tr></tfoot>
-  </table>
-  </div>`;
+  Elements curriculars extrets del Decret 175/2022, de 27 de setembre, d'ordenació dels ensenyaments de l'educació bàsica.</div>`;
 }
 function taulaDocReunions(titol, arr){
   return `<section><h2>${titol}</h2>
@@ -6306,6 +6385,140 @@ function taulaDocReunions(titol, arr){
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>`;
 }
 
+/* ---------- Edició del document a la previsualització ----------
+   El document es genera a partir del pla, però abans d'imprimir-lo sovint cal
+   retocar-ne un text, treure'n un apartat o afegir-hi un matís que no té lloc
+   a cap pas. En mode d'edició, el cos del document és editable directament i
+   cada apartat porta un botó per eliminar-lo.
+
+   El resultat es desa al pla (p.docEdit) i, a partir d'aquí, el document és
+   el text editat: els canvis que es facin després als passos del pla ja no hi
+   arriben fins que es descarten les edicions. La franja d'eines ho recorda
+   sempre, perquè ningú no imprimeixi una versió antiga sense saber-ho.
+
+   Tot el que és eina (botons, avisos) porta la classe doc-eina i no s'imprimeix
+   ni es desa. */
+let docEditant = false;
+let desaDocTimer = null;
+
+/* Franja d'eines del document: no s'imprimeix. */
+function einesDoc(p){
+  const ed = p.docEdit && p.docEdit.html;
+  return `<div class="doc-tools no-print">
+    <span class="eyebrow">Edició del document</span>
+    ${docEditant
+      ? `<button class="btn sm primary" onclick="commutaEdicioDoc(false)">Acaba l'edició</button>`
+      : `<button class="btn sm" onclick="commutaEdicioDoc(true)">Edita el document</button>`}
+    ${ed ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta les edicions</button>` : ""}
+    <span class="legal" style="flex-basis:100%;margin:0">${docEditant
+      ? "Clica qualsevol text per canviar-lo. Amb el botó <b>×</b> de cada apartat l'elimines sencer. Els canvis es desen sols."
+      : ed
+        ? `<b>Aquest document té edicions fetes a mà</b> (${dataCat(p.docEdit.data)}). Els canvis que facis ara als passos del pla o al seguiment <b>no s'hi reflecteixen</b> fins que descartis les edicions.`
+        : "Pots retocar qualsevol text del document, o eliminar-ne apartats, abans d'imprimir-lo. Les edicions es desen amb el pla."}</span>
+  </div>`;
+}
+
+/* Activa o desactiva l'edició sobre el document que hi ha pintat ara. */
+function aplicaEdicioDoc(){
+  const cos = $("#doc-cos");
+  if(!cos) return;
+  if(!docEditant){ cos.removeAttribute("contenteditable"); return; }
+  cos.setAttribute("contenteditable", "true");
+  cos.setAttribute("spellcheck", "true");
+  cos.querySelectorAll(":scope > section").forEach(s => {
+    if(s.querySelector(":scope > .doc-treu")) return;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "doc-treu doc-eina no-print";
+    b.contentEditable = "false";
+    b.title = "Elimina aquest apartat del document";
+    b.setAttribute("aria-label", b.title);
+    b.textContent = "×";
+    b.onclick = () => treuApartatDoc(s);
+    s.insertBefore(b, s.firstChild);
+  });
+  cos.oninput = () => { cos.dataset.tocat = "1"; clearTimeout(desaDocTimer); desaDocTimer = setTimeout(desaEdicioDoc, 400); };
+}
+
+function commutaEdicioDoc(on){
+  if(!on){ clearTimeout(desaDocTimer); desaEdicioDoc(true); }
+  docEditant = !!on;
+  refrescaDoc();
+  if(on) toast("Mode d'edició: clica qualsevol text del document per canviar-lo.");
+  else toast("Edició acabada.");
+}
+
+/* Desa el cos del document tal com és ara, sense les eines. Si no s'hi ha
+   tocat res, no es desa res: el document continua viu. */
+function desaEdicioDoc(nomesSiCanvia){
+  const p = pi(state.docPi), cos = $("#doc-cos");
+  if(!p || !cos || (nomesSiCanvia && !cos.dataset.tocat && !(p.docEdit && p.docEdit.html))) return;
+  const c = cos.cloneNode(true);
+  c.querySelectorAll(".doc-eina").forEach(x => x.remove());
+  p.docEdit = {html: c.innerHTML, data: avui()};
+  cos.dataset.tocat = "1";
+  desa();
+}
+
+async function treuApartatDoc(s){
+  const h = s.querySelector("h2");
+  const ok = await confirma("Elimina l'apartat",
+    `Es traurà del document l'apartat <b>${esc(h ? h.textContent : "")}</b>. El pla no canvia: si més endavant descartes les edicions, hi tornarà.`,
+    {confirma:"Elimina'l", perillos:true});
+  if(!ok) return;
+  s.remove();
+  desaEdicioDoc();
+  refrescaDoc();
+}
+
+async function descartaEdicioDoc(){
+  const p = pi(state.docPi);
+  if(!p || !p.docEdit) return;
+  const ok = await confirma("Descarta les edicions",
+    "El document tornarà a generar-se a partir del pla i es perdran tots els canvis fets a mà a la previsualització, inclosos els apartats eliminats.",
+    {confirma:"Descarta-les", perillos:true});
+  if(!ok) return;
+  p.docEdit = null;
+  docEditant = false;
+  desa();
+  refrescaDoc();
+  toast("Edicions descartades. El document torna a reflectir el pla.");
+}
+
+/* Commuta la graella de mesures de l'apartat 5 entre la completa i la que
+   només en porta els títols. */
+function commutaMesuresSimples(){
+  const p = pi(state.docPi);
+  if(!p) return;
+  if(p.docEdit && p.docEdit.html){
+    toast("El document té edicions fetes a mà: descarta-les per poder canviar la graella.");
+    return;
+  }
+  p.docMesuresSimples = !p.docMesuresSimples;
+  desa();
+  refrescaDoc();
+}
+
+/* El text desat torna a entrar al document amb innerHTML. Pot venir d'una
+   còpia de seguretat importada, així que abans se'n treu tot el que podria
+   executar codi: elements actius, gestors d'esdeveniments i enllaços
+   javascript:. */
+function netejaHtmlDoc(html){
+  const t = document.createElement("template");
+  t.innerHTML = String(html || "");
+  t.content.querySelectorAll("script,style,iframe,frame,object,embed,link,meta,base,form,input,button,textarea,select,svg,math")
+    .forEach(x => x.remove());
+  t.content.querySelectorAll("*").forEach(el => {
+    [...el.attributes].forEach(at => {
+      const n = at.name.toLowerCase(), v = at.value.replace(/\s+/g, "").toLowerCase();
+      if(n.startsWith("on") || n === "contenteditable" || n === "srcdoc") el.removeAttribute(at.name);
+      else if((n === "href" || n === "src" || n === "action" || n === "formaction" || n.endsWith(":href"))
+              && (v.startsWith("javascript:") || v.startsWith("vbscript:")
+                  || (v.startsWith("data:") && !v.startsWith("data:image/")))) el.removeAttribute(at.name);
+    });
+  });
+  return t.innerHTML;
+}
 /* ---------- 12. Còpia de seguretat ---------- */
 /* ---------- 8b. Dades i còpies de seguretat ---------- */
 

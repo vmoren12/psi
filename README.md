@@ -96,7 +96,7 @@ la fa servir**: buidar les dades del navegador esborra els plans. Vegeu
 ├── src/                  codi font de l'aplicació
 │   ├── index.html          estructura del document i marques de construcció
 │   ├── styles/             18 fulls d'estil, en ordre de cascada
-│   └── app/                32 mòduls de JavaScript, en ordre d'execució
+│   └── app/                33 mòduls de JavaScript, en ordre d'execució
 ├── data/                 dades: currículum, mesures, estratègies, plantilles
 ├── web/                  manifest, service worker i icones de la versió web
 ├── tools/                construcció, validació i extracció dels PDF oficials

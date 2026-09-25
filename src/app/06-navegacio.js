@@ -76,6 +76,8 @@ function capsaleraNavegador(on){
     : "@media print{@page{margin:0}.doc{padding:0 15mm;--m-dalt:20mm;--m-cap:8mm;--m-baix:14mm}}";
 }
 function closeModal(){
+  /* Si es tanca el document a mig editar, el que s'hi ha escrit no es perd. */
+  if(docEditant){ clearTimeout(desaDocTimer); desaEdicioDoc(true); docEditant = false; }
   tornaDeModal = null;
   $("#modal").classList.remove("on");
   document.body.style.overflow = "";

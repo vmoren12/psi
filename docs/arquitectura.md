@@ -59,7 +59,7 @@ i la paleta sencera cap en catorze línies.
 
 ## El codi
 
-32 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
+33 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
 Comparteixen, doncs, **un sol àmbit global**, i això té dues conseqüències que
 convé tenir presents abans de tocar res:
 

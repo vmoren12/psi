@@ -7,6 +7,24 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Afegit
 
+- **Edició del document a la previsualització.** Amb **Edita el document** es
+  pot retocar qualsevol text directament sobre el document i eliminar apartats
+  sencers amb el botó **×** de cadascun. Les edicions es desen amb el pla; mentre
+  n'hi ha, una franja recorda que els canvis posteriors als passos no hi arriben
+  fins que es fa **Descarta les edicions**. El text desat es neteja d'elements
+  actius abans de tornar-lo a pintar.
+- **Graella de mesures simplificada** a l'apartat 5 del document: un botó hi
+  deixa només els títols de les mesures, i un altre torna a la redacció completa.
+- **Columna «Avaluació»** a la taula d'objectius del document, amb el grau
+  d'assoliment de cada valoració registrada al seguiment (trimestre i data).
+  L'annex ja no les repeteix: hi queden la decisió i les observacions de cada
+  seguiment. Si els objectius no surten al document, l'annex les manté com fins
+  ara.
+- **Text lliure de l'objectiu** al pas 6: si s'escriu, substitueix la frase
+  construïda amb els camps al document, al seguiment i al control de qualitat.
+- **Neteja totes les mesures** al pas 4, amb confirmació. Es mantenen les
+  matèries i els textos de concreció.
+
 - **Banc d'estratègies metodològiques**, al capdamunt dels resultats del banc
   de mesures i de la finestra que s'obre des del pas 4. Són **131 frases breus
   i directes** —«Donar instruccions clares, curtes i d'una sola idea cada
@@ -57,6 +75,10 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   acords de cada reunió de l'apartat 7. Surt a l'apartat 6 del document.
 
 ### Canviat
+
+- Carregar la proposta de mesures segons el perfil **ja no obre el pas 4**:
+  des de la fitxa de l'alumne/a s'hi torna amb un avís de les mesures
+  carregades, i des de qualsevol altre lloc es queda on era.
 
 - **Peu de la barra lateral**, ara amb l'autoria, la llicència, la versió i una
   sola línia sobre les dades.

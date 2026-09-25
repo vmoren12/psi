@@ -7,7 +7,7 @@ es distribueix. El motiu és a [ADR 0001](../docs/adr/0001-fitxer-unic.md).
 ```
 index.html     estructura del document i les tres marques de construcció
 styles/        18 fulls d'estil, concatenats en ordre de cascada
-app/           32 mòduls de JavaScript, concatenats en ordre d'execució
+app/           33 mòduls de JavaScript, concatenats en ordre d'execució
 ```
 
 ## Les marques
