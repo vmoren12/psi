@@ -45,6 +45,7 @@ function muntaDocCos(p, a){
     if(so) refrescaAvaluacio(so, p);
   }
   numeraDoc(t.content);
+  decoraOcults(t.content, p);
   return t.innerHTML;
 }
 
@@ -63,7 +64,11 @@ function numeraDoc(arrel){
 function htmlSeccio(el){
   const c = el.cloneNode(true);
   c.querySelectorAll(".doc-eina").forEach(x => x.remove());
-  [c, ...c.querySelectorAll("*")].forEach(x => { x.removeAttribute("contenteditable"); x.removeAttribute("spellcheck"); });
+  [c, ...c.querySelectorAll("*")].forEach(x => {
+    x.removeAttribute("contenteditable"); x.removeAttribute("spellcheck");
+    x.classList.remove("doc-ocult", "doc-pantalla");
+    if(x.getAttribute("class") === "") x.removeAttribute("class");
+  });
   const h = c.querySelector("h2");
   if(h) h.textContent = h.textContent.replace(NUM_APARTAT, "");
   return c.innerHTML;
@@ -121,7 +126,7 @@ function refrescaAvaluacio(sec, p){
   let th = fc && fc.querySelector("th[data-aval]");
   if(amb && fc && !th){
     th = document.createElement("th");
-    th.dataset.aval = ""; th.style.width = "17%"; th.textContent = "Avaluació";
+    th.dataset.aval = ""; th.dataset.col = "aval"; th.style.width = "17%"; th.textContent = "Avaluació";
     fc.appendChild(th);
   }
   if(!amb && th) th.remove();
@@ -129,7 +134,7 @@ function refrescaAvaluacio(sec, p){
     const o = p.objectius.find(x => x.id === tr.dataset.obj);
     let td = tr.querySelector("td[data-aval]");
     if(!amb){ if(td) td.remove(); return; }
-    if(!td){ td = document.createElement("td"); td.dataset.aval = ""; tr.appendChild(td); }
+    if(!td){ td = document.createElement("td"); td.dataset.aval = ""; td.dataset.col = "aval"; tr.appendChild(td); }
     td.innerHTML = o ? cellaAssolimentDoc(p, o) : "—";
   });
 }
@@ -342,4 +347,116 @@ function netejaHtmlDoc(html){
     });
   });
   return t.innerHTML;
+}
+
+/* ---------- Files i columnes ocultes a la impressió ----------
+   A la taula d'objectius, cada fila i cada columna porta un ull que l'amaga
+   del document imprès. No és una edició: el text no canvia i l'apartat
+   continua viu. A la pantalla la fila o la columna es continua veient, més
+   apagada i amb l'avís «No s'imprimirà», perquè es pugui tornar a mostrar.
+
+   Per imprimir es fa servir una còpia de la taula sense el que s'ha amagat, amb
+   les caselles fusionades (rowspan) recalculades: si s'amaga la primera fila
+   d'una matèria, la casella de la matèria passa a la fila següent. */
+const ULL_ON = "&#xe8f4;", ULL_OFF = "&#xe8f5;";
+
+function ocultsDoc(p){
+  const o = p.docOcult || {};
+  return {files: o.files || [], cols: o.cols || []};
+}
+
+function ullDoc(amagat, accio, que){
+  const t = amagat ? `Torna a imprimir ${que}` : `No imprimeixis ${que}`;
+  return `<button type="button" class="doc-ull doc-eina no-print${amagat?" off":""}" contenteditable="false"
+    onclick="${accio}" title="${t}" aria-label="${t}" aria-pressed="${amagat}"><span class="msym" aria-hidden="true">${amagat ? ULL_OFF : ULL_ON}</span></button>${
+    amagat ? `<span class="doc-no-imp doc-eina no-print" contenteditable="false">No s'imprimirà</span>` : ""}`;
+}
+
+/* Posició de cada casella del cos d'una taula, tenint en compte les fusions. */
+function graellaTaula(files){
+  const ocupat = files.map(() => []), cel = [];
+  files.forEach((tr, r) => {
+    let c = 0;
+    [...tr.cells].forEach(td => {
+      while(ocupat[r][c]) c++;
+      const rs = Math.max(1, td.rowSpan || 1);
+      for(let k = 0; k < rs && r + k < files.length; k++) ocupat[r + k][c] = true;
+      cel.push({td, r, c, rs});
+      c++;
+    });
+  });
+  return cel;
+}
+
+/* Còpia de la taula per imprimir, sense les files ni les columnes amagades. */
+function taulaImpressio(taula, filaAmagada, cols){
+  const t = taula.cloneNode(true);
+  t.querySelectorAll("[data-col]").forEach(c => { if(cols.includes(c.dataset.col)) c.remove(); });
+  const files = [...t.querySelectorAll("tbody tr")];
+  const queda = files.map(tr => !filaAmagada(tr));
+  const cel = graellaTaula(files);
+  files.forEach(tr => [...tr.cells].forEach(td => td.remove()));
+  cel.sort((x, y) => x.c - y.c).forEach(x => {
+    const vis = [];
+    for(let k = 0; k < x.rs && x.r + k < files.length; k++) if(queda[x.r + k]) vis.push(x.r + k);
+    if(!vis.length) return;
+    x.td.rowSpan = vis.length;
+    files[vis[0]].appendChild(x.td);
+  });
+  files.forEach((tr, i) => { if(!queda[i]) tr.remove(); });
+  t.classList.add("doc-imprimir", "doc-eina");
+  return t;
+}
+
+function decoraOcults(arrel, p){
+  const sec = arrel.querySelector('[data-sec="objectius"]');
+  const taula = sec && sec.querySelector("table");
+  if(!taula) return;
+  const oc = ocultsDoc(p);
+  const files = [...taula.querySelectorAll("tbody tr")];
+  const amagada = tr => !!tr.dataset.obj && oc.files.includes(tr.dataset.obj);
+  const nFiles = files.filter(amagada).length;
+  const nCols = [...taula.querySelectorAll("th[data-col]")].filter(th => oc.cols.includes(th.dataset.col)).length;
+  /* Primer la còpia per imprimir, encara sense ulls ni avisos. */
+  if(nFiles || nCols){
+    taula.after(taulaImpressio(taula, amagada, oc.cols));
+    taula.classList.add("doc-pantalla");
+    const h = sec.querySelector("h2");
+    const que = [nFiles ? `${nFiles} fila${nFiles===1?"":"s"}` : "",
+                 nCols ? `${nCols} columna${nCols===1?"":"s"}` : ""].filter(Boolean).join(" i ");
+    const avis = `<div class="doc-ocults doc-eina no-print" contenteditable="false">${que} d'aquesta taula no ${
+      nFiles + nCols === 1 ? "s'imprimirà" : "s'imprimiran"}. Es mostren apagades; amb l'ull les tornes a mostrar.</div>`;
+    if(h) h.insertAdjacentHTML("afterend", avis);
+  }
+  /* Casella a casella: les fusionades només s'apaguen si totes les seves
+     files són amagades. */
+  graellaTaula(files).forEach(x => {
+    const totes = files.slice(x.r, x.r + x.rs).every(amagada);
+    if(totes || oc.cols.includes(x.td.dataset.col)) x.td.classList.add("doc-ocult");
+  });
+  taula.querySelectorAll("th[data-col]").forEach(th => {
+    const k = th.dataset.col, off = oc.cols.includes(k);
+    if(off) th.classList.add("doc-ocult");
+    th.insertAdjacentHTML("beforeend", ullDoc(off, `commutaColDoc(${jq(k)})`, "aquesta columna"));
+  });
+  files.forEach(tr => {
+    if(!tr.dataset.obj) return;
+    const td = tr.querySelector('td[data-col="obj"]') || tr.cells[tr.cells.length - 1];
+    if(td) td.insertAdjacentHTML("beforeend", ullDoc(amagada(tr), `commutaFilaDoc(${jq(tr.dataset.obj)})`, "aquesta fila"));
+  });
+}
+
+function commutaFilaDoc(id){ commutaOcultDoc("files", id); }
+function commutaColDoc(k){ commutaOcultDoc("cols", k); }
+function commutaOcultDoc(camp, v){
+  const p = pi(state.docPi);
+  if(!p) return;
+  if(docEditant) buidaEdicioDoc();
+  const o = p.docOcult = Object.assign({files:[], cols:[]}, p.docOcult || {});
+  const i = o[camp].indexOf(v);
+  if(i >= 0) o[camp].splice(i, 1); else o[camp].push(v);
+  desa();
+  refrescaDoc();
+  const que = camp === "files" ? "La fila" : "La columna";
+  toast(i >= 0 ? `${que} es tornarà a imprimir.` : `${que} no s'imprimirà.`);
 }

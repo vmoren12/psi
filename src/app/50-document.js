@@ -78,17 +78,17 @@ function taulaObjectiusDoc(p, a, ambAval){
     let cel = "";
     if(i === 0 || mat(obs[i-1]) !== mat(o)){
       let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o)) n++;
-      cel += `<td class="k" rowspan="${n}">${esc(mat(o) || "—")}</td>`;
+      cel += `<td class="k" rowspan="${n}" data-col="mat">${esc(mat(o) || "—")}</td>`;
     }
     if(i === 0 || mat(obs[i-1]) !== mat(o) || tri(obs[i-1]) !== tri(o)){
       let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o) && tri(obs[i+n]) === tri(o)) n++;
-      cel += `<td rowspan="${n}">${esc(tri(o) || "—")}</td>`;
+      cel += `<td rowspan="${n}" data-col="tri">${esc(tri(o) || "—")}</td>`;
     }
-    return `<tr data-obj="${esc(o.id)}">${cel}<td>${esc(fraseText(o, a.alias))}</td><td>${cellaAvaluacioDoc(o)}</td>${
-      ambAval ? `<td data-aval="">${cellaAssolimentDoc(p, o)}</td>` : ""}</tr>`;
+    return `<tr data-obj="${esc(o.id)}">${cel}<td data-col="obj">${esc(fraseText(o, a.alias))}</td><td data-col="ins">${cellaAvaluacioDoc(o)}</td>${
+      ambAval ? `<td data-aval="" data-col="aval">${cellaAssolimentDoc(p, o)}</td>` : ""}</tr>`;
   }).join("");
-  return `<table><thead><tr><th style="width:15%">Matèria</th><th style="width:11%">Trimestre</th><th>Objectiu</th>
-    <th style="width:${ambAval?20:24}%">Instrument i evidència</th>${ambAval?`<th style="width:13%" data-aval="">Avaluació</th>`:""}</tr></thead>
+  return `<table><thead><tr><th style="width:15%" data-col="mat">Matèria</th><th style="width:11%" data-col="tri">Trimestre</th><th data-col="obj">Objectiu</th>
+    <th style="width:${ambAval?20:24}%" data-col="ins">Instrument i evidència</th>${ambAval?`<th style="width:13%" data-aval="" data-col="aval">Avaluació</th>`:""}</tr></thead>
     <tbody>${files}</tbody></table>`;
 }
 

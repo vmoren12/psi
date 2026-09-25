@@ -85,3 +85,22 @@
 .doc-edits{flex-basis:100%;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 /* Caselles fusionades (rowspan) de la taula d'objectius: centrades verticalment. */
 .doc [data-sec="objectius"] td[rowspan]{vertical-align:middle}
+/* Files i columnes de la taula d'objectius amagades a la impressió. */
+.doc [data-sec="objectius"] th,.doc [data-sec="objectius"] td[data-col="obj"]{position:relative}
+.doc .doc-ull{position:absolute;top:2px;right:2px;width:22px;height:22px;padding:0;display:grid;place-items:center;
+  border:1px solid transparent;border-radius:50%;background:transparent;color:inherit;opacity:.45;cursor:pointer}
+.doc .doc-ull .msym{font-size:15px}
+.doc .doc-ull:hover,.doc .doc-ull:focus-visible{opacity:1;background:var(--surface);border-color:var(--line2);color:var(--ink)}
+.doc .doc-ull.off{opacity:1;color:var(--alert)}
+.doc [data-sec="objectius"] table:not(.doc-imprimir) th{padding-right:26px}
+.doc [data-sec="objectius"] table:not(.doc-imprimir) td[data-col="obj"]{padding-right:28px}
+.doc .doc-ocult,.doc .doc-ocult *{color:#a7b0b4!important}
+.doc .doc-ocult{background:repeating-linear-gradient(135deg,#fff 0 6px,#f1f3f2 6px 12px)!important}
+.doc .doc-ocult .doc-ull.off,.doc .doc-ocult .doc-ull.off *,.doc .doc-ocult .doc-no-imp{color:var(--alert)!important}
+.doc .doc-no-imp{display:block;margin-top:4px;font:600 10px/1.2 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--alert)}
+.doc .doc-ocults{font:12px/1.5 var(--sans);color:var(--ink2);background:var(--paper);border:1px dashed var(--line2);border-radius:var(--r);padding:6px 10px;margin:0 0 6px}
+.doc table.doc-imprimir{display:none}
+@media print{
+  .doc table.doc-imprimir{display:table!important}
+  .doc table.doc-pantalla{display:none!important}
+}

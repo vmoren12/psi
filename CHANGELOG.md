@@ -35,6 +35,12 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   si l'apartat s'ha retocat a mà. L'annex ja no repeteix les valoracions: hi
   queden la decisió i les observacions de cada seguiment. Si els objectius no
   surten al document, l'annex les manté com fins ara.
+- **Files i columnes ocultes a la impressió** a la taula d'objectius del
+  document: cada fila i cada capçalera de columna porta una icona d'ull que
+  l'amaga del document imprès. A la pantalla es continua veient, apagada, amb
+  l'avís «No s'imprimirà»; a la impressió desapareix i les caselles fusionades
+  de matèria i trimestre es recalculen. No compta com a edició: l'apartat
+  continua reflectint el pla.
 - **Seguiment per trimestres**: a la fitxa de valoració, els objectius
   s'agrupen pel trimestre que tenen assignat al pas 6, amb la matèria de
   cadascun, i es destaca el grup del trimestre que s'està valorant. L'històric

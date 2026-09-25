@@ -24,6 +24,9 @@ function nouPiObj(alumneId){
        editat a mà a la previsualització ({seccions, trets, data}) o null si
        no n'hi ha. Vegeu 51-document-edicio.js. */
     docMesuresSimples: false, docEdit: null,
+    /* Files (id d'objectiu) i columnes de la taula d'objectius que no
+       s'imprimeixen: {files:[], cols:[]}. */
+    docOcult: null,
     dataInici: avui(), proximaRevisio: "",
     conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},
     reunionsFamilia: [], reunionsProf: [], continuitat: [],
