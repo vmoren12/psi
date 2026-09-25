@@ -23,6 +23,9 @@ function einesDoc(p){
       ? `<button class="btn sm primary" onclick="commutaEdicioDoc(false)">Acaba l'edició</button>`
       : `<button class="btn sm" onclick="commutaEdicioDoc(true)">Edita el document</button>`}
     ${ed ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta les edicions</button>` : ""}
+    <span style="flex:1"></span>
+    <button class="btn sm ghost" onclick="commutaMesuresSimples()" aria-pressed="${!!p.docMesuresSimples}"
+      title="Graella de l'apartat 5 · Mesures i suports">${p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button>
     <span class="legal" style="flex-basis:100%;margin:0">${docEditant
       ? "Clica qualsevol text per canviar-lo. Amb el botó <b>×</b> de cada apartat l'elimines sencer. Els canvis es desen sols."
       : ed
@@ -99,17 +102,40 @@ async function descartaEdicioDoc(){
 }
 
 /* Commuta la graella de mesures de l'apartat 5 entre la completa i la que
-   només en porta els títols. */
+   només en porta els títols. El botó és a la franja d'eines, fora del cos del
+   document, perquè hi sigui sempre, també mentre s'edita. En un document
+   editat a mà només es refà aquesta graella: la resta d'edicions es respecten. */
 function commutaMesuresSimples(){
   const p = pi(state.docPi);
   if(!p) return;
-  if(p.docEdit && p.docEdit.html){
-    toast("El document té edicions fetes a mà: descarta-les per poder canviar la graella.");
-    return;
-  }
+  if(docEditant){ clearTimeout(desaDocTimer); desaEdicioDoc(true); }
   p.docMesuresSimples = !p.docMesuresSimples;
+  let avis = p.docMesuresSimples ? "Graella de mesures amb només els títols." : "Graella de mesures amb la redacció completa.";
+  if(p.docEdit && p.docEdit.html){
+    const t = document.createElement("template");
+    t.innerHTML = p.docEdit.html;
+    const taula = graellaMesuresDe(t.content);
+    if(taula){
+      let tb = taula.querySelector("tbody");
+      if(!tb){ tb = document.createElement("tbody"); taula.appendChild(tb); }
+      tb.innerHTML = filesMesuresDoc(p);
+      p.docEdit.html = t.innerHTML;
+    } else avis = "L'apartat de mesures s'ha eliminat del document editat: el canvi s'aplicarà si descartes les edicions.";
+  }
   desa();
   refrescaDoc();
+  toast(avis);
+}
+/* La graella de mesures dins d'un document desat. Els documents editats abans
+   que la taula portés la marca data-doc es reconeixen pel títol de l'apartat. */
+function graellaMesuresDe(arrel){
+  const t = arrel.querySelector('table[data-doc="mesures"]');
+  if(t) return t;
+  const s = [...arrel.querySelectorAll("section")].find(x => {
+    const h = x.querySelector("h2");
+    return h && /Mesures i suports/i.test(h.textContent);
+  });
+  return s ? s.querySelector("table") : null;
 }
 
 /* El text desat torna a entrar al document amb innerHTML. Pot venir d'una

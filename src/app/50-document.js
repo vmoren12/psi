@@ -37,6 +37,14 @@ function cellaMesuresDoc(p, dest, etiqueta){
   </td></tr>`;
 }
 
+/* Files de la graella de mesures (apartat 5). Es fan servir també per
+   refer només aquesta graella dins d'un document editat a mà. */
+function filesMesuresDoc(p){
+  return cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")
+    + (p.materies.map(m => cellaMesuresDoc(p, m, m)).join("")
+       || (p.adaptacions.length ? "" : `<tr><td colspan="2">—</td></tr>`));
+}
+
 /* Casella «Instrument i evidència» del document: instruments i evidències d'un
    objectiu, cadascun en forma de llista quan n'hi ha més d'un. */
 function cellaAvaluacioDoc(o){
@@ -146,12 +154,8 @@ function docCos(p, a){
   <ul>${prof || "<li>—</li>"}</ul></section>
 
   <section><h2>5. Proposta educativa · Mesures i suports</h2>
-  ${p.adaptacions.length ? `<div class="doc-eina no-print" contenteditable="false"><button class="btn sm ghost" onclick="commutaMesuresSimples()">${p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button></div>` : ""}
-  <table><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
-  <tbody>
-  ${cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")}
-  ${p.materies.map(m => cellaMesuresDoc(p, m, m)).join("") || (p.adaptacions.length ? "" : `<tr><td colspan="2">—</td></tr>`)}
-  </tbody></table>
+  <table data-doc="mesures"><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
+  <tbody>${filesMesuresDoc(p)}</tbody></table>
   <p class="legal">Intensitat de les mesures d'aquest pla: ${(()=>{const c=comptaIntensitats(p);return `${c.Universal} universals, ${c.Addicional} addicionals i ${c.Intensiva} intensives`;})()}. Decret 150/2017, de 17 d'octubre, de l'atenció educativa a l'alumnat en el marc d'un sistema educatiu inclusiu.</p></section>
 
   ${matsCurr.map(nom=>{

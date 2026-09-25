@@ -80,5 +80,4 @@
   font:600 15px/1 var(--sans);color:var(--alert);background:var(--surface);border:1px solid var(--line2);
   border-radius:var(--r);cursor:pointer}
 .doc-treu:hover{background:#fbeceb}
-.doc-eina{font-family:var(--sans);margin:0 0 6px;display:flex;justify-content:flex-end}
 .doc .mes-grup{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3f8c9e;margin:8px 0 2px}
