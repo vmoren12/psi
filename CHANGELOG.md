@@ -16,8 +16,8 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 - **Graella de mesures simplificada** a l'apartat 5 del document: un botó hi
   deixa només els títols de les mesures, agrupats sota un petit títol per
   intensitat (universals, addicionals, intensius), i un altre torna a la
-  redacció completa. El botó és a la franja d'eines de la previsualització i hi és
-  sempre, també mentre s'edita; en un document editat a mà només es refà la
+  redacció completa. El botó surt sempre just a sota del títol de l'apartat 5, també
+  mentre s'edita, i no s'imprimeix; en un document editat a mà només es refà la
   graella i es respecten la resta d'edicions.
 - **Columna «Avaluació»** a la taula d'objectius del document, amb el grau
   d'assoliment de cada valoració registrada al seguiment (trimestre i data).

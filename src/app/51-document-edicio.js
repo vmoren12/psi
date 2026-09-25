@@ -23,15 +23,37 @@ function einesDoc(p){
       ? `<button class="btn sm primary" onclick="commutaEdicioDoc(false)">Acaba l'edició</button>`
       : `<button class="btn sm" onclick="commutaEdicioDoc(true)">Edita el document</button>`}
     ${ed ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta les edicions</button>` : ""}
-    <span style="flex:1"></span>
-    <button class="btn sm ghost" onclick="commutaMesuresSimples()" aria-pressed="${!!p.docMesuresSimples}"
-      title="Graella de l'apartat 5 · Mesures i suports">${p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button>
     <span class="legal" style="flex-basis:100%;margin:0">${docEditant
       ? "Clica qualsevol text per canviar-lo. Amb el botó <b>×</b> de cada apartat l'elimines sencer. Els canvis es desen sols."
       : ed
         ? `<b>Aquest document té edicions fetes a mà</b> (${dataCat(p.docEdit.data)}). Els canvis que facis ara als passos del pla o al seguiment <b>no s'hi reflecteixen</b> fins que descartis les edicions.`
         : "Pots retocar qualsevol text del document, o eliminar-ne apartats, abans d'imprimir-lo. Les edicions es desen amb el pla."}</span>
   </div>`;
+}
+
+/* Eines que es posen sobre el document ja pintat, generat o editat a mà:
+   el botó de la graella de mesures i, si cal, el mode d'edició. */
+function decoraDoc(){
+  posaBotoMesures();
+  aplicaEdicioDoc();
+}
+
+/* Botó de la graella de mesures, just a sota del títol de l'apartat 5. No
+   forma part del document: es torna a posar a cada repintat, no es desa mai
+   amb les edicions (és doc-eina) i no s'imprimeix (és no-print). */
+function posaBotoMesures(){
+  const cos = $("#doc-cos"), p = pi(state.docPi);
+  if(!cos || !p) return;
+  const taula = graellaMesuresDe(cos);
+  const sec = taula && taula.closest("section");
+  if(!sec || sec.querySelector(".doc-mesures-eina")) return;
+  const d = document.createElement("div");
+  d.className = "doc-mesures-eina doc-eina no-print";
+  d.contentEditable = "false";
+  d.innerHTML = `<button type="button" class="btn sm ghost" aria-pressed="${!!p.docMesuresSimples}" onclick="commutaMesuresSimples()">${
+    p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button>`;
+  const h = sec.querySelector("h2");
+  if(h) h.after(d); else sec.insertBefore(d, sec.firstChild);
 }
 
 /* Activa o desactiva l'edició sobre el document que hi ha pintat ara. */
@@ -102,8 +124,8 @@ async function descartaEdicioDoc(){
 }
 
 /* Commuta la graella de mesures de l'apartat 5 entre la completa i la que
-   només en porta els títols. El botó és a la franja d'eines, fora del cos del
-   document, perquè hi sigui sempre, també mentre s'edita. En un document
+   només en porta els títols. El botó el posa posaBotoMesures() a cada
+   repintat, perquè hi sigui sempre, també mentre s'edita. En un document
    editat a mà només es refà aquesta graella: la resta d'edicions es respecten. */
 function commutaMesuresSimples(){
   const p = pi(state.docPi);

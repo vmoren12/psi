@@ -4,6 +4,7 @@ function obreDoc(id){
   state.docPi = id;
   docEditant = false;
   openModal("PI · " + a.alias, doc(p, a), false, true);
+  decoraDoc();
 }
 /* Repinta el document obert sense perdre la posició de lectura. */
 function refrescaDoc(){
@@ -11,7 +12,7 @@ function refrescaDoc(){
   const p = pi(state.docPi);
   if(!p) return;
   $("#modal-body").innerHTML = doc(p, alumne(p.alumneId));
-  aplicaEdicioDoc();
+  decoraDoc();
 }
 /* Una fila de la taula de mesures del document oficial: agrupa les mesures
    triades per a una destinació i hi afegeix la concreció escrita. */
