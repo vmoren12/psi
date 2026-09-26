@@ -7,6 +7,20 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Afegit
 
+- **Exportació del document a Word.** El botó «Imprimeix / PDF» passa a ser
+  **Exporta** i obre un diàleg per triar el format: **PDF** (el diàleg
+  d'impressió del navegador) o **Word (.docx)**. El .docx es genera al mateix
+  navegador, sense connexió ni biblioteques externes, i porta el mateix que
+  s'imprimiria: apartats numerats, edicions fetes a mà, sense el que s'ha
+  amagat amb l'ull, amb els logos (a la primera pàgina o a la capçalera de
+  totes), les caselles fusionades i l'apartat d'objectius en una secció
+  horitzontal.
+- **Color dels títols dels apartats del document.** Al quadre de logos del
+  centre s'hi pot triar el color de fons dels títols, entre uns quants
+  proposats o qualsevol altre. El text del títol passa a fosc quan el fons és
+  clar. Val per a tots els documents del centre, surt a la impressió i al Word
+  i viatja amb la còpia de seguretat.
+
 - **Edició del document a la previsualització.** Amb **Edita el document** es
   pot retocar qualsevol text directament sobre el document. Les edicions es
   desen **per apartats**: només queden fixos els apartats retocats a mà, i la
