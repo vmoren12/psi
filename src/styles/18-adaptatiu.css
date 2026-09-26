@@ -69,7 +69,7 @@
   .modal{position:static;padding:0;background:none;display:block;overflow:visible}
   .modal-inner{max-width:none;min-height:0}
   .doc{font-size:10.5pt}
-  .doc h2{background:#3f8c9e!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc h2{background:var(--doc-titol,#3f8c9e)!important;color:var(--doc-titol-tx,#fff)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .doc table td.k{background:#f6f8f6!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   /* Marges verticals de cada full. Els valors els posa el full commutable
      #print-page; aquí només se'n descriu el repartiment.

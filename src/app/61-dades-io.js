@@ -3,7 +3,7 @@
    còpia automàtica i cada instantània de l'historial: tots tres produeixen
    exactament el mateix fitxer i, per tant, es restauren igual. */
 function dadesCopia(){
-  return {v:5, data:avui(), centre:state.centre, logos:state.logos, alumnes:state.alumnes, pis:state.pis,
+  return {v:5, data:avui(), centre:state.centre, logos:state.logos, colorTitols:state.colorTitols, alumnes:state.alumnes, pis:state.pis,
           mesuresPropies:state.mesuresPropies, mesuresEdit:state.mesuresEdit,
           estrategiesPropies:state.estrategiesPropies, estrategiesEdit:state.estrategiesEdit};
 }
@@ -11,6 +11,7 @@ function dadesCopia(){
 function substitueixDades(d){
   state.centre = d.centre || "";
   state.logos = Array.isArray(d.logos) ? d.logos.slice(0, LOGOS_MAX) : [];
+  state.colorTitols = colorValid(d.colorTitols);
   state.alumnes = d.alumnes || [];
   state.mesuresPropies = d.mesuresPropies || [];
   state.mesuresEdit = netejaEdicions(d.mesuresEdit);
@@ -57,6 +58,7 @@ function importa(){
       await instantania("abans d'afegir-hi una còpia");
       if(!state.centre) state.centre = d.centre || "";
       if(!(state.logos||[]).length && Array.isArray(d.logos)) state.logos = d.logos.slice(0, LOGOS_MAX);
+      if(!state.colorTitols) state.colorTitols = colorValid(d.colorTitols);
       fusiona(d);
     }
     state.currentPi = null;

@@ -122,7 +122,7 @@ function doc(p, a){
   const logos = state.logos || [];
   const corrents = logos.filter(l => l.totes), pag1 = logos.filter(l => !l.totes);
   const filaLogos = (arr, cls) => `<div class="logos${cls?" "+cls:""}">${arr.map(l=>`<img src="${esc(l.src)}" alt="${esc(l.nom||"Logo del centre")}">`).join("")}</div>`;
-  return `<div class="doc${corrents.length ? " cap-corrent" : ""}">
+  return `<div class="doc${corrents.length ? " cap-corrent" : ""}" style="${estilTitols(colorTitols())}">
   ${einesLogos()}
   ${einesDoc(p)}
   <table class="fulls">

@@ -105,6 +105,7 @@ APLICACIO = [
     "50-document.js",
     "51-document-edicio.js",
     "52-document-ocults.js",
+    "53-document-word.js",
     "60-copies.js",
     "61-dades-io.js",
     "62-alumnat-io.js",

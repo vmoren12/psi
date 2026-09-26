@@ -84,7 +84,7 @@ function treuLogo(id){
 function einesLogos(){
   const l = state.logos || [];
   return `<div class="doc-tools no-print">
-    <span class="eyebrow">Logos i segells del centre</span>
+    <span class="eyebrow">Logos, segells i color del centre</span>
     ${l.map(x=>`<span class="logo-chip"><img src="${esc(x.src)}" alt="${esc(x.nom||"")}">
       <button class="btn sm ghost pag" aria-pressed="${!!x.totes}" onclick="commutaLogo('${x.id}')"
         title="Canvia on surt ${esc(x.nom||"la imatge")}">${x.totes ? "Totes les pàgines" : "Només pàgina 1"}</button>
@@ -93,6 +93,7 @@ function einesLogos(){
       ? `<button class="btn sm" onclick="triaLogos()">Afegeix una imatge</button>`
       : `<span class="muted small">Màxim de ${LOGOS_MAX} imatges.</span>`}
     <span class="legal" style="flex-basis:100%;margin:0">PNG, JPG, SVG o WEBP. Es desen en aquest navegador, dins de la còpia de seguretat, i surten a la capçalera de tots els documents del centre. Amb el botó de cada imatge tries si surt <b>només a la primera pàgina</b> o com a <b>capçalera de totes</b>; si en combines les dues opcions, la primera pàgina en mostra dues files.</span>
+    ${einesColor()}
   </div>`;
 }
 /* Commuta si una imatge surt només al primer full o a la capçalera de tots. */
@@ -105,3 +106,39 @@ function commutaLogo(id){
                 : `«${l.nom}» només sortirà a la primera pàgina.`);
 }
 
+
+/* ---------- Color dels títols dels apartats ----------
+   Com els logos, és una tria del centre: val per a tots els documents i viatja
+   amb la còpia de seguretat. El text del títol passa a fosc quan el fons és
+   clar, perquè es continuï llegint. */
+const COLOR_TITOLS = "#3f8c9e";
+const COLORS_TITOLS = ["#3f8c9e", "#1f6b5c", "#2f5d8a", "#4a4a86", "#9c3a26", "#56616a", "#d9e6ea"];
+const colorValid = c => /^#[0-9a-f]{6}$/i.test(c || "") ? c.toLowerCase() : "";
+const colorTitols = () => colorValid(state.colorTitols) || COLOR_TITOLS;
+function colorTextTitols(fons){
+  const [r, g, b] = [1, 3, 5].map(i => parseInt(fons.slice(i, i + 2), 16) / 255)
+    .map(v => v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4));
+  return .2126 * r + .7152 * g + .0722 * b > .4 ? "#1b2429" : "#ffffff";
+}
+/* Variables CSS que pinten els títols del document. */
+const estilTitols = c => `--doc-titol:${c};--doc-titol-tx:${colorTextTitols(c)}`;
+function einesColor(){
+  const c = colorTitols();
+  return `<div class="doc-color">
+    <span class="small"><b>Color dels títols dels apartats</b></span>
+    ${COLORS_TITOLS.map(x => `<button type="button" class="doc-mostra${x === c ? " on" : ""}" style="background:${x}"
+      title="${x}" aria-label="Color ${x}" aria-pressed="${x === c}" onclick="triaColorTitols('${x}')"></button>`).join("")}
+    <label class="doc-mostra-lliure" title="Un altre color"><input type="color" value="${c}" aria-label="Un altre color"
+      oninput="previsualitzaColorTitols(this.value)" onchange="triaColorTitols(this.value)"></label>
+    ${c !== COLOR_TITOLS ? `<button class="btn sm ghost" onclick="triaColorTitols('')">Restaura el color</button>` : ""}
+  </div>`;
+}
+/* Mentre es remena el selector només es repinten les variables; es desa en triar. */
+function previsualitzaColorTitols(c){
+  const d = $("#modal-body .doc");
+  if(d && colorValid(c)) d.setAttribute("style", estilTitols(c));
+}
+function triaColorTitols(c){
+  state.colorTitols = colorValid(c);
+  desa(); refrescaDoc();
+}

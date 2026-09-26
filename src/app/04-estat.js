@@ -116,6 +116,8 @@ const state = {
   perfAltres: false,
   seguimentPi: null,
   logos: [],
+  /* Color de fons dels títols dels apartats del document (#rrggbb); buit, el de sempre. */
+  colorTitols: "",
   docPi: null,
   draftValoracions: {}
 };
@@ -127,7 +129,7 @@ let revisio = 0;
 
 function desa(){
   try{
-    localStorage.setItem(KEY, JSON.stringify({centre:state.centre, logos:state.logos, alumnes:state.alumnes, pis:state.pis, mesuresPropies:state.mesuresPropies, mesuresEdit:state.mesuresEdit, estrategiesPropies:state.estrategiesPropies, estrategiesEdit:state.estrategiesEdit}));
+    localStorage.setItem(KEY, JSON.stringify({centre:state.centre, logos:state.logos, colorTitols:state.colorTitols, alumnes:state.alumnes, pis:state.pis, mesuresPropies:state.mesuresPropies, mesuresEdit:state.mesuresEdit, estrategiesPropies:state.estrategiesPropies, estrategiesEdit:state.estrategiesEdit}));
     revisio++;
     return true;
   }catch(e){ toast("No s'han pogut desar les dades en aquest navegador."); return false; }
@@ -139,6 +141,7 @@ function carrega(){
     const d = JSON.parse(raw);
     state.centre = d.centre || "";
     state.logos = Array.isArray(d.logos) ? d.logos.slice(0, LOGOS_MAX) : [];
+    state.colorTitols = colorValid(d.colorTitols);
     state.alumnes = d.alumnes || [];
     state.mesuresPropies = d.mesuresPropies || [];
     state.mesuresEdit = netejaEdicions(d.mesuresEdit);

@@ -283,7 +283,7 @@ function renderDades(){
   </div></div>
 
   <div class="card"><div class="card-h"><h2>Còpia de seguretat completa</h2><span class="tag">${nAl} alumnes · ${nPi} plans</span></div><div class="card-b">
-    <p class="small muted" style="margin-top:0">Inclou el nom del centre, els logos de la capçalera, totes les fitxes d'alumnat, tots els plans amb el seu seguiment, les mesures pròpies del centre, les modificacions fetes sobre les mesures del catàleg i el banc d'estratègies metodològiques del centre. És el format recomanat per traslladar-ho tot a un altre ordinador.</p>
+    <p class="small muted" style="margin-top:0">Inclou el nom del centre, els logos de la capçalera i el color dels títols del document, totes les fitxes d'alumnat, tots els plans amb el seu seguiment, les mesures pròpies del centre, les modificacions fetes sobre les mesures del catàleg i el banc d'estratègies metodològiques del centre. És el format recomanat per traslladar-ho tot a un altre ordinador.</p>
     <div style="display:flex;gap:9px;flex-wrap:wrap">
       <button class="btn primary" onclick="exportaTot()">Descarrega la còpia completa</button>
       <button class="btn" onclick="dialegRestaura()">Restaura una còpia</button>
