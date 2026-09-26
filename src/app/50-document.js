@@ -283,7 +283,7 @@ function docCos(p, a){
   </div>
   <div class="cloenda">
     <div class="lloc"><b>Lloc i data:</b> ${esc(p.conformitat.lloc)||"—"}${p.conformitat.data?", "+dataCat(p.conformitat.data):""}</div>
-    <div class="segell">Segell del centre</div>
+    <div class="segell" data-bloc="segell">Segell del centre</div>
   </div>
   </section>
 

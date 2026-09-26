@@ -21,11 +21,12 @@ function nouPiObj(alumneId){
        Es decideix al pas 6 i, per defecte, hi surten. */
     docObjectius: true,
     /* Graella de mesures del document amb només els títols, i document
-       editat a mà a la previsualització ({seccions, trets, data}) o null si
+       editat a mà a la previsualització ({seccions, data}) o null si
        no n'hi ha. Vegeu 51-document-edicio.js. */
     docMesuresSimples: false, docEdit: null,
-    /* Files i columnes de les taules del document que no s'imprimeixen,
-       per taula: {clau: {files:[], cols:[]}}. Vegeu 52-document-ocults.js. */
+    /* El que no s'imprimeix del document: files i columnes de cada taula
+       ({clau: {files:[], cols:[]}}), apartats (seccions:[]) i blocs com el
+       segell (blocs:[]). Vegeu 52-document-ocults.js. */
     docOcult: null,
     dataInici: avui(), proximaRevisio: "",
     conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},

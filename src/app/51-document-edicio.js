@@ -1,12 +1,11 @@
 /* ---------- Edició del document a la previsualització ----------
    El document es genera a partir del pla, però abans d'imprimir-lo sovint cal
-   retocar-ne un text, treure'n un apartat o afegir-hi un matís que no té lloc
-   a cap pas. En mode d'edició, el cos del document és editable directament i
-   cada apartat porta un botó per eliminar-lo.
+   retocar-ne un text o afegir-hi un matís que no té lloc a cap pas. En mode
+   d'edició, el cos del document és editable directament. Els apartats no
+   s'eliminen: s'amaguen de la impressió amb l'ull (52-document-ocults.js).
 
    Les edicions es desen per apartats (p.docEdit):
      seccions  {clau: html}  apartats retocats a mà, tal com han quedat
-     trets     [clau]        apartats eliminats del document
    Cada apartat del document porta la seva clau a data-sec. Un apartat que no
    s'ha tocat continua viu i reflecteix sempre el pla; un de retocat queda fix
    fins que es restaura. L'única excepció és la columna «Avaluació» dels
@@ -14,8 +13,8 @@
    retocat.
 
    Els números dels apartats no es desen enlloc: es posen en muntar el
-   document, per ordre, de manera que són consecutius encara que se n'eliminin
-   o se n'hi afegeixin. L'annex no es numera.
+   document, per ordre, de manera que són consecutius encara que se n'amaguin
+   o se n'hi afegeixin. Els apartats amagats i l'annex no es numeren.
 
    Tot el que és eina (botons, avisos) porta la classe doc-eina i no s'imprimeix
    ni es desa. */
@@ -31,12 +30,12 @@ function muntaDocCos(p, a){
   const t = document.createElement("template");
   t.innerHTML = docCos(p, a);
   migraDocEdit(p, t.content);
+  migraTretsDoc(p);
   const ed = p.docEdit;
   if(ed){
     [...t.content.querySelectorAll("[data-sec]")].forEach(el => {
       const k = el.dataset.sec;
-      if((ed.trets || []).includes(k)) el.remove();
-      else if((ed.seccions || {})[k] != null){
+      if((ed.seccions || {})[k] != null){
         el.innerHTML = netejaHtmlDoc(ed.seccions[k]);
         el.dataset.editat = "1";
       }
@@ -44,20 +43,34 @@ function muntaDocCos(p, a){
     const so = t.content.querySelector('[data-sec="objectius"][data-editat]');
     if(so) refrescaAvaluacio(so, p);
   }
-  numeraDoc(t.content);
+  numeraDoc(t.content, seccionsOcultes(p));
   decoraOcults(t.content, p);
   return t.innerHTML;
 }
 
-/* Numera els apartats per ordre: 1, 2, 3… L'annex queda sense número. */
-function numeraDoc(arrel){
+/* Numera els apartats per ordre: 1, 2, 3… L'annex i els apartats que no
+   s'imprimeixen queden sense número. */
+function numeraDoc(arrel, ocultes){
   let n = 0;
   arrel.querySelectorAll("section[data-sec]").forEach(sec => {
     const h = sec.querySelector("h2");
     if(!h) return;
     const text = h.textContent.replace(NUM_APARTAT, "");
-    h.textContent = sec.dataset.annex ? text : `${++n}. ${text}`;
+    h.textContent = sec.dataset.annex || ocultes.includes(sec.dataset.sec) ? text : `${++n}. ${text}`;
   });
+}
+
+/* Els apartats eliminats amb la versió anterior d'aquesta eina (docEdit.trets)
+   passen a ser apartats amagats a la impressió, que es poden tornar a mostrar. */
+function migraTretsDoc(p){
+  const ed = p.docEdit;
+  if(!ed || ed.html != null || !(ed.trets || []).length) return;
+  const oc = ocultsDoc(p);
+  oc.seccions = [...new Set((oc.seccions || []).concat(ed.trets))];
+  p.docOcult = oc;
+  delete ed.trets;
+  if(!Object.keys(ed.seccions || {}).length) p.docEdit = null;
+  desa();
 }
 
 /* Contingut d'un apartat tal com es desa: sense eines ni número. */
@@ -66,7 +79,7 @@ function htmlSeccio(el){
   c.querySelectorAll(".doc-eina").forEach(x => x.remove());
   [c, ...c.querySelectorAll("*")].forEach(x => {
     x.removeAttribute("contenteditable"); x.removeAttribute("spellcheck");
-    x.classList.remove("doc-ocult", "doc-pantalla", "doc-ulls", "doc-ull-cel");
+    x.classList.remove("doc-ocult", "doc-pantalla", "doc-ulls", "doc-ull-cel", "doc-sec-oculta", "doc-bloc-ocult");
     if(x.getAttribute("class") === "") x.removeAttribute("class");
   });
   const h = c.querySelector("h2");
@@ -113,6 +126,7 @@ function migraDocEdit(p, fresc){
     if(hv !== htmlSeccio(el)) nou.seccions[k] = hv;
   });
   p.docEdit = (Object.keys(nou.seccions).length || nou.trets.length) ? nou : null;
+  migraTretsDoc(p);
   desa();
 }
 
@@ -146,26 +160,24 @@ function einesDoc(p){
     t.innerHTML = docCos(p, alumne(p.alumneId));
     migraDocEdit(p, t.content);
   }
+  migraTretsDoc(p);
   const ed = p.docEdit && p.docEdit.html == null ? p.docEdit : null;
   const noms = ed ? seccionsFresques(p) : {};
   const nom = k => esc((noms[k] && noms[k].nom) || k);
   const editats = ed ? Object.keys(ed.seccions || {}).filter(k => noms[k]) : [];
-  const trets = ed ? (ed.trets || []).filter(k => noms[k]) : [];
   return `<div class="doc-tools no-print">
     <span class="eyebrow">Edició del document</span>
     ${docEditant
       ? `<button class="btn sm primary" onclick="commutaEdicioDoc(false)">Acaba l'edició</button>`
       : `<button class="btn sm" onclick="commutaEdicioDoc(true)">Edita el document</button>`}
-    ${editats.length || trets.length ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta totes les edicions</button>` : ""}
+    ${editats.length ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta totes les edicions</button>` : ""}
+    ${p.docOcult ? `<button class="btn sm ghost" onclick="mostraTotDoc()">Torna a imprimir-ho tot</button>` : ""}
     <span class="legal" style="flex-basis:100%;margin:0">${docEditant
-      ? "Clica qualsevol text per canviar-lo. Amb el botó <b>×</b> de cada apartat l'elimines sencer. Els canvis es desen sols, i els números dels apartats es refan sols."
-      : "Pots retocar qualsevol text del document, o eliminar-ne apartats, abans d'imprimir-lo. Les edicions es desen amb el pla."}</span>
+      ? "Clica qualsevol text per canviar-lo. Els canvis es desen sols. Amb l'ull d'un apartat, una fila, una columna o el segell l'amagues de la impressió, i els números dels apartats es refan sols."
+      : "Pots retocar qualsevol text del document abans d'imprimir-lo; les edicions es desen amb el pla. Amb l'ull d'un apartat, una fila, una columna o el segell l'amagues de la impressió."}</span>
     ${editats.length ? `<div class="doc-edits"><span class="small"><b>Retocats a mà</b> (no reflecteixen els canvis posteriors del pla, tret de la columna «Avaluació»):</span>
       ${editats.map(k => `<span class="logo-chip"><span class="small">${nom(k)}</span>
         <button class="btn sm ghost pag" title="Torna a generar aquest apartat a partir del pla" onclick="restauraSeccio(${jq(k)})">Restaura</button></span>`).join("")}</div>` : ""}
-    ${trets.length ? `<div class="doc-edits"><span class="small"><b>Eliminats:</b></span>
-      ${trets.map(k => `<span class="logo-chip"><span class="small">${nom(k)}</span>
-        <button class="btn sm ghost pag" title="Torna a posar aquest apartat al document" onclick="restauraSeccio(${jq(k)})">Recupera</button></span>`).join("")}</div>` : ""}
   </div>`;
 }
 
@@ -201,18 +213,6 @@ function aplicaEdicioDoc(){
   if(!docEditant){ cos.removeAttribute("contenteditable"); return; }
   cos.setAttribute("contenteditable", "true");
   cos.setAttribute("spellcheck", "true");
-  cos.querySelectorAll(":scope > section").forEach(s => {
-    if(s.querySelector(":scope > .doc-treu")) return;
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "doc-treu doc-eina no-print";
-    b.contentEditable = "false";
-    b.title = "Elimina aquest apartat del document";
-    b.setAttribute("aria-label", b.title);
-    b.textContent = "×";
-    b.onclick = () => treuApartatDoc(s);
-    s.insertBefore(b, s.firstChild);
-  });
   cos.oninput = () => { cos.dataset.tocat = "1"; clearTimeout(desaDocTimer); desaDocTimer = setTimeout(desaEdicioDoc, 400); };
 }
 
@@ -231,46 +231,28 @@ function desaEdicioDoc(){
   const p = pi(state.docPi), cos = $("#doc-cos");
   if(!p || !cos || !cos.dataset.tocat) return;
   const fresc = seccionsFresques(p);
-  const ed = (p.docEdit && p.docEdit.html == null) ? p.docEdit : {seccions:{}, trets:[]};
-  ed.seccions = ed.seccions || {}; ed.trets = ed.trets || [];
+  const ed = (p.docEdit && p.docEdit.html == null) ? p.docEdit : {seccions:{}};
+  ed.seccions = ed.seccions || {};
   cos.querySelectorAll("[data-sec]").forEach(el => {
     const k = el.dataset.sec, h = htmlSeccio(el);
     if(fresc[k] && h === fresc[k].html) delete ed.seccions[k];
     else ed.seccions[k] = h;
   });
   ed.data = avui();
-  p.docEdit = (Object.keys(ed.seccions).length || ed.trets.length) ? ed : null;
+  p.docEdit = Object.keys(ed.seccions).length ? ed : null;
   desa();
 }
 /* Desa el que hi hagi pendent de l'edició en curs. */
 function buidaEdicioDoc(){ clearTimeout(desaDocTimer); desaEdicioDoc(); }
 
-async function treuApartatDoc(s){
-  const h = s.querySelector("h2");
-  const ok = await confirma("Elimina l'apartat",
-    `Es traurà del document l'apartat <b>${esc(h ? h.textContent : "")}</b>. El pla no canvia, i el pots recuperar des de la franja d'edició.`,
-    {confirma:"Elimina'l", perillos:true});
-  if(!ok) return;
-  buidaEdicioDoc();
-  const p = pi(state.docPi);
-  const ed = p.docEdit = (p.docEdit && p.docEdit.html == null) ? p.docEdit : {seccions:{}, trets:[]};
-  ed.trets = ed.trets || [];
-  if(!ed.trets.includes(s.dataset.sec)) ed.trets.push(s.dataset.sec);
-  ed.data = avui();
-  desa();
-  refrescaDoc();
-}
-
-/* Torna un apartat al que es genera a partir del pla, tant si s'havia
-   retocat com si s'havia eliminat. */
+/* Torna un apartat retocat al que es genera a partir del pla. */
 function restauraSeccio(k){
   const p = pi(state.docPi);
   if(!p || !p.docEdit) return;
   buidaEdicioDoc();
   const ed = p.docEdit;
   if(ed.seccions) delete ed.seccions[k];
-  ed.trets = (ed.trets || []).filter(x => x !== k);
-  if(!Object.keys(ed.seccions || {}).length && !ed.trets.length) p.docEdit = null;
+  if(!Object.keys(ed.seccions || {}).length) p.docEdit = null;
   desa();
   refrescaDoc();
   toast("Apartat restaurat a partir del pla.");
@@ -280,7 +262,7 @@ async function descartaEdicioDoc(){
   const p = pi(state.docPi);
   if(!p || !p.docEdit) return;
   const ok = await confirma("Descarta totes les edicions",
-    "El document tornarà a generar-se sencer a partir del pla i es perdran tots els canvis fets a mà a la previsualització, inclosos els apartats eliminats.",
+    "El document tornarà a generar-se sencer a partir del pla i es perdran tots els canvis fets a mà a la previsualització. El que s'ha amagat de la impressió continua amagat.",
     {confirma:"Descarta-les", perillos:true});
   if(!ok) return;
   clearTimeout(desaDocTimer);

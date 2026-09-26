@@ -8,11 +8,10 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 ### Afegit
 
 - **Edició del document a la previsualització.** Amb **Edita el document** es
-  pot retocar qualsevol text directament sobre el document i eliminar apartats
-  sencers amb el botó **×** de cadascun. Les edicions es desen **per apartats**:
-  només queden fixos els apartats retocats a mà, i la resta continua reflectint
-  el pla. La franja d'edició llista els apartats retocats i els eliminats, amb
-  un botó per restaurar-ne o recuperar-ne cadascun, i un per descartar-ho tot.
+  pot retocar qualsevol text directament sobre el document. Les edicions es
+  desen **per apartats**: només queden fixos els apartats retocats a mà, i la
+  resta continua reflectint el pla. La franja d'edició llista els apartats
+  retocats, amb un botó per restaurar-ne cadascun, i un per descartar-ho tot.
   El text desat es neteja d'elements actius abans de tornar-lo a pintar.
 - **Numeració consecutiva dels apartats del document**: cada apartat porta el
   seu número (els objectius, per exemple, passen a ser un apartat numerat propi
@@ -35,10 +34,14 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   si l'apartat s'ha retocat a mà. L'annex ja no repeteix les valoracions: hi
   queden la decisió i les observacions de cada seguiment. Si els objectius no
   surten al document, l'annex les manté com fins ara.
-- **Files i columnes ocultes a la impressió** a totes les taules del
-  document (dades, justificació, mesures, propostes per matèria, objectius,
-  horari, reunions i continuïtat): cada fila i cada capçalera de columna porta
-  una icona d'ull que l'amaga del document imprès. A la pantalla es continua
+- **Parts del document ocultes a la impressió**: cada apartat, cada fila i
+  cada capçalera de columna de les taules (dades, justificació, mesures,
+  propostes per matèria, objectius, horari, reunions i continuïtat), cada
+  casella fusionada (que amaga tot el grup de files que abraça) i el requadre
+  del segell del centre porten una icona d'ull que els amaga del document
+  imprès. Els apartats ja no s'eliminen: s'amaguen, i els que s'havien
+  eliminat abans passen a estar amagats. Els apartats amagats no es numeren, i
+  **Torna a imprimir-ho tot** ho torna a mostrar tot d'un cop. A la pantalla es continua
   veient, apagada, amb l'avís «No s'imprimirà»; a la impressió desapareix i les
   caselles fusionades es recalculen. No compta com a edició: l'apartat
   continua reflectint el pla. Si s'imprimeix enmig d'una edició, abans es desen

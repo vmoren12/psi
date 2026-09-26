@@ -1,15 +1,18 @@
-/* ---------- Files i columnes ocultes a la impressió ----------
-   A totes les taules del document, cada fila i cada columna porta un ull que
-   l'amaga del document imprès. No és una edició: el text no canvia i
-   l'apartat continua viu. A la pantalla la fila o la columna es continua
-   veient, més apagada i amb l'avís «No s'imprimirà», perquè es pugui tornar a
-   mostrar.
+/* ---------- Parts del document ocultes a la impressió ----------
+   Cada apartat, cada fila i cada columna de les taules, cada casella fusionada
+   (que representa un grup de files) i el requadre del segell porten un ull que
+   els amaga del document imprès. No és una edició: el text no canvia i
+   l'apartat continua viu. A la pantalla es continuen veient, més apagats i amb
+   l'avís «No s'imprimirà», perquè es puguin tornar a mostrar.
 
-   Es desa per taula a p.docOcult = {clau: {files:[], cols:[]}}:
-     clau   l'apartat (data-sec) i, si n'hi ha més d'una, el número de taula
-     files  la clau de cada fila: l'id de l'objectiu, la marca data-fila que
-            posa el document o, si no en té, una empremta del seu text
-     cols   la clau de cada columna: data-col de la capçalera o la posició
+   Es desa a p.docOcult:
+     seccions  [data-sec]  apartats sencers que no s'imprimeixen
+     blocs     [clau]      blocs solts, com el segell (data-bloc)
+     clau      {files, cols} per taula:
+       clau   l'apartat (data-sec) i, si n'hi ha més d'una, el número de taula
+       files  la clau de cada fila: l'id de l'objectiu, la marca data-fila que
+              posa el document o, si no en té, una empremta del seu text
+       cols   la clau de cada columna: data-col de la capçalera o la posició
 
    Per imprimir es fa servir una còpia de la taula sense el que s'ha amagat, amb
    les caselles fusionades (rowspan) recalculades: si s'amaga la primera fila
@@ -24,6 +27,8 @@ function ocultsDoc(p){
     p.docOcult = {objectius: {files: o.files || [], cols: o.cols || []}};
   return p.docOcult || {};
 }
+const seccionsOcultes = p => ocultsDoc(p).seccions || [];
+const blocsOcults = p => ocultsDoc(p).blocs || [];
 function ocultsTaula(p, clau){
   const o = ocultsDoc(p)[clau] || {};
   return {files: o.files || [], cols: o.cols || []};
@@ -102,6 +107,21 @@ function taulaImpressio(taula, filaAmagada, colAmagada){
 }
 
 function decoraOcults(arrel, p){
+  const secs = seccionsOcultes(p), blocs = blocsOcults(p);
+  arrel.querySelectorAll("section[data-sec]").forEach(sec => {
+    const h = sec.querySelector("h2");
+    if(!h) return;
+    const off = secs.includes(sec.dataset.sec);
+    if(off) sec.classList.add("doc-sec-oculta");
+    h.insertAdjacentHTML("beforeend", ullDoc(off, `commutaSeccioDoc(${jq(sec.dataset.sec)})`, "aquest apartat"));
+  });
+  /* Els documents retocats abans que el segell portés la marca el tenen igual. */
+  arrel.querySelectorAll("[data-bloc], .segell").forEach(el => {
+    const k = el.dataset.bloc || "segell", off = blocs.includes(k);
+    el.classList.add("doc-ull-cel");
+    if(off) el.classList.add("doc-ocult", "doc-bloc-ocult");
+    el.insertAdjacentHTML("beforeend", ullDoc(off, `commutaBlocDoc(${jq(k)})`, "el segell"));
+  });
   taulesDoc(arrel).forEach(x => decoraTaula(x.taula, x.clau, p));
 }
 
@@ -138,31 +158,64 @@ function decoraTaula(taula, clau, p){
     if(colOff(c)) th.classList.add("doc-ocult");
     th.insertAdjacentHTML("beforeend", ullDoc(colOff(c), `commutaColDoc(${jq(clau)},${jq(cols[c])})`, "aquesta columna"));
   });
+  /* L'ull de la fila va a la casella de l'objectiu o a la darrera que no és
+     fusionada. */
   files.forEach((tr, i) => {
     if(filaBuida(tr)) return;
-    const td = tr.querySelector('td[data-col="obj"]') || tr.cells[tr.cells.length - 1];
+    const td = tr.querySelector('td[data-col="obj"]') || [...tr.cells].reverse().find(c => c.rowSpan <= 1);
     if(!td) return;
     td.classList.add("doc-ull-cel");
     td.insertAdjacentHTML("beforeend", ullDoc(amagada(i), `commutaFilaDoc(${jq(clau)},${jq(claus[i])})`, "aquesta fila"));
   });
+  /* Una casella fusionada (la matèria, el trimestre, la competència
+     específica…) amaga o mostra totes les files que abraça. */
+  graellaTaula(files).forEach(x => {
+    const idx = [];
+    for(let k = 0; k < x.rs && x.r + k < files.length; k++) if(!filaBuida(files[x.r + k])) idx.push(x.r + k);
+    if(idx.length < 2) return;
+    x.td.classList.add("doc-ull-cel");
+    x.td.insertAdjacentHTML("beforeend", ullDoc(idx.every(amagada),
+      `commutaGrupDoc(${jq(clau)},${jq(idx.map(i => claus[i]))})`, `les ${idx.length} files d'aquest grup`));
+  });
 }
 
-function commutaFilaDoc(taula, k){ commutaOcultDoc(taula, "files", k); }
-function commutaColDoc(taula, k){ commutaOcultDoc(taula, "cols", k); }
-function commutaOcultDoc(taula, camp, v){
+function commutaFilaDoc(taula, k){ commutaOcultDoc(taula, "files", [k], "La fila"); }
+function commutaColDoc(taula, k){ commutaOcultDoc(taula, "cols", [k], "La columna"); }
+function commutaGrupDoc(taula, ks){ commutaOcultDoc(taula, "files", ks, "El grup de files"); }
+function commutaSeccioDoc(k){ commutaOcultDoc(null, "seccions", [k], "L'apartat"); }
+function commutaBlocDoc(k){ commutaOcultDoc(null, "blocs", [k], "El segell"); }
+
+/* Si tots els valors ja eren amagats, es tornen a mostrar; si no, s'amaguen
+   tots. Així una casella fusionada fa de commutador per a tot el grup. */
+function commutaOcultDoc(taula, camp, vals, que){
   const p = pi(state.docPi);
   if(!p) return;
   if(docEditant) buidaEdicioDoc();
   const tot = ocultsDoc(p);
-  const o = tot[taula] = ocultsTaula(p, taula);
-  const i = o[camp].indexOf(v);
-  if(i >= 0) o[camp].splice(i, 1); else o[camp].push(v);
-  if(!o.files.length && !o.cols.length) delete tot[taula];
+  const o = taula ? (tot[taula] = ocultsTaula(p, taula)) : tot;
+  const l = o[camp] = (o[camp] || []).slice();
+  const mostra = vals.every(v => l.includes(v));
+  vals.forEach(v => {
+    const i = l.indexOf(v);
+    if(mostra && i >= 0) l.splice(i, 1);
+    if(!mostra && i < 0) l.push(v);
+  });
+  if(taula && !o.files.length && !o.cols.length) delete tot[taula];
+  if(!taula && !l.length) delete tot[camp];
   p.docOcult = Object.keys(tot).length ? tot : null;
   desa();
   refrescaDoc();
-  const que = camp === "files" ? "La fila" : "La columna";
-  toast(i >= 0 ? `${que} es tornarà a imprimir.` : `${que} no s'imprimirà.`);
+  toast(mostra ? `${que} es tornarà a imprimir.` : `${que} no s'imprimirà.`);
+}
+
+function mostraTotDoc(){
+  const p = pi(state.docPi);
+  if(!p) return;
+  if(docEditant) buidaEdicioDoc();
+  p.docOcult = null;
+  desa();
+  refrescaDoc();
+  toast("Tot el document es tornarà a imprimir.");
 }
 
 /* Si s'imprimeix enmig d'una edició, les còpies per imprimir encara són les
