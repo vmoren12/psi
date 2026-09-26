@@ -109,6 +109,12 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Canviat
 
+- **El PDF del document té text seleccionable.** Chrome i Edge no incrusten
+  les fonts variables de Google Fonts (Newsreader, IBM Plex Sans) i les
+  convertien en dibuixos; en imprimir, el document passa a Georgia i Arial,
+  que s'incrusten com a text i es poden seleccionar, copiar i cercar.
+- **L'apartat d'objectius i avaluació s'imprimeix en fulls horitzontals**, sol;
+  la resta del document continua en vertical.
 - La franja de passos de l'editor de PI **ja no s'encongeix** en desplaçar-se
   cap avall: es manté sempre desplegada, amb el nom de cada pas, i només hi
   apareix una ombra quan queda enganxada a dalt.
