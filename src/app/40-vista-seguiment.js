@@ -146,8 +146,11 @@ function detallSeguiment(sel){
   const d = draft(sel.id, sel);
   const senseObj = sel.objectius.length === 0;
   const teNota = !!(d.observacions||"").trim();
-  const nVal = Object.keys(d.valoracions).filter(k => sel.objectius.some(o => o.id === k)).length;
+  const obert = o => valorableAl(o, d.trimestre);
+  const nVal = Object.keys(d.valoracions).filter(k => sel.objectius.some(o => o.id === k && obert(o))).length;
   const potRegistrar = nVal > 0 || teNota;
+  const delTrimestre = sel.objectius.filter(o => o.trimestre === d.trimestre).length;
+  const senseTri = sel.objectius.filter(o => !TRIMESTRES.includes(o.trimestre)).length;
   return `
   <div class="card" id="seg-detall"><div class="card-h">
     <h2>${esc(a.alias)} <span class="mono small muted">${esc(sel.id)}</span></h2>
@@ -167,13 +170,20 @@ function detallSeguiment(sel){
       <label class="field"><span class="lbl">Responsable</span><input type="text" value="${esc(d.autor)}" onchange="draft(${jq(sel.id)}).autor=this.value"></label>
     </div>
 
-    ${grupsTrimestre(sel.objectius).map(([t, obs]) => `<div class="seg-tri${t===d.trimestre?" actual":""}">
+    ${!senseObj && !delTrimestre ? `<p class="seg-avis small">No hi ha cap objectiu assignat al <b>${esc(d.trimestre)}</b>. ${senseTri
+      ? "Pots valorar els que no tenen trimestre assignat o deixar-hi una nota de seguiment."
+      : "Pots deixar-hi una nota de seguiment o triar un altre trimestre."}</p>` : ""}
+
+    ${grupsTrimestre(sel.objectius).map(([t, obs]) => `<div class="seg-tri${t===d.trimestre?" actual":""}${!t || t===d.trimestre ? "" : " tancat"}">
       <div class="grp-title"><span class="eyebrow">${esc(t || "Sense trimestre assignat")}</span>
         <span class="muted small">${obs.length} objectiu${obs.length===1?"":"s"}</span>
-        ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>` : ""}</div>
+        ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>`
+          : t ? `<span class="muted small">· Es valoren quan triïs el ${esc(t)}</span>` : ""}</div>
       ${obs.map(o=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)">
         <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${esc(fraseText(o, a.alias))}</div>
-        <div class="scale">${ESCALA.map(e=>`<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`).join("")}</div>
+        <div class="scale">${ESCALA.map(e=>obert(o)
+          ? `<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`
+          : `<button aria-pressed="false" disabled title="Aquest objectiu és del ${esc(o.trimestre)}">${e}</button>`).join("")}</div>
       </div>`).join("")}
     </div>`).join("")}
 
@@ -187,7 +197,7 @@ function detallSeguiment(sel){
         ? (nVal
             ? `${nVal} objectiu${nVal===1?"":"s"} valorat${nVal===1?"":"s"}${teNota?" i una nota escrita":""}.`
             : "Es registrarà com a nota de seguiment, sense valoració d'objectius.")
-        : (senseObj ? "Escriu una nota per poder-la registrar." : "Valora almenys un objectiu o escriu una nota.")}</span>
+        : (senseObj || (!delTrimestre && !senseTri) ? "Escriu una nota per poder-la registrar." : "Valora almenys un objectiu o escriu una nota.")}</span>
     </div>
   </div></div>
 
@@ -209,6 +219,13 @@ function detallSeguiment(sel){
   </div></div>`;
 }
 
+/* Un objectiu es pot valorar en el trimestre que té assignat al pas 6. Els
+   dels altres trimestres es veuen, però no es poden marcar; els que no en
+   tenen cap es poden valorar en qualsevol. */
+function valorableAl(o, trimestre){
+  return !TRIMESTRES.includes(o.trimestre) || o.trimestre === trimestre;
+}
+
 /* Objectius agrupats pel trimestre que tenen assignat al pas 6, en l'ordre
    dels trimestres; els que no en tenen, al final. */
 function grupsTrimestre(obs){
@@ -224,10 +241,11 @@ function registraSeguiment(id){
   const p = pi(id);
   if(!p) return;
   const d = draft(id, p);
-  /* Les valoracions d'objectius que ja s'han esborrat del pla no compten. */
+  /* Les valoracions d'objectius que ja s'han esborrat del pla, o que són
+     d'un altre trimestre, no compten. */
   const vals = {};
   Object.keys(d.valoracions||{}).forEach(k => {
-    if(p.objectius.some(o => o.id === k)) vals[k] = d.valoracions[k];
+    if(p.objectius.some(o => o.id === k && valorableAl(o, d.trimestre))) vals[k] = d.valoracions[k];
   });
   const nota = (d.observacions||"").trim();
   if(!Object.keys(vals).length && !nota){

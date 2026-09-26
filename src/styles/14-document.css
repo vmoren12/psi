@@ -85,15 +85,17 @@
 .doc-edits{flex-basis:100%;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 /* Caselles fusionades (rowspan) de la taula d'objectius: centrades verticalment. */
 .doc [data-sec="objectius"] td[rowspan]{vertical-align:middle}
-/* Files i columnes de la taula d'objectius amagades a la impressió. */
-.doc [data-sec="objectius"] th,.doc [data-sec="objectius"] td[data-col="obj"]{position:relative}
+/* Files i columnes de les taules amagades a la impressió. */
+.doc table.doc-ulls th,.doc .doc-ull-cel{position:relative}
 .doc .doc-ull{position:absolute;top:2px;right:2px;width:22px;height:22px;padding:0;display:grid;place-items:center;
   border:1px solid transparent;border-radius:50%;background:transparent;color:inherit;opacity:.45;cursor:pointer}
 .doc .doc-ull .msym{font-size:15px}
 .doc .doc-ull:hover,.doc .doc-ull:focus-visible{opacity:1;background:var(--surface);border-color:var(--line2);color:var(--ink)}
 .doc .doc-ull.off{opacity:1;color:var(--alert)}
-.doc [data-sec="objectius"] table:not(.doc-imprimir) th{padding-right:26px}
-.doc [data-sec="objectius"] table:not(.doc-imprimir) td[data-col="obj"]{padding-right:28px}
+@media screen{
+  .doc table.doc-ulls th{padding-right:26px}
+  .doc .doc-ull-cel{padding-right:28px}
+}
 .doc .doc-ocult,.doc .doc-ocult *{color:#a7b0b4!important}
 .doc .doc-ocult{background:repeating-linear-gradient(135deg,#fff 0 6px,#f1f3f2 6px 12px)!important}
 .doc .doc-ocult .doc-ull.off,.doc .doc-ocult .doc-ull.off *,.doc .doc-ocult .doc-no-imp{color:var(--alert)!important}

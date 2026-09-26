@@ -35,16 +35,21 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   si l'apartat s'ha retocat a mà. L'annex ja no repeteix les valoracions: hi
   queden la decisió i les observacions de cada seguiment. Si els objectius no
   surten al document, l'annex les manté com fins ara.
-- **Files i columnes ocultes a la impressió** a la taula d'objectius del
-  document: cada fila i cada capçalera de columna porta una icona d'ull que
-  l'amaga del document imprès. A la pantalla es continua veient, apagada, amb
-  l'avís «No s'imprimirà»; a la impressió desapareix i les caselles fusionades
-  de matèria i trimestre es recalculen. No compta com a edició: l'apartat
-  continua reflectint el pla.
+- **Files i columnes ocultes a la impressió** a totes les taules del
+  document (dades, justificació, mesures, propostes per matèria, objectius,
+  horari, reunions i continuïtat): cada fila i cada capçalera de columna porta
+  una icona d'ull que l'amaga del document imprès. A la pantalla es continua
+  veient, apagada, amb l'avís «No s'imprimirà»; a la impressió desapareix i les
+  caselles fusionades es recalculen. No compta com a edició: l'apartat
+  continua reflectint el pla. Si s'imprimeix enmig d'una edició, abans es desen
+  els canvis perquè la còpia impresa els reculli.
 - **Seguiment per trimestres**: a la fitxa de valoració, els objectius
   s'agrupen pel trimestre que tenen assignat al pas 6, amb la matèria de
-  cadascun, i es destaca el grup del trimestre que s'està valorant. L'històric
-  indica el trimestre de cada objectiu valorat.
+  cadascun, i es destaca el grup del trimestre que s'està valorant. Només es
+  poden valorar els objectius del trimestre triat (i els que no en tenen cap
+  d'assignat); els dels altres trimestres es veuen, apagats, sense poder-los
+  marcar. Si el trimestre triat no té objectius, un avís ho indica al
+  començament. L'històric indica el trimestre de cada objectiu valorat.
 - **Text lliure de l'objectiu** al pas 6: si s'escriu, substitueix la frase
   construïda amb els camps al document, al seguiment i al control de qualitat.
 - **Neteja totes les mesures** al pas 4, amb confirmació. Es mantenen les

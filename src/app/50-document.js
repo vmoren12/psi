@@ -14,6 +14,10 @@ function refrescaDoc(){
   $("#modal-body").innerHTML = doc(p, alumne(p.alumneId));
   decoraDoc();
 }
+/* Marca que identifica una fila del document, perquè s'hi pugui recordar si
+   s'imprimeix o no (vegeu 52-document-ocults.js). */
+const dfila = v => v ? ` data-fila="${esc(v)}"` : "";
+
 /* Una fila de la taula de mesures del document oficial: agrupa les mesures
    triades per a una destinació i hi afegeix la concreció escrita. */
 function cellaMesuresDoc(p, dest, etiqueta){
@@ -27,11 +31,11 @@ function cellaMesuresDoc(p, dest, etiqueta){
     const grups = INTENSITATS.map(i => [i, items.filter(x => x.intensitat===i)])
       .concat([["", items.filter(x => !INTENSITATS.includes(x.intensitat))]])
       .filter(([, l]) => l.length);
-    return `<tr><td class="k">${esc(etiqueta)}</td><td>${grups.map(([i, l], n) =>
+    return `<tr${dfila(dest)}><td class="k">${esc(etiqueta)}</td><td>${grups.map(([i, l], n) =>
       `<div class="mes-grup"${n ? "" : ' style="margin-top:0"'}>Mesures i suports ${esc(i ? INTENSITAT_PLURAL[i] : "sense intensitat")}</div>
       <ul style="margin:0;padding-left:16px">${l.map(x => `<li>${esc(x.titol)}</li>`).join("")}</ul>`).join("")}</td></tr>`;
   }
-  return `<tr><td class="k">${esc(etiqueta)}</td><td>
+  return `<tr${dfila(dest)}><td class="k">${esc(etiqueta)}</td><td>
     ${items.length ? `<ul style="margin:0 0 ${txt?"8px":"0"};padding-left:16px">${items.map(x=>
       `<li><b>${esc(x.titol)}</b> <i>(${esc(x.intensitat)})</i>${x.text?`<br>${esc(x.text)}`:""}</li>`).join("")}</ul>` : ""}
     ${txt ? esc(txt) : ""}
@@ -112,7 +116,7 @@ function cellaAssolimentDoc(p, o){
 }
 
 function kv(rows){
-  return `<table><tbody>${rows.map(([k,v])=>`<tr><td class="k">${k}</td><td>${v||"—"}</td></tr>`).join("")}</tbody></table>`;
+  return `<table><tbody>${rows.map(([k,v])=>`<tr${dfila(k)}><td class="k">${k}</td><td>${v||"—"}</td></tr>`).join("")}</tbody></table>`;
 }
 function doc(p, a){
   const logos = state.logos || [];
@@ -231,10 +235,10 @@ function docCos(p, a){
       const adCE = (st.adaptCE||{})[kce];
       const cela = `<td rowspan="${Math.max(1, fila.claus.length)}">${prim?`<b>Primària · ${esc(areaPrim(fila.font))}</b><br>`:""}${esc(adCE ? ("CE"+fila.n+" · "+adCE) : (ce?("CE"+fila.n+" · "+ce.desc):("CE"+fila.n)))}${adCE&&ce?`<br><span class="orig">Text de referència del decret: ${esc(ce.desc)}</span>`:""}</td>`;
       if(!fila.claus.length)
-        return `<tr>${cela}<td>—</td><td>—</td><td>${esc(prim ? "Primària · "+areaPrim(fila.font) : etapaDe(fila.font))}</td></tr>`;
+        return `<tr${dfila(kce)}>${cela}<td>—</td><td>—</td><td>${esc(prim ? "Primària · "+areaPrim(fila.font) : etapaDe(fila.font))}</td></tr>`;
       return fila.claus.map((k, i)=>{
         const ad = (st.adapt||{})[k], ac = (st.accions||{})[k];
-        return `<tr>${i===0?cela:""}<td>${k.split("|")[1]} ${esc(ad ? ad : critText(k))}`
+        return `<tr${dfila(k)}>${i===0?cela:""}<td>${k.split("|")[1]} ${esc(ad ? ad : critText(k))}`
           + (ac && ac!=="Mantenir sense canvis" ? ` <i>(${esc(ac)})</i>` : "")
           + (ad ? `<br><span class="orig">Text de referència del decret: ${esc(critText(k))}</span>` : "")
           + `</td><td>${cellaSabers((st.sabersCrit||{})[k] || [])}</td>`
@@ -253,7 +257,7 @@ function docCos(p, a){
   <table><thead><tr><th style="width:30%">Competència transversal</th><th>Competències específiques</th><th>Criteris d'avaluació</th><th style="width:18%">Etapa i curs</th></tr></thead>
   <tbody>${p.transv.map(t=>{
     const c = COMP_TRANSVERSALS.find(x=>x.id===t.id);
-    return `<tr><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
+    return `<tr${dfila(t.id)}><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
   }).join("")}</tbody></table></section>`:""}
 
   ${ambObjectius?`<section data-sec="objectius"><h2>Proposta educativa · Objectius i avaluació</h2>
@@ -261,7 +265,7 @@ function docCos(p, a){
 
   ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section data-sec="horari"><h2>Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>
-  <tbody>${p.franges.map((fr,fi)=>`<tr><td class="k">${esc(fr==="ESBARJO"?"Esbarjo":fr)}</td>
+  <tbody>${p.franges.map((fr,fi)=>`<tr${dfila("f"+fi)}><td class="k">${esc(fr==="ESBARJO"?"Esbarjo":fr)}</td>
     ${DIES.map((d,di)=>{const v=p.horari[fi+"-"+di]||{};
       return `<td style="font-size:11.5px">${esc(v.m||"")}${v.d?`<br><i>${esc(v.d)}</i>`:""}${v.e?`<br>${esc(v.e)}`:""}</td>`;}).join("")}</tr>`).join("")}</tbody></table></section>`:""}
 
@@ -288,7 +292,7 @@ function docCos(p, a){
 
   <section data-sec="continuitat"><h2>Acords sobre la continuïtat del pla de suport individualitzat</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:28%">Agents participants</th><th style="width:18%">Acord</th><th>Observacions</th></tr></thead>
-  <tbody>${p.continuitat.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
+  <tbody>${p.continuitat.map(r=>`<tr${dfila(r.id)}><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>
 
   ${p.seguiments.length?`<section data-sec="annex" data-annex="1"><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
@@ -302,7 +306,7 @@ function docCos(p, a){
 function taulaDocReunions(clau, titol, arr){
   return `<section data-sec="${clau}"><h2>${titol}</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:24%">Agents participants</th><th>Temes tractats</th><th style="width:28%">Acords</th></tr></thead>
-  <tbody>${arr.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.temes)}</td><td>${esc(r.acords)}</td></tr>`).join("")
+  <tbody>${arr.map(r=>`<tr${dfila(r.id)}><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.temes)}</td><td>${esc(r.acords)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>`;
 }
 

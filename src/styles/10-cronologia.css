@@ -11,3 +11,7 @@
 .seg-tri{padding:2px 12px 4px;margin:0 -12px 10px;border-radius:var(--r)}
 .seg-tri.actual{background:var(--met-soft)}
 .seg-tri .grp-title{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+/* Objectius d'un altre trimestre: es veuen però no es poden valorar. */
+.seg-tri.tancat > div:not(.grp-title){opacity:.55}
+.scale button:disabled{cursor:not-allowed;background:var(--paper)}
+.seg-avis{margin:14px 0 4px;padding:8px 12px;border-radius:var(--r);background:var(--paper);border:1px dashed var(--line2);color:var(--ink2)}

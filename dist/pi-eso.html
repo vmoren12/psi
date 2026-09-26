@@ -345,6 +345,10 @@ details.ce .ceb{padding:6px 14px 12px}
 .seg-tri{padding:2px 12px 4px;margin:0 -12px 10px;border-radius:var(--r)}
 .seg-tri.actual{background:var(--met-soft)}
 .seg-tri .grp-title{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+/* Objectius d'un altre trimestre: es veuen però no es poden valorar. */
+.seg-tri.tancat > div:not(.grp-title){opacity:.55}
+.scale button:disabled{cursor:not-allowed;background:var(--paper)}
+.seg-avis{margin:14px 0 4px;padding:8px 12px;border-radius:var(--r);background:var(--paper);border:1px dashed var(--line2);color:var(--ink2)}
 /* ---------- mesures i suports (pas 4) ---------- */
 .note.alert{background:var(--alert-soft);border-color:#e2bfb3;color:#7a2d1d}
 .mes-item{border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:0 var(--r) var(--r) 0;padding:12px 13px;margin-bottom:10px;background:var(--surface)}
@@ -531,15 +535,17 @@ details.ce .ceb{padding:6px 14px 12px}
 .doc-edits{flex-basis:100%;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 /* Caselles fusionades (rowspan) de la taula d'objectius: centrades verticalment. */
 .doc [data-sec="objectius"] td[rowspan]{vertical-align:middle}
-/* Files i columnes de la taula d'objectius amagades a la impressió. */
-.doc [data-sec="objectius"] th,.doc [data-sec="objectius"] td[data-col="obj"]{position:relative}
+/* Files i columnes de les taules amagades a la impressió. */
+.doc table.doc-ulls th,.doc .doc-ull-cel{position:relative}
 .doc .doc-ull{position:absolute;top:2px;right:2px;width:22px;height:22px;padding:0;display:grid;place-items:center;
   border:1px solid transparent;border-radius:50%;background:transparent;color:inherit;opacity:.45;cursor:pointer}
 .doc .doc-ull .msym{font-size:15px}
 .doc .doc-ull:hover,.doc .doc-ull:focus-visible{opacity:1;background:var(--surface);border-color:var(--line2);color:var(--ink)}
 .doc .doc-ull.off{opacity:1;color:var(--alert)}
-.doc [data-sec="objectius"] table:not(.doc-imprimir) th{padding-right:26px}
-.doc [data-sec="objectius"] table:not(.doc-imprimir) td[data-col="obj"]{padding-right:28px}
+@media screen{
+  .doc table.doc-ulls th{padding-right:26px}
+  .doc .doc-ull-cel{padding-right:28px}
+}
 .doc .doc-ocult,.doc .doc-ocult *{color:#a7b0b4!important}
 .doc .doc-ocult{background:repeating-linear-gradient(135deg,#fff 0 6px,#f1f3f2 6px 12px)!important}
 .doc .doc-ocult .doc-ull.off,.doc .doc-ocult .doc-ull.off *,.doc .doc-ocult .doc-no-imp{color:var(--alert)!important}
@@ -1518,8 +1524,8 @@ function nouPiObj(alumneId){
        editat a mà a la previsualització ({seccions, trets, data}) o null si
        no n'hi ha. Vegeu 51-document-edicio.js. */
     docMesuresSimples: false, docEdit: null,
-    /* Files (id d'objectiu) i columnes de la taula d'objectius que no
-       s'imprimeixen: {files:[], cols:[]}. */
+    /* Files i columnes de les taules del document que no s'imprimeixen,
+       per taula: {clau: {files:[], cols:[]}}. Vegeu 52-document-ocults.js. */
     docOcult: null,
     dataInici: avui(), proximaRevisio: "",
     conformitat: {lloc:"", data:"", familia:false, acordsFamilia:"", tutorSig:"", director:""},
@@ -6014,8 +6020,11 @@ function detallSeguiment(sel){
   const d = draft(sel.id, sel);
   const senseObj = sel.objectius.length === 0;
   const teNota = !!(d.observacions||"").trim();
-  const nVal = Object.keys(d.valoracions).filter(k => sel.objectius.some(o => o.id === k)).length;
+  const obert = o => valorableAl(o, d.trimestre);
+  const nVal = Object.keys(d.valoracions).filter(k => sel.objectius.some(o => o.id === k && obert(o))).length;
   const potRegistrar = nVal > 0 || teNota;
+  const delTrimestre = sel.objectius.filter(o => o.trimestre === d.trimestre).length;
+  const senseTri = sel.objectius.filter(o => !TRIMESTRES.includes(o.trimestre)).length;
   return `
   <div class="card" id="seg-detall"><div class="card-h">
     <h2>${esc(a.alias)} <span class="mono small muted">${esc(sel.id)}</span></h2>
@@ -6035,13 +6044,20 @@ function detallSeguiment(sel){
       <label class="field"><span class="lbl">Responsable</span><input type="text" value="${esc(d.autor)}" onchange="draft(${jq(sel.id)}).autor=this.value"></label>
     </div>
 
-    ${grupsTrimestre(sel.objectius).map(([t, obs]) => `<div class="seg-tri${t===d.trimestre?" actual":""}">
+    ${!senseObj && !delTrimestre ? `<p class="seg-avis small">No hi ha cap objectiu assignat al <b>${esc(d.trimestre)}</b>. ${senseTri
+      ? "Pots valorar els que no tenen trimestre assignat o deixar-hi una nota de seguiment."
+      : "Pots deixar-hi una nota de seguiment o triar un altre trimestre."}</p>` : ""}
+
+    ${grupsTrimestre(sel.objectius).map(([t, obs]) => `<div class="seg-tri${t===d.trimestre?" actual":""}${!t || t===d.trimestre ? "" : " tancat"}">
       <div class="grp-title"><span class="eyebrow">${esc(t || "Sense trimestre assignat")}</span>
         <span class="muted small">${obs.length} objectiu${obs.length===1?"":"s"}</span>
-        ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>` : ""}</div>
+        ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>`
+          : t ? `<span class="muted small">· Es valoren quan triïs el ${esc(t)}</span>` : ""}</div>
       ${obs.map(o=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)">
         <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${esc(fraseText(o, a.alias))}</div>
-        <div class="scale">${ESCALA.map(e=>`<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`).join("")}</div>
+        <div class="scale">${ESCALA.map(e=>obert(o)
+          ? `<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`
+          : `<button aria-pressed="false" disabled title="Aquest objectiu és del ${esc(o.trimestre)}">${e}</button>`).join("")}</div>
       </div>`).join("")}
     </div>`).join("")}
 
@@ -6055,7 +6071,7 @@ function detallSeguiment(sel){
         ? (nVal
             ? `${nVal} objectiu${nVal===1?"":"s"} valorat${nVal===1?"":"s"}${teNota?" i una nota escrita":""}.`
             : "Es registrarà com a nota de seguiment, sense valoració d'objectius.")
-        : (senseObj ? "Escriu una nota per poder-la registrar." : "Valora almenys un objectiu o escriu una nota.")}</span>
+        : (senseObj || (!delTrimestre && !senseTri) ? "Escriu una nota per poder-la registrar." : "Valora almenys un objectiu o escriu una nota.")}</span>
     </div>
   </div></div>
 
@@ -6077,6 +6093,13 @@ function detallSeguiment(sel){
   </div></div>`;
 }
 
+/* Un objectiu es pot valorar en el trimestre que té assignat al pas 6. Els
+   dels altres trimestres es veuen, però no es poden marcar; els que no en
+   tenen cap es poden valorar en qualsevol. */
+function valorableAl(o, trimestre){
+  return !TRIMESTRES.includes(o.trimestre) || o.trimestre === trimestre;
+}
+
 /* Objectius agrupats pel trimestre que tenen assignat al pas 6, en l'ordre
    dels trimestres; els que no en tenen, al final. */
 function grupsTrimestre(obs){
@@ -6092,10 +6115,11 @@ function registraSeguiment(id){
   const p = pi(id);
   if(!p) return;
   const d = draft(id, p);
-  /* Les valoracions d'objectius que ja s'han esborrat del pla no compten. */
+  /* Les valoracions d'objectius que ja s'han esborrat del pla, o que són
+     d'un altre trimestre, no compten. */
   const vals = {};
   Object.keys(d.valoracions||{}).forEach(k => {
-    if(p.objectius.some(o => o.id === k)) vals[k] = d.valoracions[k];
+    if(p.objectius.some(o => o.id === k && valorableAl(o, d.trimestre))) vals[k] = d.valoracions[k];
   });
   const nota = (d.observacions||"").trim();
   if(!Object.keys(vals).length && !nota){
@@ -6126,6 +6150,10 @@ function refrescaDoc(){
   $("#modal-body").innerHTML = doc(p, alumne(p.alumneId));
   decoraDoc();
 }
+/* Marca que identifica una fila del document, perquè s'hi pugui recordar si
+   s'imprimeix o no (vegeu 52-document-ocults.js). */
+const dfila = v => v ? ` data-fila="${esc(v)}"` : "";
+
 /* Una fila de la taula de mesures del document oficial: agrupa les mesures
    triades per a una destinació i hi afegeix la concreció escrita. */
 function cellaMesuresDoc(p, dest, etiqueta){
@@ -6139,11 +6167,11 @@ function cellaMesuresDoc(p, dest, etiqueta){
     const grups = INTENSITATS.map(i => [i, items.filter(x => x.intensitat===i)])
       .concat([["", items.filter(x => !INTENSITATS.includes(x.intensitat))]])
       .filter(([, l]) => l.length);
-    return `<tr><td class="k">${esc(etiqueta)}</td><td>${grups.map(([i, l], n) =>
+    return `<tr${dfila(dest)}><td class="k">${esc(etiqueta)}</td><td>${grups.map(([i, l], n) =>
       `<div class="mes-grup"${n ? "" : ' style="margin-top:0"'}>Mesures i suports ${esc(i ? INTENSITAT_PLURAL[i] : "sense intensitat")}</div>
       <ul style="margin:0;padding-left:16px">${l.map(x => `<li>${esc(x.titol)}</li>`).join("")}</ul>`).join("")}</td></tr>`;
   }
-  return `<tr><td class="k">${esc(etiqueta)}</td><td>
+  return `<tr${dfila(dest)}><td class="k">${esc(etiqueta)}</td><td>
     ${items.length ? `<ul style="margin:0 0 ${txt?"8px":"0"};padding-left:16px">${items.map(x=>
       `<li><b>${esc(x.titol)}</b> <i>(${esc(x.intensitat)})</i>${x.text?`<br>${esc(x.text)}`:""}</li>`).join("")}</ul>` : ""}
     ${txt ? esc(txt) : ""}
@@ -6224,7 +6252,7 @@ function cellaAssolimentDoc(p, o){
 }
 
 function kv(rows){
-  return `<table><tbody>${rows.map(([k,v])=>`<tr><td class="k">${k}</td><td>${v||"—"}</td></tr>`).join("")}</tbody></table>`;
+  return `<table><tbody>${rows.map(([k,v])=>`<tr${dfila(k)}><td class="k">${k}</td><td>${v||"—"}</td></tr>`).join("")}</tbody></table>`;
 }
 function doc(p, a){
   const logos = state.logos || [];
@@ -6343,10 +6371,10 @@ function docCos(p, a){
       const adCE = (st.adaptCE||{})[kce];
       const cela = `<td rowspan="${Math.max(1, fila.claus.length)}">${prim?`<b>Primària · ${esc(areaPrim(fila.font))}</b><br>`:""}${esc(adCE ? ("CE"+fila.n+" · "+adCE) : (ce?("CE"+fila.n+" · "+ce.desc):("CE"+fila.n)))}${adCE&&ce?`<br><span class="orig">Text de referència del decret: ${esc(ce.desc)}</span>`:""}</td>`;
       if(!fila.claus.length)
-        return `<tr>${cela}<td>—</td><td>—</td><td>${esc(prim ? "Primària · "+areaPrim(fila.font) : etapaDe(fila.font))}</td></tr>`;
+        return `<tr${dfila(kce)}>${cela}<td>—</td><td>—</td><td>${esc(prim ? "Primària · "+areaPrim(fila.font) : etapaDe(fila.font))}</td></tr>`;
       return fila.claus.map((k, i)=>{
         const ad = (st.adapt||{})[k], ac = (st.accions||{})[k];
-        return `<tr>${i===0?cela:""}<td>${k.split("|")[1]} ${esc(ad ? ad : critText(k))}`
+        return `<tr${dfila(k)}>${i===0?cela:""}<td>${k.split("|")[1]} ${esc(ad ? ad : critText(k))}`
           + (ac && ac!=="Mantenir sense canvis" ? ` <i>(${esc(ac)})</i>` : "")
           + (ad ? `<br><span class="orig">Text de referència del decret: ${esc(critText(k))}</span>` : "")
           + `</td><td>${cellaSabers((st.sabersCrit||{})[k] || [])}</td>`
@@ -6365,7 +6393,7 @@ function docCos(p, a){
   <table><thead><tr><th style="width:30%">Competència transversal</th><th>Competències específiques</th><th>Criteris d'avaluació</th><th style="width:18%">Etapa i curs</th></tr></thead>
   <tbody>${p.transv.map(t=>{
     const c = COMP_TRANSVERSALS.find(x=>x.id===t.id);
-    return `<tr><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
+    return `<tr${dfila(t.id)}><td class="k">${esc(c.nom)}</td><td>${esc(t.ce)||"—"}</td><td>${esc(t.criteris)||"—"}</td><td>${esc(t.etapa)||"—"}</td></tr>`;
   }).join("")}</tbody></table></section>`:""}
 
   ${ambObjectius?`<section data-sec="objectius"><h2>Proposta educativa · Objectius i avaluació</h2>
@@ -6373,7 +6401,7 @@ function docCos(p, a){
 
   ${Object.keys(p.horari).some(k=>{const v=p.horari[k];return v&&(v.m||v.d||v.e)}) ? `<section data-sec="horari"><h2>Proposta educativa · Horari</h2>
   <table><thead><tr><th>Horari</th>${DIES.map(d=>`<th>${d}</th>`).join("")}</tr></thead>
-  <tbody>${p.franges.map((fr,fi)=>`<tr><td class="k">${esc(fr==="ESBARJO"?"Esbarjo":fr)}</td>
+  <tbody>${p.franges.map((fr,fi)=>`<tr${dfila("f"+fi)}><td class="k">${esc(fr==="ESBARJO"?"Esbarjo":fr)}</td>
     ${DIES.map((d,di)=>{const v=p.horari[fi+"-"+di]||{};
       return `<td style="font-size:11.5px">${esc(v.m||"")}${v.d?`<br><i>${esc(v.d)}</i>`:""}${v.e?`<br>${esc(v.e)}`:""}</td>`;}).join("")}</tr>`).join("")}</tbody></table></section>`:""}
 
@@ -6400,7 +6428,7 @@ function docCos(p, a){
 
   <section data-sec="continuitat"><h2>Acords sobre la continuïtat del pla de suport individualitzat</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:28%">Agents participants</th><th style="width:18%">Acord</th><th>Observacions</th></tr></thead>
-  <tbody>${p.continuitat.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
+  <tbody>${p.continuitat.map(r=>`<tr${dfila(r.id)}><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.acord)}</td><td>${esc(r.obs)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>
 
   ${p.seguiments.length?`<section data-sec="annex" data-annex="1"><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
@@ -6414,7 +6442,7 @@ function docCos(p, a){
 function taulaDocReunions(clau, titol, arr){
   return `<section data-sec="${clau}"><h2>${titol}</h2>
   <table><thead><tr><th style="width:14%">Data</th><th style="width:24%">Agents participants</th><th>Temes tractats</th><th style="width:28%">Acords</th></tr></thead>
-  <tbody>${arr.map(r=>`<tr><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.temes)}</td><td>${esc(r.acords)}</td></tr>`).join("")
+  <tbody>${arr.map(r=>`<tr${dfila(r.id)}><td>${dataCat(r.data)}</td><td>${esc(r.agents)}</td><td>${esc(r.temes)}</td><td>${esc(r.acords)}</td></tr>`).join("")
    || `<tr><td colspan="4">—</td></tr>`}</tbody></table></section>`;
 }
 
@@ -6486,7 +6514,7 @@ function htmlSeccio(el){
   c.querySelectorAll(".doc-eina").forEach(x => x.remove());
   [c, ...c.querySelectorAll("*")].forEach(x => {
     x.removeAttribute("contenteditable"); x.removeAttribute("spellcheck");
-    x.classList.remove("doc-ocult", "doc-pantalla");
+    x.classList.remove("doc-ocult", "doc-pantalla", "doc-ulls", "doc-ull-cel");
     if(x.getAttribute("class") === "") x.removeAttribute("class");
   });
   const h = c.querySelector("h2");
@@ -6770,20 +6798,57 @@ function netejaHtmlDoc(html){
 }
 
 /* ---------- Files i columnes ocultes a la impressió ----------
-   A la taula d'objectius, cada fila i cada columna porta un ull que l'amaga
-   del document imprès. No és una edició: el text no canvia i l'apartat
-   continua viu. A la pantalla la fila o la columna es continua veient, més
-   apagada i amb l'avís «No s'imprimirà», perquè es pugui tornar a mostrar.
+   A totes les taules del document, cada fila i cada columna porta un ull que
+   l'amaga del document imprès. No és una edició: el text no canvia i
+   l'apartat continua viu. A la pantalla la fila o la columna es continua
+   veient, més apagada i amb l'avís «No s'imprimirà», perquè es pugui tornar a
+   mostrar.
+
+   Es desa per taula a p.docOcult = {clau: {files:[], cols:[]}}:
+     clau   l'apartat (data-sec) i, si n'hi ha més d'una, el número de taula
+     files  la clau de cada fila: l'id de l'objectiu, la marca data-fila que
+            posa el document o, si no en té, una empremta del seu text
+     cols   la clau de cada columna: data-col de la capçalera o la posició
 
    Per imprimir es fa servir una còpia de la taula sense el que s'ha amagat, amb
    les caselles fusionades (rowspan) recalculades: si s'amaga la primera fila
-   d'una matèria, la casella de la matèria passa a la fila següent. */
+   d'un grup, la casella fusionada passa a la fila següent. */
 const ULL_ON = "&#xe8f4;", ULL_OFF = "&#xe8f5;";
 
+/* La primera versió només ho feia a la taula d'objectius i ho desava com a
+   {files, cols}: passa a ser l'entrada d'aquella taula. */
 function ocultsDoc(p){
-  const o = p.docOcult || {};
+  const o = p.docOcult;
+  if(o && (Array.isArray(o.files) || Array.isArray(o.cols)))
+    p.docOcult = {objectius: {files: o.files || [], cols: o.cols || []}};
+  return p.docOcult || {};
+}
+function ocultsTaula(p, clau){
+  const o = ocultsDoc(p)[clau] || {};
   return {files: o.files || [], cols: o.cols || []};
 }
+
+/* Taules del document amb la seva clau. */
+function taulesDoc(arrel){
+  const out = [];
+  arrel.querySelectorAll("section[data-sec]").forEach(sec => {
+    [...sec.querySelectorAll("table")].forEach((taula, i) =>
+      out.push({sec, taula, clau: sec.dataset.sec + (i ? "#" + i : "")}));
+  });
+  return out;
+}
+
+function empremta(text){
+  let h = 5381;
+  for(const ch of text.replace(/\s+/g, " ").trim()) h = (h * 33 + ch.charCodeAt(0)) >>> 0;
+  return "t" + h.toString(36);
+}
+const clauFila = tr => tr.dataset.obj || tr.dataset.fila || empremta(tr.textContent);
+/* Una fila que és només el guionet de «no n'hi ha» no porta ull. */
+const filaBuida = tr => tr.cells.length === 1 && tr.cells[0].colSpan > 1;
+const filesCos = taula => [...taula.tBodies].flatMap(b => [...b.rows]);
+const capTaula = taula => (taula.tHead && taula.tHead.rows[0]) || null;
+const clausCols = taula => { const c = capTaula(taula); return c ? [...c.cells].map((th, i) => th.dataset.col || "c" + i) : []; };
 
 function ullDoc(amagat, accio, que){
   const t = amagat ? `Torna a imprimir ${que}` : `No imprimeixis ${que}`;
@@ -6792,35 +6857,42 @@ function ullDoc(amagat, accio, que){
     amagat ? `<span class="doc-no-imp doc-eina no-print" contenteditable="false">No s'imprimirà</span>` : ""}`;
 }
 
-/* Posició de cada casella del cos d'una taula, tenint en compte les fusions. */
+/* Posició de cada casella del cos d'una taula, tenint en compte les fusions
+   de files (rowspan) i de columnes (colspan). */
 function graellaTaula(files){
   const ocupat = files.map(() => []), cel = [];
   files.forEach((tr, r) => {
     let c = 0;
     [...tr.cells].forEach(td => {
       while(ocupat[r][c]) c++;
-      const rs = Math.max(1, td.rowSpan || 1);
-      for(let k = 0; k < rs && r + k < files.length; k++) ocupat[r + k][c] = true;
-      cel.push({td, r, c, rs});
-      c++;
+      const rs = Math.max(1, td.rowSpan || 1), cs = Math.max(1, td.colSpan || 1);
+      for(let k = 0; k < rs && r + k < files.length; k++)
+        for(let j = 0; j < cs; j++) ocupat[r + k][c + j] = true;
+      cel.push({td, r, c, rs, cs});
+      c += cs;
     });
   });
   return cel;
 }
 
-/* Còpia de la taula per imprimir, sense les files ni les columnes amagades. */
-function taulaImpressio(taula, filaAmagada, cols){
+/* Còpia de la taula per imprimir, sense les files ni les columnes amagades.
+   Les files de la còpia s'identifiquen per la posició, que és la mateixa. */
+function taulaImpressio(taula, filaAmagada, colAmagada){
   const t = taula.cloneNode(true);
-  t.querySelectorAll("[data-col]").forEach(c => { if(cols.includes(c.dataset.col)) c.remove(); });
-  const files = [...t.querySelectorAll("tbody tr")];
-  const queda = files.map(tr => !filaAmagada(tr));
+  const cap = capTaula(t);
+  if(cap) [...cap.cells].forEach((th, c) => { if(colAmagada(c)) th.remove(); });
+  const files = filesCos(t);
+  const queda = files.map((tr, i) => !filaAmagada(i));
   const cel = graellaTaula(files);
   files.forEach(tr => [...tr.cells].forEach(td => td.remove()));
   cel.sort((x, y) => x.c - y.c).forEach(x => {
+    let cs = 0;
+    for(let j = 0; j < x.cs; j++) if(!colAmagada(x.c + j)) cs++;
     const vis = [];
     for(let k = 0; k < x.rs && x.r + k < files.length; k++) if(queda[x.r + k]) vis.push(x.r + k);
-    if(!vis.length) return;
+    if(!cs || !vis.length) return;
     x.td.rowSpan = vis.length;
+    if(x.cs > 1) x.td.colSpan = cs;
     files[vis[0]].appendChild(x.td);
   });
   files.forEach((tr, i) => { if(!queda[i]) tr.remove(); });
@@ -6829,57 +6901,75 @@ function taulaImpressio(taula, filaAmagada, cols){
 }
 
 function decoraOcults(arrel, p){
-  const sec = arrel.querySelector('[data-sec="objectius"]');
-  const taula = sec && sec.querySelector("table");
-  if(!taula) return;
-  const oc = ocultsDoc(p);
-  const files = [...taula.querySelectorAll("tbody tr")];
-  const amagada = tr => !!tr.dataset.obj && oc.files.includes(tr.dataset.obj);
-  const nFiles = files.filter(amagada).length;
-  const nCols = [...taula.querySelectorAll("th[data-col]")].filter(th => oc.cols.includes(th.dataset.col)).length;
+  taulesDoc(arrel).forEach(x => decoraTaula(x.taula, x.clau, p));
+}
+
+function decoraTaula(taula, clau, p){
+  const oc = ocultsTaula(p, clau);
+  const files = filesCos(taula);
+  /* Les claus es treuen abans de posar-hi ulls i avisos, que en canviarien el text. */
+  const claus = files.map(clauFila);
+  const cols = clausCols(taula);
+  const amagada = i => !filaBuida(files[i]) && oc.files.includes(claus[i]);
+  const colOff = c => oc.cols.includes(cols[c]);
+  const nFiles = files.filter((tr, i) => amagada(i)).length;
+  const nCols = cols.filter((k, c) => colOff(c)).length;
   /* Primer la còpia per imprimir, encara sense ulls ni avisos. */
   if(nFiles || nCols){
-    taula.after(taulaImpressio(taula, amagada, oc.cols));
+    taula.after(taulaImpressio(taula, amagada, colOff));
     taula.classList.add("doc-pantalla");
-    const h = sec.querySelector("h2");
     const que = [nFiles ? `${nFiles} fila${nFiles===1?"":"s"}` : "",
                  nCols ? `${nCols} columna${nCols===1?"":"s"}` : ""].filter(Boolean).join(" i ");
-    const avis = `<div class="doc-ocults doc-eina no-print" contenteditable="false">${que} d'aquesta taula no ${
-      nFiles + nCols === 1 ? "s'imprimirà" : "s'imprimiran"}. Es mostren apagades; amb l'ull les tornes a mostrar.</div>`;
-    if(h) h.insertAdjacentHTML("afterend", avis);
+    taula.insertAdjacentHTML("beforebegin", `<div class="doc-ocults doc-eina no-print" contenteditable="false">${que} d'aquesta taula no ${
+      nFiles + nCols === 1 ? "s'imprimirà" : "s'imprimiran"}. Es mostren apagades; amb l'ull les tornes a mostrar.</div>`);
   }
+  taula.classList.add("doc-ulls");
   /* Casella a casella: les fusionades només s'apaguen si totes les seves
-     files són amagades. */
+     files, o totes les seves columnes, són amagades. */
   graellaTaula(files).forEach(x => {
-    const totes = files.slice(x.r, x.r + x.rs).every(amagada);
-    if(totes || oc.cols.includes(x.td.dataset.col)) x.td.classList.add("doc-ocult");
+    let filesOff = true, colsOff = true;
+    for(let k = 0; k < x.rs && x.r + k < files.length; k++) if(!amagada(x.r + k)) filesOff = false;
+    for(let j = 0; j < x.cs; j++) if(!colOff(x.c + j)) colsOff = false;
+    if(filesOff || colsOff) x.td.classList.add("doc-ocult");
   });
-  taula.querySelectorAll("th[data-col]").forEach(th => {
-    const k = th.dataset.col, off = oc.cols.includes(k);
-    if(off) th.classList.add("doc-ocult");
-    th.insertAdjacentHTML("beforeend", ullDoc(off, `commutaColDoc(${jq(k)})`, "aquesta columna"));
+  const cap = capTaula(taula);
+  if(cap) [...cap.cells].forEach((th, c) => {
+    if(colOff(c)) th.classList.add("doc-ocult");
+    th.insertAdjacentHTML("beforeend", ullDoc(colOff(c), `commutaColDoc(${jq(clau)},${jq(cols[c])})`, "aquesta columna"));
   });
-  files.forEach(tr => {
-    if(!tr.dataset.obj) return;
+  files.forEach((tr, i) => {
+    if(filaBuida(tr)) return;
     const td = tr.querySelector('td[data-col="obj"]') || tr.cells[tr.cells.length - 1];
-    if(td) td.insertAdjacentHTML("beforeend", ullDoc(amagada(tr), `commutaFilaDoc(${jq(tr.dataset.obj)})`, "aquesta fila"));
+    if(!td) return;
+    td.classList.add("doc-ull-cel");
+    td.insertAdjacentHTML("beforeend", ullDoc(amagada(i), `commutaFilaDoc(${jq(clau)},${jq(claus[i])})`, "aquesta fila"));
   });
 }
 
-function commutaFilaDoc(id){ commutaOcultDoc("files", id); }
-function commutaColDoc(k){ commutaOcultDoc("cols", k); }
-function commutaOcultDoc(camp, v){
+function commutaFilaDoc(taula, k){ commutaOcultDoc(taula, "files", k); }
+function commutaColDoc(taula, k){ commutaOcultDoc(taula, "cols", k); }
+function commutaOcultDoc(taula, camp, v){
   const p = pi(state.docPi);
   if(!p) return;
   if(docEditant) buidaEdicioDoc();
-  const o = p.docOcult = Object.assign({files:[], cols:[]}, p.docOcult || {});
+  const tot = ocultsDoc(p);
+  const o = tot[taula] = ocultsTaula(p, taula);
   const i = o[camp].indexOf(v);
   if(i >= 0) o[camp].splice(i, 1); else o[camp].push(v);
+  if(!o.files.length && !o.cols.length) delete tot[taula];
+  p.docOcult = Object.keys(tot).length ? tot : null;
   desa();
   refrescaDoc();
   const que = camp === "files" ? "La fila" : "La columna";
   toast(i >= 0 ? `${que} es tornarà a imprimir.` : `${que} no s'imprimirà.`);
 }
+
+/* Si s'imprimeix enmig d'una edició, les còpies per imprimir encara són les
+   d'abans dels últims canvis: es desa i es repinta el document abans. */
+window.addEventListener("beforeprint", () => {
+  const cos = $("#doc-cos");
+  if(docEditant && cos && cos.dataset.tocat){ buidaEdicioDoc(); refrescaDoc(); }
+});
 /* ---------- 12. Còpia de seguretat ---------- */
 /* ---------- 8b. Dades i còpies de seguretat ---------- */
 
