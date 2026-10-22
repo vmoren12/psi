@@ -76,11 +76,14 @@ function capsaleraNavegador(on){
     : "@media print{@page{margin:0}.doc{padding:0 15mm;--m-dalt:20mm;--m-cap:8mm;--m-baix:14mm}}";
 }
 function closeModal(){
-  /* Si es tanca el document a mig editar, el que s'hi ha escrit no es perd. */
+  /* Si es tanca el document a mig editar un apartat, el que s'hi ha escrit no es perd. */
   if(docEditant){ buidaEdicioDoc(); docEditant = false; }
   tornaDeModal = null;
   $("#modal").classList.remove("on");
   document.body.style.overflow = "";
   if(state.bm && state.bm.obert){ state.bm.obert = false; if(state.view==="pi") renderPi(); }
+  /* El banc de frases escriu a l'objectiu mentre és obert: el pas 6 s'ha de
+     repintar per veure-hi la conducta triada. */
+  if(state.bc && state.bc.obert){ state.bc.obert = false; if(state.view==="pi") renderPi(); }
 }
 

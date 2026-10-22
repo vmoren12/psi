@@ -35,6 +35,8 @@
       <button data-view="curriculum"><span class="ic">▤</span><span class="lb">Currículum</span></button>
       <button data-view="dades"><span class="ic">▽</span><span class="lb">Dades i còpies</span></button>
     </nav>
+    <button class="rail-incidencia" type="button" onclick="obreIncidencia()"
+      title="Obre un formulari a GitHub per notificar un error o proposar una millora"><span class="msym" aria-hidden="true">&#xe87f;</span><span>Notifica un problema o suggeriment</span></button>
     <div class="rail-foot">
       <b class="nom">Víctor Moreno de la Torre</b>
       <span class="carrec">Psicòleg i Orientador Educatiu</span>
@@ -46,6 +48,10 @@
   <main class="main">
     <header class="topbar">
       <div><h1 id="vtitle">Tauler</h1><div class="sub" id="vsub"></div></div>
+      <!-- A pantalla petita la barra lateral és la de navegació inferior i no
+           hi cap el botó d'incidències: va aquí. -->
+      <button class="btn sm ghost topbar-incidencia" type="button" onclick="obreIncidencia()"
+        title="Notifica un problema o suggeriment" aria-label="Notifica un problema o suggeriment"><span class="msym" aria-hidden="true">&#xe87f;</span></button>
       <div class="actions" id="vactions"></div>
     </header>
     <div class="wrap">

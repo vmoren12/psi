@@ -180,7 +180,7 @@ function detallSeguiment(sel){
         ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>`
           : t ? `<span class="muted small">· Es valoren quan triïs el ${esc(t)}</span>` : ""}</div>
       ${obs.map(o=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)">
-        <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${esc(fraseText(o, a.alias))}</div>
+        <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${fraseText(o, a.alias) ? esc(fraseText(o, a.alias)) : `<i class="muted">Objectiu encara sense redactar al pas 6</i>`}</div>
         <div class="scale">${ESCALA.map(e=>obert(o)
           ? `<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`
           : `<button aria-pressed="false" disabled title="Aquest objectiu és del ${esc(o.trimestre)}">${e}</button>`).join("")}</div>

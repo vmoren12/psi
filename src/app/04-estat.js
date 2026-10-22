@@ -24,6 +24,9 @@ function nouPiObj(alumneId){
        editat a mà a la previsualització ({seccions, data}) o null si
        no n'hi ha. Vegeu 51-document-edicio.js. */
     docMesuresSimples: false, docEdit: null,
+    /* Estratègies metodològiques del banc en una graella pròpia de l'apartat
+       de mesures, agrupades per categoria. Per defecte, sí. */
+    docEstrategiesApart: true,
     /* El que no s'imprimeix del document: files i columnes de cada taula
        ({clau: {files:[], cols:[]}}), apartats (seccions:[]) i blocs com el
        segell (blocs:[]). Vegeu 52-document-ocults.js. */

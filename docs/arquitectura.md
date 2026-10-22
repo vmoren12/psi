@@ -59,7 +59,7 @@ i la paleta sencera cap en catorze línies.
 
 ## El codi
 
-35 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
+36 mòduls a `src/app/`, concatenats dins d'**un únic `<script>` clàssic**.
 Comparteixen, doncs, **un sol àmbit global**, i això té dues conseqüències que
 convé tenir presents abans de tocar res:
 
@@ -89,7 +89,7 @@ segura.
 | `09` | La versió web: manifest, service worker i botó de descàrrega. Amb `file://` no fa res. |
 | `10`–`14` | Vistes de tauler, alumnat, banc, explorador del currículum i secció d'estratègies. |
 | `20`–`31` | Editor del pla, un mòdul per pas del model oficial. |
-| `40`–`62` | Seguiment, generació del document, còpies de seguretat i importació. |
+| `40`–`63` | Seguiment, generació del document, còpies de seguretat, importació i l'enllaç per notificar incidències. |
 | `99` | Arrencada. |
 
 L'editor del pla és la part gran, i per això és l'única que es parteix per

@@ -72,6 +72,16 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 .view{display:none}
 .view.on{display:block}
 
+
+/* Notifica un problema o suggeriment: a la barra lateral, ben visible, entre
+   la navegació i el peu. A pantalla petita en fa les funcions el botó de la
+   capçalera (vegeu 18-adaptatiu.css). */
+.rail-incidencia{display:flex;align-items:center;gap:9px;margin:0 12px 12px;padding:10px 12px;border:1px solid #33434d;border-radius:var(--r);
+  background:#1b262d;color:#e3eaed;font:inherit;font-size:13px;line-height:1.3;text-align:left;cursor:pointer;transition:background .12s,border-color .12s}
+.rail-incidencia .msym{font-size:19px;color:#8fd0bf;flex:0 0 auto}
+.rail-incidencia:hover,.rail-incidencia:focus-visible{background:#22303a;border-color:#4b5f6a}
+.btn.topbar-incidencia{display:none}
+.topbar-incidencia .msym{font-size:19px}
 /* ---------- primitives ---------- */
 .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:16px}
@@ -215,6 +225,14 @@ tbody tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--met)}
 .obj-item .composer{font-size:15px;padding:11px 13px;margin-bottom:10px}
 .obj-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
+/* Text lliure de l'objectiu: una alternativa a tots els camps de la frase, no
+   un camp més. Va en un requadre de to suau perquè es distingeixi a primer cop d'ull. */
+.camp-lliure{margin:4px 0 12px;padding:10px 12px 12px;background:var(--con-soft);border:1px solid #d3d3ea;border-left:3px solid var(--con);border-radius:0 var(--r) var(--r) 0}
+.camp-lliure .lbl{display:flex;align-items:center;gap:6px;color:var(--con);margin-bottom:3px}
+.camp-lliure .lbl .msym{font-size:15px}
+.camp-lliure-nota{display:block;font-size:12.5px;line-height:1.45;color:var(--ink2);margin-bottom:7px}
+.camp-lliure textarea{background:var(--surface)}
+.camp-lliure.on{background:#dedef0;border-color:#c4c4e2;border-left-color:var(--con)}
 /* ---------- banc / currículum ---------- */
 .bank{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .ad{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px;display:flex;flex-direction:column;gap:9px}
@@ -394,6 +412,13 @@ details.ce .ceb{padding:6px 14px 12px}
 .ad-font{margin:0;font-size:11px}
 .btn.ok{background:var(--met-soft);border-color:#b9d6cb;color:#134338;cursor:default}
 
+/* Banc de frases de la conducta observable: el botó «Fet» va just al costat
+   de la casella que s'omple, gran i destacat, perquè és com es torna a l'objectiu. */
+.bc-dest{align-items:flex-end}
+.bc-dest input[type=text]{min-height:44px;font-size:14.5px}
+.btn.bc-fet{min-height:44px;padding:0 18px;font-size:14px;font-weight:600;background:var(--met);border-color:var(--met);white-space:nowrap}
+.btn.bc-fet:hover{background:#185a4d;border-color:#185a4d}
+.btn.bc-fet .msym{font-size:19px}
 /* ---------- adaptació de criteris (pas 5) ---------- */
 .crit.on{background:#fbfdfb}
 .crit-tools{display:flex;gap:7px;flex-wrap:nowrap;align-items:center;margin-top:3px;
@@ -529,10 +554,6 @@ details.ce .ceb{padding:6px 14px 12px}
 .doc .segell{width:48mm;min-height:36mm;border:1px dashed #a9b2b7;border-radius:4px;display:flex;align-items:flex-end;justify-content:center;padding:0 6px 6px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#939ca1}
 .doc .foot{margin-top:34px;border-top:1px solid #d9dedb;padding-top:8px;font-family:var(--mono);font-size:10px;color:#8b959a;letter-spacing:.06em}
 
-/* Edició del document a la previsualització */
-.doc-cos[contenteditable="true"]{outline:2px dashed #b9d6cb;outline-offset:8px;border-radius:2px}
-.doc-cos[contenteditable="true"] section{position:relative}
-.doc-cos[contenteditable="true"] section:hover{box-shadow:0 0 0 1px #d9dedb}
 .doc .mes-grup{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3f8c9e;margin:8px 0 2px}
 .doc-mesures-eina{font-family:var(--sans);margin:0 0 6px;display:flex;justify-content:flex-end}
 .doc-edits{flex-basis:100%;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
@@ -569,6 +590,22 @@ details.ce .ceb{padding:6px 14px 12px}
   .doc table.doc-pantalla{display:none!important}
   .doc .doc-sec-oculta,.doc .doc-bloc-ocult{display:none!important}
 }
+/* Llapis i fletxa de restaurar de cada apartat (51-document-edicio.js). Fan
+   servir l'aspecte de l'ull; als títols van a la seva esquerra. */
+@media screen{
+  .doc section h2{padding-right:64px}
+  .doc section[data-editat] h2{padding-right:90px}
+}
+.doc h2 .doc-llapis{right:32px}
+.doc h2 .doc-restaura{right:58px}
+.doc .doc-llapis.on,.doc .doc-llapis.on:hover{opacity:1;background:var(--met);border-color:var(--met);color:#fff}
+.doc [data-sec="cap"],.doc [data-sec="peu"]{position:relative}
+.doc .doc-eines-solt{position:absolute;top:0;right:-36px;display:flex;flex-direction:column;gap:4px;font-size:14.5px}
+.doc .doc-eines-solt .doc-ull{position:static;opacity:.6}
+.doc [data-sec][contenteditable="true"]{outline:2px dashed var(--met);outline-offset:6px;border-radius:2px;background:#fbfdfc}
+.doc [data-sec][contenteditable="true"]:focus{outline-style:solid}
+.doc-llegenda{display:inline-block;font-size:15px;vertical-align:-3px;color:var(--ink2)}
+.doc-mesures-eina{gap:6px;flex-wrap:wrap}
 /* ---------- avís permanent: l'aplicació no és oficial ----------
    Barra fixa a baix de tot. Es pot amagar, però no desapareix mai del tot:
    en queda el botó rodó de la dreta, que la torna a obrir. L'alçada que ocupa
@@ -674,6 +711,9 @@ details.ce .ceb{padding:6px 14px 12px}
   .topbar .sub{display:none}
   .topbar .actions{margin-left:0;width:100%;order:3}
   .topbar .actions .btn{flex:1}
+  .btn.topbar-incidencia{display:inline-flex;margin-left:auto;min-height:38px;padding:0 10px}
+  .rail-incidencia{display:none}
+  .doc .doc-eines-solt{top:-30px;right:0;flex-direction:row}
   .wrap{padding:16px 14px 40px}
   .card-b{padding:14px}
   .row>*{min-width:100%}
@@ -767,6 +807,8 @@ details.ce .ceb{padding:6px 14px 12px}
       <button data-view="curriculum"><span class="ic">▤</span><span class="lb">Currículum</span></button>
       <button data-view="dades"><span class="ic">▽</span><span class="lb">Dades i còpies</span></button>
     </nav>
+    <button class="rail-incidencia" type="button" onclick="obreIncidencia()"
+      title="Obre un formulari a GitHub per notificar un error o proposar una millora"><span class="msym" aria-hidden="true">&#xe87f;</span><span>Notifica un problema o suggeriment</span></button>
     <div class="rail-foot">
       <b class="nom">Víctor Moreno de la Torre</b>
       <span class="carrec">Psicòleg i Orientador Educatiu</span>
@@ -778,6 +820,10 @@ details.ce .ceb{padding:6px 14px 12px}
   <main class="main">
     <header class="topbar">
       <div><h1 id="vtitle">Tauler</h1><div class="sub" id="vsub"></div></div>
+      <!-- A pantalla petita la barra lateral és la de navegació inferior i no
+           hi cap el botó d'incidències: va aquí. -->
+      <button class="btn sm ghost topbar-incidencia" type="button" onclick="obreIncidencia()"
+        title="Notifica un problema o suggeriment" aria-label="Notifica un problema o suggeriment"><span class="msym" aria-hidden="true">&#xe87f;</span></button>
       <div class="actions" id="vactions"></div>
     </header>
     <div class="wrap">
@@ -1552,6 +1598,9 @@ function nouPiObj(alumneId){
        editat a mà a la previsualització ({seccions, data}) o null si
        no n'hi ha. Vegeu 51-document-edicio.js. */
     docMesuresSimples: false, docEdit: null,
+    /* Estratègies metodològiques del banc en una graella pròpia de l'apartat
+       de mesures, agrupades per categoria. Per defecte, sí. */
+    docEstrategiesApart: true,
     /* El que no s'imprimeix del document: files i columnes de cada taula
        ({clau: {files:[], cols:[]}}), apartats (seccions:[]) i blocs com el
        segell (blocs:[]). Vegeu 52-document-ocults.js. */
@@ -1840,10 +1889,22 @@ function frase(o, alias){
 /* Text lliure de l'objectiu: si s'ha escrit, substitueix la frase construïda
    amb els camps a tot arreu (document, seguiment i control de qualitat). */
 const textLliure = o => (o.lliure || "").trim();
+/* Si l'objectiu té escrit algun dels camps que formen la frase. */
+const objEscrit = o => !!textLliure(o)
+  || ["conducta","suport","context","valor","unitat"].some(k => String(o[k] || "").trim());
+/* La frase en text pla, per al document i el seguiment. Hi entren només els
+   camps escrits: les marques de la plantilla («conducta observable»,
+   «criteri d'assoliment»…) són ajuda per redactar al pas 6, no text del pla.
+   Un objectiu sense res escrit dona una cadena buida. */
 function fraseText(o, alias){
   if(textLliure(o)) return textLliure(o);
-  const d = document.createElement("div"); d.innerHTML = frase(o, alias);
-  return d.textContent.replace(/\s+/g," ").trim();
+  if(!objEscrit(o)) return "";
+  const v = k => String(o[k] || "").replace(/\s+/g, " ").trim();
+  const qui = alias || "l’alumne/a";
+  const fer = [v("conducta"), v("suport"), v("context")].filter(Boolean).join(" ");
+  const crit = [v("valor"), v("unitat")].filter(Boolean).join(" ");
+  const inici = v("trimestre") ? `Al final del ${v("trimestre")}, ${qui}` : qui.charAt(0).toUpperCase() + qui.slice(1);
+  return `${inici} serà capaç de ${fer || "…"}${crit ? `, assolint ${crit}` : ""}.`;
 }
 const objCompleta = o => !!textLliure(o) || !!(o.conducta && o.valor && o.unitat && o.trimestre);
 
@@ -1971,12 +2032,15 @@ function capsaleraNavegador(on){
     : "@media print{@page{margin:0}.doc{padding:0 15mm;--m-dalt:20mm;--m-cap:8mm;--m-baix:14mm}}";
 }
 function closeModal(){
-  /* Si es tanca el document a mig editar, el que s'hi ha escrit no es perd. */
+  /* Si es tanca el document a mig editar un apartat, el que s'hi ha escrit no es perd. */
   if(docEditant){ buidaEdicioDoc(); docEditant = false; }
   tornaDeModal = null;
   $("#modal").classList.remove("on");
   document.body.style.overflow = "";
   if(state.bm && state.bm.obert){ state.bm.obert = false; if(state.view==="pi") renderPi(); }
+  /* El banc de frases escriu a l'objectiu mentre és obert: el pas 6 s'ha de
+     repintar per veure-hi la conducta triada. */
+  if(state.bc && state.bc.obert){ state.bc.obert = false; if(state.view==="pi") renderPi(); }
 }
 
 /* ---------- Diàlegs propis ----------
@@ -3222,11 +3286,21 @@ function repintaEstrategies(){
 /* ----- Passar una frase al pla -----
    Entra com una mesura més de l'apartat 5 del document, amb la frase com a
    títol i com a redacció. Neix universal i amb l'eix «Metodologia» perquè és
-   el que és una estratègia d'aula; des del pas 4 es pot canviar tot. */
+   el que és una estratègia d'aula; des del pas 4 es pot canviar tot.
+   Porta la categoria perquè el document les pugui agrupar en una graella
+   pròpia (vegeu taulaEstrategiesDoc a 50-document.js). */
+const BLOC_ESTRATEGIES = "Estratègies metodològiques";
+const esEstrategiaPla = x => x.bloc === BLOC_ESTRATEGIES;
 function itemEstrategia(e, materia){
   return {id:uid("A"), adId:e.id, titol:e.text, text:e.text,
           materia: materia || DEST_TOTES, tipus:"Metodologia",
-          bloc:"Estratègies metodològiques", intensitat:"Universal", concrecio:""};
+          bloc:BLOC_ESTRATEGIES, categoria:e.categoria, intensitat:"Universal", concrecio:""};
+}
+/* Categoria d'una estratègia del pla. Les afegides abans que l'element en
+   portés la treuen del banc; si la frase ja no hi és, van a «Altres». */
+function categoriaEstrategiaPla(x){
+  const e = x.categoria ? null : estrategia(x.adId);
+  return x.categoria || (e && e.categoria) || "Altres estratègies";
 }
 function afegeixEstrategia(id){
   const e = estrategia(id); if(!e) return;
@@ -3805,6 +3879,7 @@ function pas4(p, a){
   const prim = esPlaPrim(p);
   const c = comptaIntensitats(p);
   const total = p.adaptacions.length;
+  const nEstr = p.adaptacions.filter(esEstrategiaPla).length;
   return `
   <div class="card"><div class="card-h"><span class="num">5</span><h2>Proposta educativa · Mesures i suports</h2>
     ${(a.perfils||[]).some(x => plantillaPerfil(x))
@@ -3828,6 +3903,10 @@ function pas4(p, a){
    <div class="card-b" style="padding:12px 16px">
     ${c.Intensiva ? `<div class="note alert" style="margin:0 0 10px">Aquest pla inclou <b>mesures i suports intensius</b>. Requereixen l'informe de reconeixement de necessitats específiques de suport educatiu elaborat per l'EAP i han de constar a l'expedient acadèmic de l'alumne/a. Decret 150/2017, articles 10 i 11.</div>` : ""}
     <p class="small muted" style="margin:0">Les mesures assignades a «${esc(DEST_TOTES)}» s'apliquen a totes les matèries d'aquest pla. Pots reassignar qualsevol mesura a una matèria concreta amb el selector de cada fitxa.</p>
+    ${nEstr ? `<label class="chk" style="border-top:1px solid var(--line);padding:11px 0 0;margin:11px 0 0">
+      <input type="checkbox" ${p.docEstrategiesApart!==false?"checked":""} onchange="up(p=>p.docEstrategiesApart=this.checked)">
+      <span class="txt"><b>Mostra les estratègies metodològiques en una graella independent al document del PI</b>
+      <div class="small muted" style="margin-top:3px;line-height:1.5">El pla en té <b>${nEstr}</b>. Quan està marcat, a l'apartat <b>Proposta educativa · Mesures i suports</b> surten en una taula a part, agrupades per categoria, i no barrejades amb les mesures del Decret 150/2017. Ho pots canviar també des del document.</div></span></label>` : ""}
    </div></div>
 
   ${blocMesures(p, a, DEST_TOTES, "Mesures i suports transversals", "S'apliquen a totes les matèries d'aquest pla.")}
@@ -5259,7 +5338,12 @@ function netejaFont(p, nom, font){
 
    · Per àmbits — frases curtes, ja redactades en la forma que demana la
      frase de l'objectiu («serà capaç de …»), agrupades per àmbit de
-     l'educació bàsica: personal i social, lingüístic, matemàtic, i la resta.
+     l'educació bàsica i, dins de cada àmbit, per subàmbit. El personal i
+     social és el més extens perquè és on més costa trobar la paraula justa:
+     autonomia, atenció, organització, regulació emocional, conducta,
+     relacions, comunicació, autodeterminació, flexibilitat, vida diària i
+     assistència. Un selector deixa veure només un àmbit; si l'objectiu és de
+     l'àmbit personal i social, la finestra s'hi obre directament.
 
    · Des del currículum — el mateix currículum del pas 5, matèria per matèria,
      amb les competències específiques i els criteris d'avaluació. S'hi pot
@@ -5273,115 +5357,260 @@ function netejaFont(p, nom, font){
 /* Frases d'ús freqüent, en infinitiu, per encaixar rere «serà capaç de».
    No és una llista tancada: la casella continua essent de text lliure. */
 const CONDUCTES_SUGG = [
-  {g:"Personal i social · aprendre a aprendre", items:[
+  {a:"Personal i social", g:"Autonomia i hàbits de treball", items:[
     "planificar la tasca abans de començar-la i dir en quin ordre la farà",
+    "començar la tasca de manera autònoma en els primers cinc minuts de la sessió",
+    "treballar de manera autònoma durant el temps acordat sense requerir la intervenció del docent",
+    "fer servir el llistat de passos per completar una tasca sense ajuda de l'adult",
+    "acabar la tasca començada dins del temps previst",
     "revisar la feina amb la pauta de revisió abans de lliurar-la",
+    "corregir els errors assenyalats abans de passar a la tasca següent",
+    "consultar els recursos de l'aula (murals, glossari, exemples resolts) abans de demanar ajuda",
     "demanar ajuda amb la fórmula acordada quan es queda encallat",
     "reconèixer quan no ha entès una consigna i dir-ho",
-    "portar l'agenda al dia amb les tasques i les dates de lliurament",
-    "preparar el material de la sessió següent abans de sortir de l'aula",
-    "acabar la tasca començada dins del temps previst",
+    "lliurar les tasques i els deures en la data acordada",
     "valorar la pròpia feina amb la rúbrica i justificar la valoració",
-    "fixar-se una fita setmanal i dir al final de la setmana si l'ha assolida"]},
-  {g:"Regulació emocional i conducta", items:[
+    "fixar-se una fita setmanal i dir al final de la setmana si l'ha assolida",
+    "explicar amb una frase què ha après al final de la sessió"]},
+  {a:"Personal i social", g:"Atenció i funcions executives", items:[
+    "mantenir l'atenció en la tasca durant el temps acordat",
+    "tornar a la tasca després d'una distracció amb el senyal acordat",
+    "seguir una instrucció de diversos passos amb el suport visual",
+    "llegir l'enunciat sencer abans de començar a respondre",
+    "dividir una tasca llarga en parts i marcar-les a mesura que les acaba",
+    "fer servir el temporitzador per gestionar el temps de cada part de la tasca",
+    "fer la pausa activa pactada i reprendre la feina després",
+    "esperar a tenir tota la informació abans de respondre o actuar",
+    "passar d'una activitat a la següent quan se li indica",
+    "recordar i aplicar les rutines de l'aula sense recordatori de l'adult"]},
+  {a:"Personal i social", g:"Organització, agenda i materials", items:[
+    "portar l'agenda al dia amb les tasques i les dates de lliurament",
+    "anotar a l'agenda els exàmens i els lliuraments el mateix dia que s'anuncien",
+    "consultar l'agenda o l'horari visual per anticipar què toca",
+    "portar a classe el material necessari per a cada matèria",
+    "preparar el material de la sessió següent abans de sortir de l'aula",
+    "mantenir la taula de treball endreçada amb només el material de la tasca",
+    "organitzar els fulls i els apunts a la carpeta o la llibreta de cada matèria",
+    "fer servir un calendari per repartir l'estudi abans d'una prova",
+    "revisar la motxilla amb la llista de comprovació abans de marxar a casa"]},
+  {a:"Personal i social", g:"Regulació emocional", items:[
     "anomenar l'emoció que sent abans d'actuar",
+    "identificar al termòmetre emocional el seu nivell d'activació",
     "fer servir una estratègia de calma acordada quan nota que es desborda",
+    "demanar una pausa amb el senyal acordat abans que la situació s'agreugi",
     "sortir a l'espai acordat i tornar a l'aula dins del temps pactat",
-    "esperar el torn de paraula i intervenir quan se li dona",
-    "acceptar una correcció sense interrompre l'activitat",
-    "resoldre una discrepància amb un company/a parlant-ne",
-    "complir les normes acordades de l'aula al llarg de la sessió",
+    "tolerar l'error sense abandonar la tasca",
+    "acceptar perdre en un joc sense conductes disruptives",
+    "expressar el desacord amb un to i unes paraules adequats",
+    "reconèixer, després d'un conflicte, què ha passat i què podria fer diferent",
+    "fer servir una estratègia d'afrontament davant d'una prova o d'una exposició oral",
     "registrar al full de seguiment com li ha anat la sessió"]},
-  {g:"Relació amb els iguals i treball en equip", items:[
+  {a:"Personal i social", g:"Conducta i convivència a l'aula", items:[
+    "esperar el torn de paraula i intervenir quan se li dona",
+    "romandre al seu lloc durant les explicacions",
+    "entrar a l'aula i començar l'activitat seguint la rutina d'inici",
+    "complir les normes acordades de l'aula al llarg de la sessió",
+    "acceptar una correcció sense interrompre l'activitat",
+    "acceptar els límits i les conseqüències acordades sense enfrontament",
+    "reduir les interrupcions de la sessió fins al nombre acordat",
+    "fer servir un vocabulari respectuós amb els companys i amb els adults",
+    "respectar el material propi, el dels companys i el de l'aula",
+    "fer els desplaçaments entre espais (pati, aula, gimnàs) seguint les normes",
+    "complir el contracte conductual pactat i revisar-lo amb el tutor/a"]},
+  {a:"Personal i social", g:"Relació amb els iguals i treball en equip", items:[
     "assumir el rol assignat dins del grup i fer-ne la part",
     "exposar la seva idea al grup i escoltar la dels altres",
-    "demanar ajuda a un company/a abans de demanar-la al docent",
+    "acceptar les idees dels companys encara que no coincideixin amb les seves",
+    "aportar una proposta al treball cooperatiu i argumentar-la",
     "participar en una activitat de grup sense sortir-ne",
-    "aportar una proposta al treball cooperatiu i argumentar-la"]},
-  {g:"Àmbit lingüístic · comprensió lectora", items:[
+    "compartir el material i esperar el torn en les activitats de grup",
+    "demanar ajuda a un company/a abans de demanar-la al docent",
+    "oferir ajuda a un company/a quan la necessita",
+    "resoldre una discrepància amb un company/a parlant-ne",
+    "iniciar una interacció amb un company/a de manera adequada",
+    "participar en un joc estructurat al pati amb altres companys",
+    "valorar la feina de l'equip i la pròpia aportació amb la pauta de coavaluació"]},
+  {a:"Personal i social", g:"Comunicació i habilitats socials", items:[
+    "saludar i acomiadar-se de manera adequada al context",
+    "mantenir el contacte comunicatiu (mirada, orientació del cos) durant una conversa",
+    "respectar els torns en una conversa de grup",
+    "demanar les coses de manera adequada, amb les fórmules de cortesia",
+    "expressar una necessitat o un malestar a l'adult de referència",
+    "fer servir el sistema de comunicació augmentativa per expressar una necessitat",
+    "adaptar el to de veu a l'espai i a la situació",
+    "dir que no o posar un límit de manera assertiva",
+    "interpretar la intenció dels altres en una situació social amb el suport d'una història social",
+    "comprendre i fer servir les expressions no literals treballades a l'aula"]},
+  {a:"Personal i social", g:"Autoconeixement, autoestima i autodeterminació", items:[
+    "identificar dos punts forts propis i un aspecte que vol millorar",
+    "explicar quins suports l'ajuden a aprendre i demanar-los quan els necessita",
+    "prendre una decisió entre opcions donades i justificar-la",
+    "proposar-se un objectiu personal i fer-ne el seguiment amb el tutor/a",
+    "valorar els propis progressos a partir del registre d'evidències",
+    "participar en la revisió del seu pla i dir com li està anant",
+    "afrontar una tasca nova sense rebutjar-la d'entrada"]},
+  {a:"Personal i social", g:"Flexibilitat, transicions i canvis", items:[
+    "acceptar un canvi de la rutina anticipat amb l'agenda visual",
+    "fer la transició entre activitats amb l'avís previ acordat",
+    "tolerar un canvi imprevist amb el suport de l'adult de referència",
+    "provar una manera diferent de fer una tasca quan se li proposa",
+    "acceptar que l'activitat s'acabi abans d'haver-la completat del tot",
+    "participar en una activitat fora de l'aula habitual amb la preparació prèvia"]},
+  {a:"Personal i social", g:"Autonomia personal i vida diària", items:[
+    "desplaçar-se de manera autònoma pels espais habituals del centre",
+    "consultar l'horari i saber on ha d'anar a cada franja",
+    "gestionar els objectes personals (roba, motxilla, esmorzar) sense ajuda",
+    "fer servir el lavabo i tenir cura de la higiene personal de manera autònoma",
+    "fer servir de manera autònoma els productes de suport previstos",
+    "identificar quan necessita descansar, menjar o beure i demanar-ho",
+    "fer el recorregut habitual de casa a l'escola de manera segura",
+    "gestionar els diners en una situació de compra simulada o real"]},
+  {a:"Personal i social", g:"Assistència, puntualitat i implicació", items:[
+    "assistir a classe de manera regular, sense superar el nombre de faltes no justificades acordat",
+    "arribar puntual a l'inici de la jornada i després de l'esbarjo",
+    "assistir a les sessions de suport previstes i aprofitar-les",
+    "participar activament a les sessions amb almenys una intervenció pertinent",
+    "fer a casa les tasques acordades amb la família i el tutor/a",
+    "comunicar a un adult una situació de risc viscuda al pati o a la xarxa"]},
+  {a:"Lingüístic", g:"Comprensió lectora", items:[
+    "anticipar el contingut d'un text a partir del títol, les imatges i les paraules destacades",
     "identificar la idea principal d'un text expositiu i escriure-la en una frase",
     "respondre preguntes de comprensió literal sobre un text llegit",
     "fer inferències senzilles a partir de la informació del text",
     "subratllar les paraules clau de cada paràgraf",
-    "llegir un text en veu alta amb la fluïdesa acordada",
+    "ordenar en una seqüència les idees o els fets d'un text",
+    "extreure la informació rellevant d'un text per completar un esquema",
     "relacionar el títol i les imatges amb el contingut del text",
     "distingir entre la informació i l'opinió dins d'un text",
-    "buscar al diccionari les paraules que no entén i explicar-ne el sentit"]},
-  {g:"Àmbit lingüístic · expressió escrita", items:[
-    "escriure un text amb l'estructura d'inici, desenvolupament i tancament",
+    "seguir les instruccions escrites d'una activitat sense ajuda",
+    "buscar al diccionari les paraules que no entén i explicar-ne el sentit",
+    "llegir de manera autònoma un llibre de lectura fàcil i explicar-ne l'argument"]},
+  {a:"Lingüístic", g:"Lectura i escriptura inicials", items:[
+    "associar els sons treballats amb les lletres que els representen",
+    "segmentar una paraula en síl·labes i en sons",
+    "descodificar paraules amb les estructures sil·làbiques treballades",
+    "llegir un text en veu alta amb la fluïdesa acordada",
+    "llegir un text breu amb la velocitat lectora acordada (paraules per minut)",
+    "escriure al dictat paraules i frases amb les grafies treballades",
+    "copiar un text de la pissarra o del llibre sense ometre paraules",
+    "escriure amb una lletra llegible, amb la mida i l'espaiat adequats"]},
+  {a:"Lingüístic", g:"Expressió escrita", items:[
+    "escriure frases completes, amb subjecte i verb",
+    "escriure respostes completes a les preguntes, reprenent l'enunciat",
     "planificar l'escrit amb un esquema previ",
+    "escriure un text amb l'estructura d'inici, desenvolupament i tancament",
+    "escriure un text descriptiu a partir d'un guió donat",
     "escriure un resum d'un text llegit amb les seves paraules",
-    "revisar l'escrit amb la base d'orientació i corregir-ne els errors marcats",
     "fer servir connectors per enllaçar les idees del text",
+    "fer servir les majúscules i els signes de puntuació bàsics",
     "aplicar les normes ortogràfiques treballades a la unitat",
-    "escriure un text descriptiu a partir d'un guió donat"]},
-  {g:"Àmbit lingüístic · expressió i comprensió oral", items:[
-    "exposar oralment un tema preparat amb el guió de suport",
+    "revisar l'escrit amb la base d'orientació i corregir-ne els errors marcats",
+    "fer servir el corrector ortogràfic o el dictat per veu per escriure un text",
+    "presentar els treballs escrits amb el format acordat (títol, marges, data)"]},
+  {a:"Lingüístic", g:"Expressió i comprensió oral", items:[
     "seguir una consigna oral de dues instruccions seguides",
     "explicar amb les seves paraules el que acaba de sentir",
+    "respondre de manera ajustada a una pregunta oral",
+    "explicar una vivència personal seguint l'ordre temporal",
     "participar en una conversa mantenint el tema",
     "formular una pregunta pertinent sobre el que s'ha explicat",
+    "exposar oralment un tema preparat amb el guió de suport",
     "fer servir el vocabulari específic de la matèria en la seva explicació"]},
-  {g:"Àmbit matemàtic", items:[
-    "identificar les dades i la pregunta d'un problema abans de resoldre'l",
-    "resoldre problemes d'una operació amb el guió de resolució",
-    "explicar el procés que ha seguit per resoldre un problema",
+  {a:"Lingüístic", g:"Llengua d'acollida", items:[
+    "comprendre i fer servir el vocabulari bàsic de l'escola i de l'aula",
+    "comprendre les instruccions orals habituals de l'aula",
+    "presentar-se oralment amb les dades personals bàsiques",
+    "fer servir frases funcionals per demanar ajuda, permís o material",
+    "participar en converses breus amb els companys en català",
+    "llegir i comprendre textos breus adaptats al seu nivell de català",
+    "escriure frases senzilles sobre temes quotidians",
+    "fer servir el diccionari visual o bilingüe per entendre paraules noves"]},
+  {a:"Matemàtic", g:"Numeració i càlcul", items:[
+    "llegir, escriure i ordenar nombres dins del rang treballat",
+    "fer càlcul mental de sumes i restes senzilles amb les estratègies apreses",
+    "recuperar de memòria les taules de multiplicar treballades",
     "fer les operacions treballades a la unitat amb el suport acordat",
+    "aplicar els passos d'un algorisme amb el suport d'un exemple resolt",
     "estimar el resultat abans de calcular-lo i comparar-hi la resposta",
+    "fer servir la calculadora per comprovar els resultats"]},
+  {a:"Matemàtic", g:"Resolució de problemes", items:[
+    "identificar les dades i la pregunta d'un problema abans de resoldre'l",
     "representar una situació amb un dibuix, una taula o un esquema",
-    "llegir i interpretar la informació d'un gràfic senzill",
-    "aplicar les unitats de mesura adequades i escriure-les al resultat",
+    "fer servir material manipulatiu per representar el problema",
+    "resoldre problemes d'una operació amb el guió de resolució",
+    "resoldre problemes de dues operacions amb el guió de resolució",
+    "explicar el procés que ha seguit per resoldre un problema",
     "comprovar si el resultat obtingut té sentit dins del problema"]},
-  {g:"Àmbit cientificotecnològic", items:[
+  {a:"Matemàtic", g:"Mesura, geometria i dades", items:[
+    "aplicar les unitats de mesura adequades i escriure-les al resultat",
+    "llegir l'hora en rellotges analògics i digitals",
+    "fer servir l'euro en situacions de compra i calcular el canvi",
+    "identificar i descriure les figures geomètriques treballades",
+    "recollir dades i organitzar-les en una taula o un gràfic",
+    "llegir i interpretar la informació d'un gràfic senzill"]},
+  {a:"Cientificotecnològic", g:"Ciències i tecnologia", items:[
     "formular una hipòtesi abans de fer una activitat experimental",
     "seguir el protocol d'una pràctica pas a pas",
     "registrar les dades d'una observació en una taula",
     "extreure una conclusió a partir de les dades recollides",
+    "fer servir les eines de mesura del laboratori o del taller amb precisió",
+    "seguir les fases d'un projecte tecnològic amb la plantilla de planificació",
     "fer servir el vocabulari científic treballat a la unitat",
     "aplicar les normes de seguretat del laboratori o del taller",
     "relacionar un fenomen quotidià amb el contingut treballat"]},
-  {g:"Àmbit social i humanístic", items:[
+  {a:"Social i humanístic", g:"Ciències socials", items:[
     "situar un fet històric en el període que li correspon",
+    "ordenar fets en una línia del temps",
     "localitzar en un mapa els elements treballats a la unitat",
     "interpretar una font històrica senzilla amb el guió donat",
+    "extreure informació d'una font (text, imatge o mapa) per respondre una pregunta",
     "explicar una causa i una conseqüència d'un fet estudiat",
     "comparar dues realitats socials amb una taula de doble entrada",
     "argumentar la seva opinió sobre un fet d'actualitat amb una dada"]},
-  {g:"Àmbit artístic", items:[
+  {a:"Artístic", g:"Educació visual, plàstica i musical", items:[
     "fer una producció plàstica seguint la tècnica treballada",
     "explicar les decisions que ha pres en la seva producció",
     "identificar els elements del llenguatge visual en una obra",
     "mantenir el pols rítmic dins d'una interpretació de grup",
+    "seguir una partitura o un musicograma senzill",
+    "valorar amb respecte les produccions artístiques dels companys",
     "fer servir el material i les eines de manera autònoma i endreçada"]},
-  {g:"Àmbit d'educació física", items:[
+  {a:"Educació física", g:"Activitat física i esport", items:[
     "participar en l'activitat física proposada tota la sessió",
     "aplicar les normes del joc o de l'esport treballat",
     "executar l'habilitat motriu treballada amb la pauta donada",
+    "cooperar amb els companys en un joc d'equip",
     "acceptar el resultat del joc i mantenir el respecte pels companys",
+    "respectar les normes de seguretat i d'higiene de la sessió",
     "reconèixer els efectes de l'activitat física en el propi cos"]},
-  {g:"Àmbit digital", items:[
+  {a:"Digital", g:"Competència digital", items:[
     "fer servir l'eina digital acordada per fer i lliurar la tasca",
+    "organitzar els seus fitxers a la carpeta de la matèria",
     "buscar informació a la xarxa i dir d'on l'ha tret",
     "distingir una font fiable d'una que no ho és",
-    "fer servir els productes de suport i les eines d'accessibilitat previstes",
-    "organitzar els seus fitxers a la carpeta de la matèria"]}
+    "fer servir les credencials pròpies i mantenir-les en privat",
+    "comunicar-se per l'entorn virtual del centre de manera respectuosa",
+    "fer servir els productes de suport i les eines d'accessibilitat previstes"]}
 ];
+/* Àmbits de la llista, en l'ordre en què hi surten. */
+const AMBITS_CONDUCTA = [...new Set(CONDUCTES_SUGG.map(x => x.a))];
 
 /* Obre la finestra per a un objectiu concret del pas 6. */
 function obreBancConductes(objId){
   const p = P();
   const o = ob(objId);
   if(!o){ toast("L'objectiu ja no existeix."); return; }
-  state.bc = {obj:objId, mode:"ambits", q:"",
-              materia: o.materia || (p.materies[0] || ""), nomesTriat:false};
+  state.bc = {obj:objId, mode:"ambits", q:"", obert:true,
+              ambit: o.materia === AMBIT_PERSONAL ? AMBIT_PERSONAL : "",
+              materia: p.materies.includes(o.materia) ? o.materia : (p.materies[0] || ""), nomesTriat:false};
   openModal("Banc de frases · conducta observable", bcModalHTML(), true);
   pintaBancConductes();
   setTimeout(() => { const i = $("#bc-q"); if(i) i.focus(); }, 30);
 }
-/* Tancar la finestra torna al pas 6 amb el que s'hi hagi posat. */
+/* Tancar la finestra torna al pas 6 amb el que s'hi hagi posat. Si es tanca
+   amb la creu de la capçalera, ho fa closeModal(). */
 function tancaBancConductes(){
   closeModal();
-  renderPi();
 }
 
 function bcModalHTML(){
@@ -5399,10 +5628,16 @@ function bcModalHTML(){
          onclick="modeBancConductes('ambits')">Per àmbits</button>
        <button role="tab" data-bc="curr" aria-selected="${bc.mode==="curr"}" class="bm-tab"
          onclick="modeBancConductes('curr')">Des del currículum</button>
+       <span class="bm-count" id="bc-count"></span>
      </div>
      <div class="bm-filters" id="bc-filtres">
        <input type="search" id="bc-q" placeholder="Cerca dins les frases…" value="${esc(bc.q)}"
          oninput="state.bc.q=this.value;pintaBancConductes()">
+       ${bc.mode==="ambits" ? `
+       <select aria-label="Àmbit" onchange="state.bc.ambit=this.value;pintaBancConductes()">
+         <option value="">Tots els àmbits</option>
+         ${AMBITS_CONDUCTA.map(x=>`<option value="${esc(x)}" ${bc.ambit===x?"selected":""}>${esc(x)}</option>`).join("")}
+       </select>` : ""}
        ${bc.mode==="curr" ? `
        <select onchange="state.bc.materia=this.value;pintaBancConductes()">
          ${delPla.length ? `<optgroup label="Matèries del pla">${delPla.map(m=>`<option value="${esc(m)}" ${bc.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</optgroup>` : ""}
@@ -5414,13 +5649,13 @@ function bcModalHTML(){
            <option value="1" ${bc.nomesTriat?"selected":""}>Només el triat al pas 5</option>
          </select></label>` : ""}
      </div>
-     <div class="bm-dest">
-       <label class="mes-f" style="flex:1;min-width:260px"><span>Conducta observable</span>
+     <div class="bm-dest bc-dest">
+       <label class="mes-f" style="flex:1;min-width:240px"><span>Conducta observable de l'objectiu · la pots retocar aquí</span>
          <input type="text" id="bc-txt" value="${esc(o.conducta)}"
            placeholder="identificar la idea principal d'un text expositiu"
-           oninput="escriuConducta(this.value)"></label>
-       <span class="bm-count" id="bc-count"></span>
-       <button class="btn sm" onclick="tancaBancConductes()">Fet</button>
+           oninput="escriuConducta(this.value)"
+           onkeydown="if(event.key==='Enter'){event.preventDefault();tancaBancConductes()}"></label>
+       <button class="btn primary bc-fet" onclick="tancaBancConductes()"><span class="msym" aria-hidden="true">&#xe5ca;</span>Fet · torna a l'objectiu</button>
      </div>
    </div>
    <div class="bm-body" id="bc-body"></div>
@@ -5467,12 +5702,14 @@ function cosConductesAmbits(){
   const q = (state.bc.q||"").trim().toLowerCase();
   const o = ob(state.bc.obj) || {};
   const ara = (o.conducta||"").trim();
+  const ambit = state.bc.ambit || "";
   let n = 0;
   const html = CONDUCTES_SUGG.map(g => {
-    const items = g.items.filter(x => !q || (g.g+" "+x).toLowerCase().includes(q));
+    if(ambit && g.a !== ambit) return "";
+    const items = g.items.filter(x => !q || (g.a+" "+g.g+" "+x).toLowerCase().includes(q));
     n += items.length;
     if(!items.length) return "";
-    return `<div class="grp-title"><span class="eyebrow">${esc(g.g)}</span><span class="muted small">${items.length}</span></div>
+    return `<div class="grp-title"><span class="eyebrow">${esc(g.a)} · ${esc(g.g)}</span><span class="muted small">${items.length}</span></div>
       <div class="sg-list">${items.map(x=>`<button type="button" class="sg-item ${ara===x?"ja":""}" onclick="triaConducta(${jq(x)})">${esc(x)}</button>`).join("")}</div>`;
   }).join("");
   return {n, html: html || `<div class="empty"><b>Cap frase</b>Prova amb altres paraules, mira el currículum o escriu el text que vulguis a la casella de dalt.</div>`};
@@ -5559,6 +5796,11 @@ function frasePartint(text){
 /* ----- Pas 6: objectius mesurables -----
    Les mesures i els suports es concentren al pas 4; aquí només s'hi
    formulen els objectius i la manera d'avaluar-ne l'assoliment.   */
+
+/* Àmbit que un objectiu pot tenir sempre, encara que no sigui cap matèria
+   del pla: autonomia, conducta, relacions, regulació emocional… */
+const AMBIT_PERSONAL = "Personal i social";
+
 function pas6(p, a){
   const senseObj = p.materies.filter(m => !p.objectius.some(o => o.materia===m));
   /* Els objectius solen referir-se al que s'ha prioritzat al pas 5: si hi ha
@@ -5581,7 +5823,7 @@ function pas6(p, a){
     <label class="chk" style="border-top:1px solid var(--line);padding:11px 0;margin-bottom:12px">
       <input type="checkbox" ${p.docObjectius!==false?"checked":""} onchange="upR(p=>p.docObjectius=this.checked)">
       <span class="txt"><b>Inclou els objectius al document del PI</b>
-      <div class="small muted" style="margin-top:3px;line-height:1.5">Quan està marcat, el document porta l'apartat <b>5. Proposta educativa · Objectius i avaluació</b>, amb la frase de cada objectiu, la matèria i els instruments i evidències d'avaluació. Si es desmarca, els objectius es continuen desant i es continuen valorant al seguiment, però no surten al document.${p.objectius.length ? "" : " Ara mateix el pla no en té cap: l'apartat no sortiria igualment."}</div></span></label>
+      <div class="small muted" style="margin-top:3px;line-height:1.5">Quan està marcat, el document porta l'apartat <b>5. Proposta educativa · Objectius i avaluació</b>, amb la frase de cada objectiu, la matèria i els instruments i evidències d'avaluació. Si es desmarca, els objectius es continuen desant i es continuen valorant al seguiment, però no surten al document. Els objectius que no tinguin res escrit no hi surten mai: el document no porta el text de la plantilla.${objectiusDoc(p).length ? "" : " Ara mateix el pla no en té cap de redactat: l'apartat no sortiria."}</div></span></label>
 
     ${senseObj.length ? `<div class="note" style="margin:0 0 14px">Sense cap objectiu encara: ${esc(senseObj.join(", "))}.</div>` : ""}
 
@@ -5592,7 +5834,9 @@ function pas6(p, a){
         ? `${esc(textLliure(o))}<div class="small muted" style="margin-top:6px;font-family:var(--sans)">S'usa el <b>text lliure</b>. Esborra'l per tornar a la frase construïda amb els camps.</div>`
         : frase(o, a.alias)}</div>
       <div class="row g3">
-        <label class="field" style="margin-bottom:9px"><span class="lbl">Matèria</span><select onchange="upR(p=>ob('${o.id}').materia=this.value)"><option value="">—</option>${p.materies.map(m=>`<option ${o.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</select></label>
+        <label class="field" style="margin-bottom:9px"><span class="lbl">Matèria o àmbit</span><select onchange="upR(p=>ob('${o.id}').materia=this.value)"><option value="">—</option>
+          ${p.materies.length ? `<optgroup label="Matèries del pla">${p.materies.map(m=>`<option ${o.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</optgroup>` : ""}
+          <optgroup label="Àmbit transversal"><option ${o.materia===AMBIT_PERSONAL?"selected":""}>${esc(AMBIT_PERSONAL)}</option></optgroup></select></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Trimestre</span><select onchange="upR(p=>ob('${o.id}').trimestre=this.value)"><option value="">—</option>${TRIMESTRES.map(t=>`<option ${o.trimestre===t?"selected":""}>${t}</option>`).join("")}</select></label>
       </div>
       <div class="field" style="margin-bottom:9px"><span class="lbl">Conducta observable</span>
@@ -5609,8 +5853,9 @@ function pas6(p, a){
         <label class="field" style="margin-bottom:9px"><span class="lbl">Valor</span><input type="text" value="${esc(o.valor)}" onchange="upR(p=>ob('${o.id}').valor=this.value)" placeholder="4"></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Unitat</span><input type="text" value="${esc(o.unitat)}" onchange="upR(p=>ob('${o.id}').unitat=this.value)" placeholder="de cada 5 textos"></label>
       </div>
-      <label class="field" style="margin-bottom:9px"><span class="lbl">Text lliure de l'objectiu (opcional)</span>
-        <textarea rows="2" onchange="upR(p=>ob('${o.id}').lliure=this.value)" placeholder="Si ho escrius aquí, aquest text substitueix la frase construïda amb els camps d'aquest objectiu.">${esc(o.lliure||"")}</textarea></label>
+      <label class="field camp-lliure${textLliure(o)?" on":""}"><span class="lbl"><span class="msym" aria-hidden="true">&#xe3c9;</span>Text lliure de l'objectiu (opcional)</span>
+        <span class="camp-lliure-nota">Alternativa a tots els camps de dalt: si hi escrius, aquest text substitueix la frase construïda.</span>
+        <textarea rows="2" onchange="upR(p=>ob('${o.id}').lliure=this.value)" placeholder="Escriu aquí l'objectiu sencer amb les teves paraules, si ho prefereixes.">${esc(o.lliure||"")}</textarea></label>
       ${campLlistaObj(o, "instrument", "Instruments d'avaluació", "Registre de lectura setmanal")}
       ${campLlistaObj(o, "evidencia", "Evidències", "Full de lectura amb la frase resum")}
       <button class="btn sm ghost danger" onclick="upR(p=>p.objectius=p.objectius.filter(x=>x.id!=='${o.id}'))">Elimina l'objectiu</button>
@@ -6123,7 +6368,7 @@ function detallSeguiment(sel){
         ${t===d.trimestre ? `<span class="tag met">Trimestre d'aquesta valoració</span>`
           : t ? `<span class="muted small">· Es valoren quan triïs el ${esc(t)}</span>` : ""}</div>
       ${obs.map(o=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)">
-        <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${esc(fraseText(o, a.alias))}</div>
+        <div class="small" style="margin-bottom:7px"><span class="tag">${esc(o.materia||"—")}</span> ${fraseText(o, a.alias) ? esc(fraseText(o, a.alias)) : `<i class="muted">Objectiu encara sense redactar al pas 6</i>`}</div>
         <div class="scale">${ESCALA.map(e=>obert(o)
           ? `<button aria-pressed="${d.valoracions[o.id]===e}" onclick="draft(${jq(sel.id)}).valoracions[${jq(o.id)}]=${jq(e)};renderSeguiment()">${e}</button>`
           : `<button aria-pressed="false" disabled title="Aquest objectiu és del ${esc(o.trimestre)}">${e}</button>`).join("")}</div>
@@ -6226,7 +6471,8 @@ const dfila = v => v ? ` data-fila="${esc(v)}"` : "";
 /* Una fila de la taula de mesures del document oficial: agrupa les mesures
    triades per a una destinació i hi afegeix la concreció escrita. */
 function cellaMesuresDoc(p, dest, etiqueta){
-  const items = p.adaptacions.filter(x => x.materia===dest);
+  const apart = estrategiesApart(p);
+  const items = p.adaptacions.filter(x => x.materia===dest && !(apart && esEstrategiaPla(x)));
   const txt = (p.mesures[dest]||"").trim();
   if(!items.length && !txt) return "";
   /* Graella simplificada: només el títol de cada mesura, agrupades per
@@ -6250,9 +6496,33 @@ function cellaMesuresDoc(p, dest, etiqueta){
 /* Files de la graella de mesures (apartat 5). Es fan servir també per
    refer només aquesta graella dins d'un document editat a mà. */
 function filesMesuresDoc(p){
-  return cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")
-    + (p.materies.map(m => cellaMesuresDoc(p, m, m)).join("")
-       || (p.adaptacions.length ? "" : `<tr><td colspan="2">—</td></tr>`));
+  return (cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")
+    + p.materies.map(m => cellaMesuresDoc(p, m, m)).join(""))
+    || `<tr><td colspan="2">—</td></tr>`;
+}
+
+/* ----- Estratègies metodològiques en una graella pròpia -----
+   Per defecte, les estratègies del banc que s'han afegit al pla no van
+   barrejades amb les mesures del Decret 150/2017: surten en una taula a part,
+   dins del mateix apartat, amb una fila per categoria. p.docEstrategiesApart
+   (false) les torna a posar dins de la graella de mesures. */
+const estrategiesApart = p => p.docEstrategiesApart !== false && p.adaptacions.some(esEstrategiaPla);
+function filesEstrategiesDoc(p){
+  const perCat = {};
+  p.adaptacions.filter(esEstrategiaPla).forEach(x => {
+    const c = categoriaEstrategiaPla(x);
+    (perCat[c] = perCat[c] || []).push(x);
+  });
+  const ordre = ESTRATEGIES_CATS().filter(c => perCat[c])
+    .concat(Object.keys(perCat).filter(c => !ESTRATEGIES_CATS().includes(c)));
+  return ordre.map(c => `<tr${dfila("estr:"+c)}><td class="k">${esc(c)}</td><td>
+    <ul style="margin:0;padding-left:16px">${perCat[c].map(x => `<li>${esc(x.text || x.titol)}${
+      x.materia && x.materia !== DEST_TOTES ? ` <i>(${esc(x.materia)})</i>` : ""}</li>`).join("")}</ul></td></tr>`).join("");
+}
+function blocEstrategiesDoc(p){
+  return `<div data-doc="estrategies"><h3>Estratègies metodològiques</h3>
+  <table data-doc="estrategies"><thead><tr><th style="width:30%">Categoria</th><th>Estratègies metodològiques a l'aula</th></tr></thead>
+  <tbody>${filesEstrategiesDoc(p)}</tbody></table></div>`;
 }
 
 /* Casella «Instrument i evidència» del document: instruments i evidències d'un
@@ -6276,10 +6546,15 @@ function cellaAvaluacioDoc(o){
    l'objectiu (pas 6), encara que s'hagi redactat en text lliure, i les
    caselles repetides es fusionen amb rowspan perquè cada matèria i cada
    trimestre hi constin un sol cop. */
+/* Objectius que surten al document: els que tenen alguna cosa escrita. Un
+   objectiu afegit i deixat en blanc no hi ha de portar la frase plantilla. */
+const objectiusDoc = p => p.objectius.filter(o =>
+  objEscrit(o) || llistaPlena(o, "instrument").length || llistaPlena(o, "evidencia").length);
 function taulaObjectiusDoc(p, a, ambAval){
-  const ordM = m => { const i = p.materies.indexOf(m); return i < 0 ? (m ? 900 : 999) : i; };
+  /* L'àmbit personal i social va davant de les matèries: és transversal. */
+  const ordM = m => { if(m === AMBIT_PERSONAL) return -1; const i = p.materies.indexOf(m); return i < 0 ? (m ? 900 : 999) : i; };
   const ordT = t => { const i = TRIMESTRES.indexOf(t); return i < 0 ? 99 : i; };
-  const obs = p.objectius.map((o, i) => ({o, i})).sort((x, y) =>
+  const obs = objectiusDoc(p).map((o, i) => ({o, i})).sort((x, y) =>
     ordM(x.o.materia) - ordM(y.o.materia) || String(x.o.materia||"").localeCompare(String(y.o.materia||""), "ca")
     || ordT(x.o.trimestre) - ordT(y.o.trimestre) || x.i - y.i).map(x => x.o);
   const mat = o => o.materia || "", tri = o => o.trimestre || "";
@@ -6293,10 +6568,10 @@ function taulaObjectiusDoc(p, a, ambAval){
       let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o) && tri(obs[i+n]) === tri(o)) n++;
       cel += `<td rowspan="${n}" data-col="tri">${esc(tri(o) || "—")}</td>`;
     }
-    return `<tr data-obj="${esc(o.id)}">${cel}<td data-col="obj">${esc(fraseText(o, a.alias))}</td><td data-col="ins">${cellaAvaluacioDoc(o)}</td>${
+    return `<tr data-obj="${esc(o.id)}">${cel}<td data-col="obj">${esc(fraseText(o, a.alias) || "—")}</td><td data-col="ins">${cellaAvaluacioDoc(o)}</td>${
       ambAval ? `<td data-aval="" data-col="aval">${cellaAssolimentDoc(p, o)}</td>` : ""}</tr>`;
   }).join("");
-  return `<table><thead><tr><th style="width:15%" data-col="mat">Matèria</th><th style="width:11%" data-col="tri">Trimestre</th><th data-col="obj">Objectiu</th>
+  return `<table><thead><tr><th style="width:15%" data-col="mat">Matèria o àmbit</th><th style="width:11%" data-col="tri">Trimestre</th><th data-col="obj">Objectiu</th>
     <th style="width:${ambAval?20:24}%" data-col="ins">Instrument i evidència</th>${ambAval?`<th style="width:13%" data-aval="" data-col="aval">Avaluació</th>`:""}</tr></thead>
     <tbody>${files}</tbody></table>`;
 }
@@ -6354,7 +6629,7 @@ function docCos(p, a){
         || (st.sabersSense||[]).length || (st.sabers||[]).length || st.propis
         || Object.values(st.adaptCE||{}).some(v => (v||"").trim());
   });
-  const ambObjectius = p.objectius.length && p.docObjectius!==false;
+  const ambObjectius = objectiusDoc(p).length && p.docObjectius!==false;
   const ambAval = ambObjectius && p.objectius.some(o => valoracionsObj(p, o).length);
   return `
   <div class="head" data-sec="cap">
@@ -6403,6 +6678,7 @@ function docCos(p, a){
   <section data-sec="mesures"><h2>Proposta educativa · Mesures i suports</h2>
   <table data-doc="mesures"><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
   <tbody>${filesMesuresDoc(p)}</tbody></table>
+  ${estrategiesApart(p) ? blocEstrategiesDoc(p) : ""}
   <p class="legal">Intensitat de les mesures d'aquest pla: ${(()=>{const c=comptaIntensitats(p);return `${c.Universal} universals, ${c.Addicional} addicionals i ${c.Intensiva} intensives`;})()}. Decret 150/2017, de 17 d'octubre, de l'atenció educativa a l'alumnat en el marc d'un sistema educatiu inclusiu.</p></section>
 
   ${matsCurr.map(nom=>{
@@ -6502,7 +6778,7 @@ function docCos(p, a){
 
   ${p.seguiments.length?`<section data-sec="annex" data-annex="1"><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
   ${p.seguiments.map(s=>`<h3>${esc(s.trimestre)} — ${dataCat(s.data)} · ${esc(s.decisio)}</h3>
-    ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(fraseText(o, a.alias))}</li>`:"";}).join("")}</ul>`}
+    ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b>${fraseText(o, a.alias) ? " — "+esc(fraseText(o, a.alias)) : ""}</li>`:"";}).join("")}</ul>`}
     ${s.observacions?`<p>${esc(s.observacions)}</p>`:(ambObjectius?`<p class="orig">Sense observacions.</p>`:"")}`).join("")}</section>`:""}
 
   <div class="foot" data-sec="peu">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
@@ -6517,9 +6793,13 @@ function taulaDocReunions(clau, titol, arr){
 
 /* ---------- Edició del document a la previsualització ----------
    El document es genera a partir del pla, però abans d'imprimir-lo sovint cal
-   retocar-ne un text o afegir-hi un matís que no té lloc a cap pas. En mode
-   d'edició, el cos del document és editable directament. Els apartats no
-   s'eliminen: s'amaguen de la impressió amb l'ull (52-document-ocults.js).
+   retocar-ne un text o afegir-hi un matís que no té lloc a cap pas. Cada
+   apartat —i la capçalera i el peu— porta un llapis al costat de l'ull: en
+   clicar-lo, aquell apartat es pot editar directament, i el llapis passa a
+   ser un ✓ que l'acaba. Només n'hi ha un d'obert alhora: obrir-ne un altre
+   desa el que s'estava editant. Un apartat retocat porta, a més, una fletxa
+   per tornar-lo a generar a partir del pla. Els apartats no s'eliminen:
+   s'amaguen de la impressió amb l'ull (52-document-ocults.js).
 
    Les edicions es desen per apartats (p.docEdit):
      seccions  {clau: html}  apartats retocats a mà, tal com han quedat
@@ -6535,6 +6815,7 @@ function taulaDocReunions(clau, titol, arr){
 
    Tot el que és eina (botons, avisos) porta la classe doc-eina i no s'imprimeix
    ni es desa. */
+/* Clau (data-sec) de l'apartat que s'està editant, o false. */
 let docEditant = false;
 let desaDocTimer = null;
 
@@ -6562,7 +6843,26 @@ function muntaDocCos(p, a){
   }
   numeraDoc(t.content, seccionsOcultes(p));
   decoraOcults(t.content, p);
+  decoraEdicio(t.content);
   return t.innerHTML;
+}
+
+/* Llapis de cada apartat i, als retocats, la fletxa per restaurar-los. Als
+   apartats amb títol van dins del títol, al costat de l'ull; a la capçalera i
+   al peu, que no en tenen, van al marge. */
+function decoraEdicio(arrel){
+  arrel.querySelectorAll("[data-sec]").forEach(el => {
+    const k = el.dataset.sec, on = docEditant === k;
+    const que = NOM_SECCIO_FIX[k] ? (k === "cap" ? "la capçalera" : "el peu") : "aquest apartat";
+    const t = on ? `Acaba d'editar ${que}` : `Edita ${que}`;
+    const eines = `<button type="button" class="doc-ull doc-llapis doc-eina no-print${on?" on":""}" contenteditable="false"
+      onclick="editaSeccioDoc(${jq(k)})" title="${t}" aria-label="${t}" aria-pressed="${on}"><span class="msym" aria-hidden="true">${on ? "&#xe5ca;" : "&#xe3c9;"}</span></button>`
+      + (el.dataset.editat ? `<button type="button" class="doc-ull doc-restaura doc-eina no-print" contenteditable="false"
+      onclick="restauraSeccioDoc(${jq(k)})" title="Torna a generar ${que} a partir del pla" aria-label="Torna a generar ${que} a partir del pla"><span class="msym" aria-hidden="true">&#xe166;</span></button>` : "");
+    const h = el.matches("section") ? el.querySelector("h2") : null;
+    if(h) h.insertAdjacentHTML("beforeend", eines);
+    else el.insertAdjacentHTML("afterbegin", `<span class="doc-eines-solt doc-eina no-print" contenteditable="false">${eines}</span>`);
+  });
 }
 
 /* Numera els apartats per ordre: 1, 2, 3… L'annex i els apartats que no
@@ -6684,14 +6984,12 @@ function einesDoc(p){
   const editats = ed ? Object.keys(ed.seccions || {}).filter(k => noms[k]) : [];
   return `<div class="doc-tools no-print">
     <span class="eyebrow">Edició del document</span>
-    ${docEditant
-      ? `<button class="btn sm primary" onclick="commutaEdicioDoc(false)">Acaba l'edició</button>`
-      : `<button class="btn sm" onclick="commutaEdicioDoc(true)">Edita el document</button>`}
+    ${docEditant ? `<button class="btn sm primary" onclick="acabaEdicioDoc()">Acaba l'edició</button>` : ""}
     ${editats.length ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta totes les edicions</button>` : ""}
     ${p.docOcult ? `<button class="btn sm ghost" onclick="mostraTotDoc()">Torna a imprimir-ho tot</button>` : ""}
     <span class="legal" style="flex-basis:100%;margin:0">${docEditant
-      ? "Clica qualsevol text per canviar-lo. Els canvis es desen sols. Amb l'ull d'un apartat, una fila, una columna o el segell l'amagues de la impressió, i els números dels apartats es refan sols."
-      : "Pots retocar qualsevol text del document abans d'imprimir-lo; les edicions es desen amb el pla. Amb l'ull d'un apartat, una fila, una columna o el segell l'amagues de la impressió."}</span>
+      ? "Clica el text de l'apartat marcat per canviar-lo; els canvis es desen sols. Amb el ✓ del títol, o amb el llapis d'un altre apartat, acabes aquesta edició."
+      : `Amb el llapis <span class="msym doc-llegenda" aria-hidden="true">&#xe3c9;</span> de cada apartat en pots retocar el text abans d'imprimir-lo; les edicions es desen amb el pla. Amb l'ull <span class="msym doc-llegenda" aria-hidden="true">&#xe8f4;</span> d'un apartat, una fila, una columna o el segell l'amagues de la impressió, i els números dels apartats es refan sols.`}</span>
     ${editats.length ? `<div class="doc-edits"><span class="small"><b>Retocats a mà</b> (no reflecteixen els canvis posteriors del pla, tret de la columna «Avaluació»):</span>
       ${editats.map(k => `<span class="logo-chip"><span class="small">${nom(k)}</span>
         <button class="btn sm ghost pag" title="Torna a generar aquest apartat a partir del pla" onclick="restauraSeccio(${jq(k)})">Restaura</button></span>`).join("")}</div>` : ""}
@@ -6717,28 +7015,48 @@ function posaBotoMesures(){
   const d = document.createElement("div");
   d.className = "doc-mesures-eina doc-eina no-print";
   d.contentEditable = "false";
-  d.innerHTML = `<button type="button" class="btn sm ghost" aria-pressed="${!!p.docMesuresSimples}" onclick="commutaMesuresSimples()">${
+  const ambEstr = p.adaptacions.some(esEstrategiaPla);
+  d.innerHTML = (ambEstr ? `<button type="button" class="btn sm ghost" aria-pressed="${estrategiesApart(p)}" onclick="commutaEstrategiesApart()"
+      title="Les estratègies metodològiques triades del banc poden anar en una taula pròpia, agrupades per categoria, o dins de la graella de mesures">${
+    estrategiesApart(p) ? "Posa les estratègies dins de la graella de mesures" : "Mostra les estratègies en una graella independent"}</button>` : "")
+    + `<button type="button" class="btn sm ghost" aria-pressed="${!!p.docMesuresSimples}" onclick="commutaMesuresSimples()">${
     p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button>`;
   const h = sec.querySelector("h2");
   if(h) h.after(d); else sec.insertBefore(d, sec.firstChild);
 }
 
-/* Activa o desactiva l'edició sobre el document que hi ha pintat ara. */
+/* Fa editable l'apartat que s'està editant, si n'hi ha cap. */
+const seccioDoc = (cos, k) => [...cos.querySelectorAll("[data-sec]")].find(x => x.dataset.sec === k);
 function aplicaEdicioDoc(){
   const cos = $("#doc-cos");
-  if(!cos) return;
-  if(!docEditant){ cos.removeAttribute("contenteditable"); return; }
-  cos.setAttribute("contenteditable", "true");
-  cos.setAttribute("spellcheck", "true");
-  cos.oninput = () => { cos.dataset.tocat = "1"; clearTimeout(desaDocTimer); desaDocTimer = setTimeout(desaEdicioDoc, 400); };
+  if(!cos || !docEditant) return;
+  const el = seccioDoc(cos, docEditant);
+  if(!el){ docEditant = false; return; }
+  el.setAttribute("contenteditable", "true");
+  el.setAttribute("spellcheck", "true");
+  el.oninput = () => { cos.dataset.tocat = "1"; clearTimeout(desaDocTimer); desaDocTimer = setTimeout(desaEdicioDoc, 400); };
 }
 
-function commutaEdicioDoc(on){
-  if(!on) buidaEdicioDoc();
-  docEditant = !!on;
+/* El llapis d'un apartat: l'obre per editar o, si ja ho estava, l'acaba. */
+function editaSeccioDoc(k){
+  const acaba = docEditant === k;
+  if(docEditant) buidaEdicioDoc();
+  docEditant = acaba ? false : k;
   refrescaDoc();
-  if(on) toast("Mode d'edició: clica qualsevol text del document per canviar-lo.");
-  else toast("Edició acabada.");
+  if(acaba){ toast("Edició acabada. Els canvis queden desats."); return; }
+  const cos = $("#doc-cos"), el = cos && seccioDoc(cos, k);
+  if(el){ el.focus({preventScroll:true}); el.scrollIntoView({block:"nearest", behavior:"smooth"}); }
+  toast("Clica el text de l'apartat per canviar-lo. Els canvis es desen sols.");
+}
+function acabaEdicioDoc(){ if(docEditant) editaSeccioDoc(docEditant); }
+
+/* La fletxa d'un apartat retocat: com «Restaura» de la franja, però amb
+   confirmació, perquè és una icona petita al costat del llapis. */
+async function restauraSeccioDoc(k){
+  if(!await confirma("Torna a generar l'apartat",
+       "Es perdran els canvis fets a mà en aquest apartat i tornarà a reflectir el que diu el pla.",
+       {confirma:"Torna'l a generar", perillos:true})) return;
+  restauraSeccio(k);
 }
 
 /* Desa com a retocats els apartats que ara no coincideixen amb el que es
@@ -6799,21 +7117,39 @@ function commutaMesuresSimples(){
   if(!p) return;
   if(docEditant) buidaEdicioDoc();
   p.docMesuresSimples = !p.docMesuresSimples;
-  const ed = p.docEdit;
-  if(ed && ed.seccions && ed.seccions.mesures != null){
-    const t = document.createElement("template");
-    t.innerHTML = ed.seccions.mesures;
-    const taula = graellaMesuresDe(t.content);
-    if(taula){
-      let tb = taula.querySelector("tbody");
-      if(!tb){ tb = document.createElement("tbody"); taula.appendChild(tb); }
-      tb.innerHTML = filesMesuresDoc(p);
-      ed.seccions.mesures = t.innerHTML;
-    }
-  }
+  refaGraellesMesures(p);
   desa();
   refrescaDoc();
   toast(p.docMesuresSimples ? "Graella de mesures amb només els títols." : "Graella de mesures amb la redacció completa.");
+}
+/* Estratègies metodològiques en una taula pròpia o dins de la graella de
+   mesures. Mateix criteri que la graella simplificada: en un apartat retocat
+   a mà només es refan les dues graelles. */
+function commutaEstrategiesApart(){
+  const p = pi(state.docPi);
+  if(!p) return;
+  if(docEditant) buidaEdicioDoc();
+  p.docEstrategiesApart = !estrategiesApart(p);
+  refaGraellesMesures(p);
+  desa();
+  refrescaDoc();
+  toast(estrategiesApart(p) ? "Estratègies en una graella independent, per categories." : "Estratègies dins de la graella de mesures.");
+}
+/* En un apartat 5 retocat a mà, refà la graella de mesures i la de les
+   estratègies a partir del pla i respecta la resta del text. */
+function refaGraellesMesures(p){
+  const ed = p.docEdit;
+  if(!ed || !ed.seccions || ed.seccions.mesures == null) return;
+  const t = document.createElement("template");
+  t.innerHTML = ed.seccions.mesures;
+  const taula = graellaMesuresDe(t.content);
+  if(!taula) return;
+  let tb = taula.querySelector("tbody");
+  if(!tb){ tb = document.createElement("tbody"); taula.appendChild(tb); }
+  tb.innerHTML = filesMesuresDoc(p);
+  t.content.querySelectorAll('div[data-doc="estrategies"]').forEach(x => x.remove());
+  if(estrategiesApart(p)) taula.insertAdjacentHTML("afterend", blocEstrategiesDoc(p));
+  ed.seccions.mesures = t.innerHTML;
 }
 /* La graella de mesures dins d'un document desat. Els documents editats abans
    que la taula portés la marca data-doc es reconeixen pel títol de l'apartat. */
@@ -8216,6 +8552,74 @@ async function carregaExemple(){
   exemple(); go("dashboard"); toast("Dades d'exemple carregades.");
 }
 
+/* ---------- Notifica un problema o suggereix una millora ----------
+   El botó de la barra lateral (i, a pantalla petita, el de la capçalera)
+   obre els formularis d'incidències del dipòsit del projecte a GitHub, en
+   una pestanya nova. Hi ha un formulari per a cada cas, els mateixos de
+   .github/ISSUE_TEMPLATE/: un error de funcionament, una proposta de millora
+   o una errada en el text del currículum o del banc de mesures. Cada
+   incidència nova arriba com a notificació a qui manté el dipòsit.
+
+   L'aplicació no envia res: és un enllaç, i qui l'obre ho escriu i ho envia
+   des de GitHub. L'única cosa que s'hi posa d'entrada, al formulari d'errors,
+   és el navegador i la versió de l'aplicació, que es veuen i es poden
+   esborrar abans d'enviar-lo. Cap dada de l'alumnat no surt d'aquí. */
+
+const URL_INCIDENCIES = "https://github.com/vmoren12/psi/issues/new";
+const FORMULARIS_INCIDENCIA = {
+  error:     "error-de-funcionament.yml",
+  millora:   "millora.yml",
+  contingut: "errada-de-contingut.yml"
+};
+
+async function obreIncidencia(){
+  const tria = await obreDlg("Notifica un problema o fes un suggeriment",
+    `<p>S'obrirà un formulari del projecte a GitHub, en una pestanya nova. Cal tenir-hi un compte, que és gratuït. Ho rebrà directament qui manté l'aplicació.</p>
+    <div class="note alert"><b>No hi escriguis mai dades de l'alumnat</b> (noms, informes, diagnòstics) ni hi adjuntis còpies de seguretat amb plans reals.</div>
+    <button class="tria" type="button" onclick="tancaDlg('error')">
+      <span class="tria-t">Alguna cosa no funciona</span>
+      <span class="tria-d">Un botó que no respon, un document que surt malament, dades que no es desen…</span>
+    </button>
+    <button class="tria" type="button" onclick="tancaDlg('millora')">
+      <span class="tria-t">Proposa una millora</span>
+      <span class="tria-d">Una funció nova, un canvi en un pas de l'editor, una mesura o una frase que hi falta.</span>
+    </button>
+    <button class="tria" type="button" onclick="tancaDlg('contingut')">
+      <span class="tria-t">Hi ha una errada en un text</span>
+      <span class="tria-d">En un criteri o un saber del currículum, o en una mesura del banc.</span>
+    </button>`,
+    [{text:"Cancel·la", classe:"ghost", valor:null}]);
+  if(!FORMULARIS_INCIDENCIA[tria]) return;
+  const q = new URLSearchParams({template: FORMULARIS_INCIDENCIA[tria]});
+  if(tria === "error"){
+    q.set("navegador", navegadorResum());
+    q.set("versio", [versioApp(), location.protocol === "file:" ? "fitxer obert des del disc" : "versió web"].filter(Boolean).join(" · "));
+  }
+  /* Sense «noopener» a la crida, que faria tornar sempre null i no deixaria
+     saber si s'ha bloquejat: el vincle amb aquesta pestanya es talla a mà. */
+  const w = window.open(URL_INCIDENCIES + "?" + q.toString(), "_blank");
+  if(w) w.opener = null;
+  else avisa("No s'ha pogut obrir la pestanya",
+    `El navegador ha bloquejat la pestanya nova. Obre aquesta adreça: <span class="mono">${esc(URL_INCIDENCIES)}</span>`);
+}
+
+/* Versió de l'aplicació, la que es llegeix al peu de la barra lateral. */
+function versioApp(){
+  const m = /v\d+(?:\.\d+)+/.exec((document.querySelector(".rail-foot") || {}).textContent || "");
+  return m ? m[0] : "";
+}
+
+/* «Firefox 130 · Windows», com demana el formulari d'errors. */
+function navegadorResum(){
+  const ua = navigator.userAgent || "";
+  const nav = [[/Edg\/(\d+)/, "Edge"], [/OPR\/(\d+)/, "Opera"], [/Firefox\/(\d+)/, "Firefox"],
+               [/Chrome\/(\d+)/, "Chrome"], [/Version\/(\d+).*Safari/, "Safari"]]
+    .map(([re, nom]) => { const m = re.exec(ua); return m ? nom + " " + m[1] : ""; }).find(Boolean) || "";
+  const so = /Windows/.test(ua) ? "Windows" : /Android/.test(ua) ? "Android"
+           : /iPhone|iPad/.test(ua) ? "iOS" : /CrOS/.test(ua) ? "ChromeOS"
+           : /Mac OS X/.test(ua) ? "macOS" : /Linux/.test(ua) ? "Linux" : "";
+  return [nav, so].filter(Boolean).join(" · ");
+}
 /* ---------- 13. Arrencada ---------- */
 document.querySelectorAll("#nav button").forEach(b => b.onclick = () => go(b.dataset.view));
 $("#modal").addEventListener("click", e => { if(e.target.id==="modal") closeModal(); });

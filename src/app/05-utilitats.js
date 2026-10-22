@@ -42,10 +42,22 @@ function frase(o, alias){
 /* Text lliure de l'objectiu: si s'ha escrit, substitueix la frase construïda
    amb els camps a tot arreu (document, seguiment i control de qualitat). */
 const textLliure = o => (o.lliure || "").trim();
+/* Si l'objectiu té escrit algun dels camps que formen la frase. */
+const objEscrit = o => !!textLliure(o)
+  || ["conducta","suport","context","valor","unitat"].some(k => String(o[k] || "").trim());
+/* La frase en text pla, per al document i el seguiment. Hi entren només els
+   camps escrits: les marques de la plantilla («conducta observable»,
+   «criteri d'assoliment»…) són ajuda per redactar al pas 6, no text del pla.
+   Un objectiu sense res escrit dona una cadena buida. */
 function fraseText(o, alias){
   if(textLliure(o)) return textLliure(o);
-  const d = document.createElement("div"); d.innerHTML = frase(o, alias);
-  return d.textContent.replace(/\s+/g," ").trim();
+  if(!objEscrit(o)) return "";
+  const v = k => String(o[k] || "").replace(/\s+/g, " ").trim();
+  const qui = alias || "l’alumne/a";
+  const fer = [v("conducta"), v("suport"), v("context")].filter(Boolean).join(" ");
+  const crit = [v("valor"), v("unitat")].filter(Boolean).join(" ");
+  const inici = v("trimestre") ? `Al final del ${v("trimestre")}, ${qui}` : qui.charAt(0).toUpperCase() + qui.slice(1);
+  return `${inici} serà capaç de ${fer || "…"}${crit ? `, assolint ${crit}` : ""}.`;
 }
 const objCompleta = o => !!textLliure(o) || !!(o.conducta && o.valor && o.unitat && o.trimestre);
 

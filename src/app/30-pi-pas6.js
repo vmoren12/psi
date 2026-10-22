@@ -1,6 +1,11 @@
 /* ----- Pas 6: objectius mesurables -----
    Les mesures i els suports es concentren al pas 4; aquí només s'hi
    formulen els objectius i la manera d'avaluar-ne l'assoliment.   */
+
+/* Àmbit que un objectiu pot tenir sempre, encara que no sigui cap matèria
+   del pla: autonomia, conducta, relacions, regulació emocional… */
+const AMBIT_PERSONAL = "Personal i social";
+
 function pas6(p, a){
   const senseObj = p.materies.filter(m => !p.objectius.some(o => o.materia===m));
   /* Els objectius solen referir-se al que s'ha prioritzat al pas 5: si hi ha
@@ -23,7 +28,7 @@ function pas6(p, a){
     <label class="chk" style="border-top:1px solid var(--line);padding:11px 0;margin-bottom:12px">
       <input type="checkbox" ${p.docObjectius!==false?"checked":""} onchange="upR(p=>p.docObjectius=this.checked)">
       <span class="txt"><b>Inclou els objectius al document del PI</b>
-      <div class="small muted" style="margin-top:3px;line-height:1.5">Quan està marcat, el document porta l'apartat <b>5. Proposta educativa · Objectius i avaluació</b>, amb la frase de cada objectiu, la matèria i els instruments i evidències d'avaluació. Si es desmarca, els objectius es continuen desant i es continuen valorant al seguiment, però no surten al document.${p.objectius.length ? "" : " Ara mateix el pla no en té cap: l'apartat no sortiria igualment."}</div></span></label>
+      <div class="small muted" style="margin-top:3px;line-height:1.5">Quan està marcat, el document porta l'apartat <b>5. Proposta educativa · Objectius i avaluació</b>, amb la frase de cada objectiu, la matèria i els instruments i evidències d'avaluació. Si es desmarca, els objectius es continuen desant i es continuen valorant al seguiment, però no surten al document. Els objectius que no tinguin res escrit no hi surten mai: el document no porta el text de la plantilla.${objectiusDoc(p).length ? "" : " Ara mateix el pla no en té cap de redactat: l'apartat no sortiria."}</div></span></label>
 
     ${senseObj.length ? `<div class="note" style="margin:0 0 14px">Sense cap objectiu encara: ${esc(senseObj.join(", "))}.</div>` : ""}
 
@@ -34,7 +39,9 @@ function pas6(p, a){
         ? `${esc(textLliure(o))}<div class="small muted" style="margin-top:6px;font-family:var(--sans)">S'usa el <b>text lliure</b>. Esborra'l per tornar a la frase construïda amb els camps.</div>`
         : frase(o, a.alias)}</div>
       <div class="row g3">
-        <label class="field" style="margin-bottom:9px"><span class="lbl">Matèria</span><select onchange="upR(p=>ob('${o.id}').materia=this.value)"><option value="">—</option>${p.materies.map(m=>`<option ${o.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</select></label>
+        <label class="field" style="margin-bottom:9px"><span class="lbl">Matèria o àmbit</span><select onchange="upR(p=>ob('${o.id}').materia=this.value)"><option value="">—</option>
+          ${p.materies.length ? `<optgroup label="Matèries del pla">${p.materies.map(m=>`<option ${o.materia===m?"selected":""}>${esc(m)}</option>`).join("")}</optgroup>` : ""}
+          <optgroup label="Àmbit transversal"><option ${o.materia===AMBIT_PERSONAL?"selected":""}>${esc(AMBIT_PERSONAL)}</option></optgroup></select></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Trimestre</span><select onchange="upR(p=>ob('${o.id}').trimestre=this.value)"><option value="">—</option>${TRIMESTRES.map(t=>`<option ${o.trimestre===t?"selected":""}>${t}</option>`).join("")}</select></label>
       </div>
       <div class="field" style="margin-bottom:9px"><span class="lbl">Conducta observable</span>
@@ -51,8 +58,9 @@ function pas6(p, a){
         <label class="field" style="margin-bottom:9px"><span class="lbl">Valor</span><input type="text" value="${esc(o.valor)}" onchange="upR(p=>ob('${o.id}').valor=this.value)" placeholder="4"></label>
         <label class="field" style="margin-bottom:9px"><span class="lbl">Unitat</span><input type="text" value="${esc(o.unitat)}" onchange="upR(p=>ob('${o.id}').unitat=this.value)" placeholder="de cada 5 textos"></label>
       </div>
-      <label class="field" style="margin-bottom:9px"><span class="lbl">Text lliure de l'objectiu (opcional)</span>
-        <textarea rows="2" onchange="upR(p=>ob('${o.id}').lliure=this.value)" placeholder="Si ho escrius aquí, aquest text substitueix la frase construïda amb els camps d'aquest objectiu.">${esc(o.lliure||"")}</textarea></label>
+      <label class="field camp-lliure${textLliure(o)?" on":""}"><span class="lbl"><span class="msym" aria-hidden="true">&#xe3c9;</span>Text lliure de l'objectiu (opcional)</span>
+        <span class="camp-lliure-nota">Alternativa a tots els camps de dalt: si hi escrius, aquest text substitueix la frase construïda.</span>
+        <textarea rows="2" onchange="upR(p=>ob('${o.id}').lliure=this.value)" placeholder="Escriu aquí l'objectiu sencer amb les teves paraules, si ho prefereixes.">${esc(o.lliure||"")}</textarea></label>
       ${campLlistaObj(o, "instrument", "Instruments d'avaluació", "Registre de lectura setmanal")}
       ${campLlistaObj(o, "evidencia", "Evidències", "Full de lectura amb la frase resum")}
       <button class="btn sm ghost danger" onclick="upR(p=>p.objectius=p.objectius.filter(x=>x.id!=='${o.id}'))">Elimina l'objectiu</button>

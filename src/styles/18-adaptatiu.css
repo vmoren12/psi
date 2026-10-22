@@ -22,6 +22,9 @@
   .topbar .sub{display:none}
   .topbar .actions{margin-left:0;width:100%;order:3}
   .topbar .actions .btn{flex:1}
+  .btn.topbar-incidencia{display:inline-flex;margin-left:auto;min-height:38px;padding:0 10px}
+  .rail-incidencia{display:none}
+  .doc .doc-eines-solt{top:-30px;right:0;flex-direction:row}
   .wrap{padding:16px 14px 40px}
   .card-b{padding:14px}
   .row>*{min-width:100%}

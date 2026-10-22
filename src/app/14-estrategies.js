@@ -107,11 +107,21 @@ function repintaEstrategies(){
 /* ----- Passar una frase al pla -----
    Entra com una mesura més de l'apartat 5 del document, amb la frase com a
    títol i com a redacció. Neix universal i amb l'eix «Metodologia» perquè és
-   el que és una estratègia d'aula; des del pas 4 es pot canviar tot. */
+   el que és una estratègia d'aula; des del pas 4 es pot canviar tot.
+   Porta la categoria perquè el document les pugui agrupar en una graella
+   pròpia (vegeu taulaEstrategiesDoc a 50-document.js). */
+const BLOC_ESTRATEGIES = "Estratègies metodològiques";
+const esEstrategiaPla = x => x.bloc === BLOC_ESTRATEGIES;
 function itemEstrategia(e, materia){
   return {id:uid("A"), adId:e.id, titol:e.text, text:e.text,
           materia: materia || DEST_TOTES, tipus:"Metodologia",
-          bloc:"Estratègies metodològiques", intensitat:"Universal", concrecio:""};
+          bloc:BLOC_ESTRATEGIES, categoria:e.categoria, intensitat:"Universal", concrecio:""};
+}
+/* Categoria d'una estratègia del pla. Les afegides abans que l'element en
+   portés la treuen del banc; si la frase ja no hi és, van a «Altres». */
+function categoriaEstrategiaPla(x){
+  const e = x.categoria ? null : estrategia(x.adId);
+  return x.categoria || (e && e.categoria) || "Altres estratègies";
 }
 function afegeixEstrategia(id){
   const e = estrategia(id); if(!e) return;

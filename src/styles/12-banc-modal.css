@@ -22,3 +22,10 @@
 .ad-font{margin:0;font-size:11px}
 .btn.ok{background:var(--met-soft);border-color:#b9d6cb;color:#134338;cursor:default}
 
+/* Banc de frases de la conducta observable: el botó «Fet» va just al costat
+   de la casella que s'omple, gran i destacat, perquè és com es torna a l'objectiu. */
+.bc-dest{align-items:flex-end}
+.bc-dest input[type=text]{min-height:44px;font-size:14.5px}
+.btn.bc-fet{min-height:44px;padding:0 18px;font-size:14px;font-weight:600;background:var(--met);border-color:var(--met);white-space:nowrap}
+.btn.bc-fet:hover{background:#185a4d;border-color:#185a4d}
+.btn.bc-fet .msym{font-size:19px}

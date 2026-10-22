@@ -28,6 +28,7 @@ function pas4(p, a){
   const prim = esPlaPrim(p);
   const c = comptaIntensitats(p);
   const total = p.adaptacions.length;
+  const nEstr = p.adaptacions.filter(esEstrategiaPla).length;
   return `
   <div class="card"><div class="card-h"><span class="num">5</span><h2>Proposta educativa · Mesures i suports</h2>
     ${(a.perfils||[]).some(x => plantillaPerfil(x))
@@ -51,6 +52,10 @@ function pas4(p, a){
    <div class="card-b" style="padding:12px 16px">
     ${c.Intensiva ? `<div class="note alert" style="margin:0 0 10px">Aquest pla inclou <b>mesures i suports intensius</b>. Requereixen l'informe de reconeixement de necessitats específiques de suport educatiu elaborat per l'EAP i han de constar a l'expedient acadèmic de l'alumne/a. Decret 150/2017, articles 10 i 11.</div>` : ""}
     <p class="small muted" style="margin:0">Les mesures assignades a «${esc(DEST_TOTES)}» s'apliquen a totes les matèries d'aquest pla. Pots reassignar qualsevol mesura a una matèria concreta amb el selector de cada fitxa.</p>
+    ${nEstr ? `<label class="chk" style="border-top:1px solid var(--line);padding:11px 0 0;margin:11px 0 0">
+      <input type="checkbox" ${p.docEstrategiesApart!==false?"checked":""} onchange="up(p=>p.docEstrategiesApart=this.checked)">
+      <span class="txt"><b>Mostra les estratègies metodològiques en una graella independent al document del PI</b>
+      <div class="small muted" style="margin-top:3px;line-height:1.5">El pla en té <b>${nEstr}</b>. Quan està marcat, a l'apartat <b>Proposta educativa · Mesures i suports</b> surten en una taula a part, agrupades per categoria, i no barrejades amb les mesures del Decret 150/2017. Ho pots canviar també des del document.</div></span></label>` : ""}
    </div></div>
 
   ${blocMesures(p, a, DEST_TOTES, "Mesures i suports transversals", "S'apliquen a totes les matèries d'aquest pla.")}

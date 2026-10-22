@@ -109,6 +109,7 @@ APLICACIO = [
     "60-copies.js",
     "61-dades-io.js",
     "62-alumnat-io.js",
+    "63-incidencies.js",
     # arrencada: ha de ser l'últim
     "99-arrencada.js",
 ]

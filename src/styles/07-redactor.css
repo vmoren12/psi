@@ -6,3 +6,11 @@
 .obj-item .composer{font-size:15px;padding:11px 13px;margin-bottom:10px}
 .obj-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
+/* Text lliure de l'objectiu: una alternativa a tots els camps de la frase, no
+   un camp més. Va en un requadre de to suau perquè es distingeixi a primer cop d'ull. */
+.camp-lliure{margin:4px 0 12px;padding:10px 12px 12px;background:var(--con-soft);border:1px solid #d3d3ea;border-left:3px solid var(--con);border-radius:0 var(--r) var(--r) 0}
+.camp-lliure .lbl{display:flex;align-items:center;gap:6px;color:var(--con);margin-bottom:3px}
+.camp-lliure .lbl .msym{font-size:15px}
+.camp-lliure-nota{display:block;font-size:12.5px;line-height:1.45;color:var(--ink2);margin-bottom:7px}
+.camp-lliure textarea{background:var(--surface)}
+.camp-lliure.on{background:#dedef0;border-color:#c4c4e2;border-left-color:var(--con)}

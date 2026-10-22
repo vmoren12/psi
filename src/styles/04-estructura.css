@@ -25,3 +25,13 @@
 .view{display:none}
 .view.on{display:block}
 
+
+/* Notifica un problema o suggeriment: a la barra lateral, ben visible, entre
+   la navegació i el peu. A pantalla petita en fa les funcions el botó de la
+   capçalera (vegeu 18-adaptatiu.css). */
+.rail-incidencia{display:flex;align-items:center;gap:9px;margin:0 12px 12px;padding:10px 12px;border:1px solid #33434d;border-radius:var(--r);
+  background:#1b262d;color:#e3eaed;font:inherit;font-size:13px;line-height:1.3;text-align:left;cursor:pointer;transition:background .12s,border-color .12s}
+.rail-incidencia .msym{font-size:19px;color:#8fd0bf;flex:0 0 auto}
+.rail-incidencia:hover,.rail-incidencia:focus-visible{background:#22303a;border-color:#4b5f6a}
+.btn.topbar-incidencia{display:none}
+.topbar-incidencia .msym{font-size:19px}

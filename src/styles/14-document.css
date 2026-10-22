@@ -79,10 +79,6 @@
 .doc .segell{width:48mm;min-height:36mm;border:1px dashed #a9b2b7;border-radius:4px;display:flex;align-items:flex-end;justify-content:center;padding:0 6px 6px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#939ca1}
 .doc .foot{margin-top:34px;border-top:1px solid #d9dedb;padding-top:8px;font-family:var(--mono);font-size:10px;color:#8b959a;letter-spacing:.06em}
 
-/* Edició del document a la previsualització */
-.doc-cos[contenteditable="true"]{outline:2px dashed #b9d6cb;outline-offset:8px;border-radius:2px}
-.doc-cos[contenteditable="true"] section{position:relative}
-.doc-cos[contenteditable="true"] section:hover{box-shadow:0 0 0 1px #d9dedb}
 .doc .mes-grup{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3f8c9e;margin:8px 0 2px}
 .doc-mesures-eina{font-family:var(--sans);margin:0 0 6px;display:flex;justify-content:flex-end}
 .doc-edits{flex-basis:100%;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
@@ -119,3 +115,19 @@
   .doc table.doc-pantalla{display:none!important}
   .doc .doc-sec-oculta,.doc .doc-bloc-ocult{display:none!important}
 }
+/* Llapis i fletxa de restaurar de cada apartat (51-document-edicio.js). Fan
+   servir l'aspecte de l'ull; als títols van a la seva esquerra. */
+@media screen{
+  .doc section h2{padding-right:64px}
+  .doc section[data-editat] h2{padding-right:90px}
+}
+.doc h2 .doc-llapis{right:32px}
+.doc h2 .doc-restaura{right:58px}
+.doc .doc-llapis.on,.doc .doc-llapis.on:hover{opacity:1;background:var(--met);border-color:var(--met);color:#fff}
+.doc [data-sec="cap"],.doc [data-sec="peu"]{position:relative}
+.doc .doc-eines-solt{position:absolute;top:0;right:-36px;display:flex;flex-direction:column;gap:4px;font-size:14.5px}
+.doc .doc-eines-solt .doc-ull{position:static;opacity:.6}
+.doc [data-sec][contenteditable="true"]{outline:2px dashed var(--met);outline-offset:6px;border-radius:2px;background:#fbfdfc}
+.doc [data-sec][contenteditable="true"]:focus{outline-style:solid}
+.doc-llegenda{display:inline-block;font-size:15px;vertical-align:-3px;color:var(--ink2)}
+.doc-mesures-eina{gap:6px;flex-wrap:wrap}

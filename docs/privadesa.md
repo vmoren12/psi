@@ -32,6 +32,13 @@ l'agent d'usuari del navegador, sense cap dada de l'aplicació. Si obriu el
 fitxer sense connexió, o si el vostre navegador ho bloqueja, l'aplicació
 funciona igual amb els tipus de lletra del sistema.
 
+El botó **Notifica un problema o suggeriment** és només un enllaç: obre en
+una pestanya nova el formulari d'incidències del dipòsit a GitHub. L'aplicació
+no hi envia res; qui l'obre hi escriu i l'envia des de GitHub. Al formulari
+d'errors s'hi posa d'entrada el navegador i la versió de l'aplicació, que es
+veuen i es poden esborrar abans d'enviar-lo. Cap dada de l'alumnat no hi va, i
+el formulari mateix demana que no se n'hi escrigui cap.
+
 ## La versió web
 
 L'aplicació també es publica a una adreça

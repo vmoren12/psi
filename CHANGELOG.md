@@ -7,6 +7,36 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Afegit
 
+- **Estratègies metodològiques en una graella independent del document.** Les
+  estratègies triades del banc ja no surten barrejades amb les mesures del
+  Decret 150/2017: a l'apartat **Proposta educativa · Mesures i suports** hi
+  ha una taula pròpia, amb una fila per categoria (atenció, instruccions,
+  lectura…). Està activat per defecte i es pot desactivar al pas 4 (casella
+  que surt quan el pla té estratègies) o des del mateix document, amb el botó
+  al costat del de la graella simplificada. En un apartat retocat a mà només
+  es refan les dues graelles.
+- **Àmbit «Personal i social» als objectius.** El desplegable del pas 6 passa
+  a dir-se **Matèria o àmbit** i, a més de les matèries del pla, ofereix
+  sempre l'àmbit transversal Personal i social. Al document, la columna també
+  es diu «Matèria o àmbit» i els objectius d'aquest àmbit van davant de les
+  matèries.
+- **Banc de frases de la conducta observable ampliat**: de 85 a **210 frases**,
+  agrupades per àmbit i subàmbit. L'àmbit personal i social en té més de cent,
+  amb conductes de repercussió educativa directa: autonomia i hàbits de
+  treball, atenció i funcions executives, organització, regulació emocional,
+  conducta i convivència, relació amb els iguals, comunicació i habilitats
+  socials, autodeterminació, flexibilitat davant els canvis, autonomia
+  personal i assistència. També s'hi afegeixen lectura i escriptura inicials,
+  llengua d'acollida i nous subàmbits matemàtics. Un selector filtra per
+  àmbit, i si l'objectiu és de l'àmbit personal i social la finestra s'hi obre
+  directament. El botó **Fet · torna a l'objectiu** és ara gran, de color i
+  just al costat de la casella de la conducta; Intro també tanca la finestra.
+- **Notifica un problema o suggeriment**: un botó ben visible a la barra
+  lateral (a la capçalera, a pantalla petita) obre el formulari d'incidències
+  del dipòsit a GitHub —error de funcionament, proposta de millora o errada en
+  un text—, amb el navegador i la versió ja posats al formulari d'errors.
+  L'aplicació no envia res: és un enllaç.
+
 - **Exportació del document a Word.** El botó «Imprimeix / PDF» passa a ser
   **Exporta** i obre un diàleg per triar el format: **PDF** (el diàleg
   d'impressió del navegador) o **Word (.docx)**. El .docx es genera al mateix
@@ -21,12 +51,17 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   clar. Val per a tots els documents del centre, surt a la impressió i al Word
   i viatja amb la còpia de seguretat.
 
-- **Edició del document a la previsualització.** Amb **Edita el document** es
-  pot retocar qualsevol text directament sobre el document. Les edicions es
-  desen **per apartats**: només queden fixos els apartats retocats a mà, i la
-  resta continua reflectint el pla. La franja d'edició llista els apartats
-  retocats, amb un botó per restaurar-ne cadascun, i un per descartar-ho tot.
-  El text desat es neteja d'elements actius abans de tornar-lo a pintar.
+- **Edició del document a la previsualització, apartat per apartat.** Cada
+  apartat —i la capçalera i el peu— porta un **llapis** al costat de l'ull: en
+  clicar-lo, aquell apartat es pot retocar directament sobre el document, i el
+  llapis passa a ser un ✓ que acaba l'edició. Obrir el llapis d'un altre
+  apartat desa el que s'estava editant. Les edicions es desen **per
+  apartats**: només queden fixos els apartats retocats a mà, i la resta
+  continua reflectint el pla. Un apartat retocat porta, a més, una fletxa per
+  tornar-lo a generar a partir del pla (amb confirmació). La franja d'edició
+  llista els apartats retocats, amb un botó per restaurar-ne cadascun, i un per
+  descartar-ho tot. Ja no hi ha un botó global «Edita el document». El text
+  desat es neteja d'elements actius abans de tornar-lo a pintar.
 - **Numeració consecutiva dels apartats del document**: cada apartat porta el
   seu número (els objectius, per exemple, passen a ser un apartat numerat propi
   en lloc d'un «5.» repetit) i la numeració es refà sola quan se n'elimina o
@@ -122,6 +157,17 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
   acords de cada reunió de l'apartat 7. Surt a l'apartat 6 del document.
 
 ### Canviat
+
+- **El document no porta mai el text de la plantilla dels objectius.** Un
+  objectiu sense res escrit no surt al document encara que estigui marcat
+  «Inclou els objectius al document del PI», i si no n'hi ha cap de redactat
+  l'apartat no hi surt. En un objectiu a mig redactar, la frase porta només els
+  camps escrits, sense les marques «conducta observable», «criteri
+  d'assoliment»… El seguiment ho indica com a «Objectiu encara sense redactar».
+- **Text lliure de l'objectiu destacat** en un requadre de to violeta suau, amb
+  una nota que explica que substitueix tota la frase: abans semblava un camp
+  més.
+- Tancar el banc de frases amb la creu de la finestra també actualitza el pas 6.
 
 - **El PDF del document té text seleccionable.** Chrome i Edge no incrusten
   les fonts variables de Google Fonts (Newsreader, IBM Plex Sans) i les

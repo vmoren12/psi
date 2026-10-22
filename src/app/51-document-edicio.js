@@ -1,8 +1,12 @@
 /* ---------- Edició del document a la previsualització ----------
    El document es genera a partir del pla, però abans d'imprimir-lo sovint cal
-   retocar-ne un text o afegir-hi un matís que no té lloc a cap pas. En mode
-   d'edició, el cos del document és editable directament. Els apartats no
-   s'eliminen: s'amaguen de la impressió amb l'ull (52-document-ocults.js).
+   retocar-ne un text o afegir-hi un matís que no té lloc a cap pas. Cada
+   apartat —i la capçalera i el peu— porta un llapis al costat de l'ull: en
+   clicar-lo, aquell apartat es pot editar directament, i el llapis passa a
+   ser un ✓ que l'acaba. Només n'hi ha un d'obert alhora: obrir-ne un altre
+   desa el que s'estava editant. Un apartat retocat porta, a més, una fletxa
+   per tornar-lo a generar a partir del pla. Els apartats no s'eliminen:
+   s'amaguen de la impressió amb l'ull (52-document-ocults.js).
 
    Les edicions es desen per apartats (p.docEdit):
      seccions  {clau: html}  apartats retocats a mà, tal com han quedat
@@ -18,6 +22,7 @@
 
    Tot el que és eina (botons, avisos) porta la classe doc-eina i no s'imprimeix
    ni es desa. */
+/* Clau (data-sec) de l'apartat que s'està editant, o false. */
 let docEditant = false;
 let desaDocTimer = null;
 
@@ -45,7 +50,26 @@ function muntaDocCos(p, a){
   }
   numeraDoc(t.content, seccionsOcultes(p));
   decoraOcults(t.content, p);
+  decoraEdicio(t.content);
   return t.innerHTML;
+}
+
+/* Llapis de cada apartat i, als retocats, la fletxa per restaurar-los. Als
+   apartats amb títol van dins del títol, al costat de l'ull; a la capçalera i
+   al peu, que no en tenen, van al marge. */
+function decoraEdicio(arrel){
+  arrel.querySelectorAll("[data-sec]").forEach(el => {
+    const k = el.dataset.sec, on = docEditant === k;
+    const que = NOM_SECCIO_FIX[k] ? (k === "cap" ? "la capçalera" : "el peu") : "aquest apartat";
+    const t = on ? `Acaba d'editar ${que}` : `Edita ${que}`;
+    const eines = `<button type="button" class="doc-ull doc-llapis doc-eina no-print${on?" on":""}" contenteditable="false"
+      onclick="editaSeccioDoc(${jq(k)})" title="${t}" aria-label="${t}" aria-pressed="${on}"><span class="msym" aria-hidden="true">${on ? "&#xe5ca;" : "&#xe3c9;"}</span></button>`
+      + (el.dataset.editat ? `<button type="button" class="doc-ull doc-restaura doc-eina no-print" contenteditable="false"
+      onclick="restauraSeccioDoc(${jq(k)})" title="Torna a generar ${que} a partir del pla" aria-label="Torna a generar ${que} a partir del pla"><span class="msym" aria-hidden="true">&#xe166;</span></button>` : "");
+    const h = el.matches("section") ? el.querySelector("h2") : null;
+    if(h) h.insertAdjacentHTML("beforeend", eines);
+    else el.insertAdjacentHTML("afterbegin", `<span class="doc-eines-solt doc-eina no-print" contenteditable="false">${eines}</span>`);
+  });
 }
 
 /* Numera els apartats per ordre: 1, 2, 3… L'annex i els apartats que no
@@ -167,14 +191,12 @@ function einesDoc(p){
   const editats = ed ? Object.keys(ed.seccions || {}).filter(k => noms[k]) : [];
   return `<div class="doc-tools no-print">
     <span class="eyebrow">Edició del document</span>
-    ${docEditant
-      ? `<button class="btn sm primary" onclick="commutaEdicioDoc(false)">Acaba l'edició</button>`
-      : `<button class="btn sm" onclick="commutaEdicioDoc(true)">Edita el document</button>`}
+    ${docEditant ? `<button class="btn sm primary" onclick="acabaEdicioDoc()">Acaba l'edició</button>` : ""}
     ${editats.length ? `<button class="btn sm ghost danger" onclick="descartaEdicioDoc()">Descarta totes les edicions</button>` : ""}
     ${p.docOcult ? `<button class="btn sm ghost" onclick="mostraTotDoc()">Torna a imprimir-ho tot</button>` : ""}
     <span class="legal" style="flex-basis:100%;margin:0">${docEditant
-      ? "Clica qualsevol text per canviar-lo. Els canvis es desen sols. Amb l'ull d'un apartat, una fila, una columna o el segell l'amagues de la impressió, i els números dels apartats es refan sols."
-      : "Pots retocar qualsevol text del document abans d'imprimir-lo; les edicions es desen amb el pla. Amb l'ull d'un apartat, una fila, una columna o el segell l'amagues de la impressió."}</span>
+      ? "Clica el text de l'apartat marcat per canviar-lo; els canvis es desen sols. Amb el ✓ del títol, o amb el llapis d'un altre apartat, acabes aquesta edició."
+      : `Amb el llapis <span class="msym doc-llegenda" aria-hidden="true">&#xe3c9;</span> de cada apartat en pots retocar el text abans d'imprimir-lo; les edicions es desen amb el pla. Amb l'ull <span class="msym doc-llegenda" aria-hidden="true">&#xe8f4;</span> d'un apartat, una fila, una columna o el segell l'amagues de la impressió, i els números dels apartats es refan sols.`}</span>
     ${editats.length ? `<div class="doc-edits"><span class="small"><b>Retocats a mà</b> (no reflecteixen els canvis posteriors del pla, tret de la columna «Avaluació»):</span>
       ${editats.map(k => `<span class="logo-chip"><span class="small">${nom(k)}</span>
         <button class="btn sm ghost pag" title="Torna a generar aquest apartat a partir del pla" onclick="restauraSeccio(${jq(k)})">Restaura</button></span>`).join("")}</div>` : ""}
@@ -200,28 +222,48 @@ function posaBotoMesures(){
   const d = document.createElement("div");
   d.className = "doc-mesures-eina doc-eina no-print";
   d.contentEditable = "false";
-  d.innerHTML = `<button type="button" class="btn sm ghost" aria-pressed="${!!p.docMesuresSimples}" onclick="commutaMesuresSimples()">${
+  const ambEstr = p.adaptacions.some(esEstrategiaPla);
+  d.innerHTML = (ambEstr ? `<button type="button" class="btn sm ghost" aria-pressed="${estrategiesApart(p)}" onclick="commutaEstrategiesApart()"
+      title="Les estratègies metodològiques triades del banc poden anar en una taula pròpia, agrupades per categoria, o dins de la graella de mesures">${
+    estrategiesApart(p) ? "Posa les estratègies dins de la graella de mesures" : "Mostra les estratègies en una graella independent"}</button>` : "")
+    + `<button type="button" class="btn sm ghost" aria-pressed="${!!p.docMesuresSimples}" onclick="commutaMesuresSimples()">${
     p.docMesuresSimples ? "Mostra la redacció de cada mesura" : "Mostra només els títols de les mesures"}</button>`;
   const h = sec.querySelector("h2");
   if(h) h.after(d); else sec.insertBefore(d, sec.firstChild);
 }
 
-/* Activa o desactiva l'edició sobre el document que hi ha pintat ara. */
+/* Fa editable l'apartat que s'està editant, si n'hi ha cap. */
+const seccioDoc = (cos, k) => [...cos.querySelectorAll("[data-sec]")].find(x => x.dataset.sec === k);
 function aplicaEdicioDoc(){
   const cos = $("#doc-cos");
-  if(!cos) return;
-  if(!docEditant){ cos.removeAttribute("contenteditable"); return; }
-  cos.setAttribute("contenteditable", "true");
-  cos.setAttribute("spellcheck", "true");
-  cos.oninput = () => { cos.dataset.tocat = "1"; clearTimeout(desaDocTimer); desaDocTimer = setTimeout(desaEdicioDoc, 400); };
+  if(!cos || !docEditant) return;
+  const el = seccioDoc(cos, docEditant);
+  if(!el){ docEditant = false; return; }
+  el.setAttribute("contenteditable", "true");
+  el.setAttribute("spellcheck", "true");
+  el.oninput = () => { cos.dataset.tocat = "1"; clearTimeout(desaDocTimer); desaDocTimer = setTimeout(desaEdicioDoc, 400); };
 }
 
-function commutaEdicioDoc(on){
-  if(!on) buidaEdicioDoc();
-  docEditant = !!on;
+/* El llapis d'un apartat: l'obre per editar o, si ja ho estava, l'acaba. */
+function editaSeccioDoc(k){
+  const acaba = docEditant === k;
+  if(docEditant) buidaEdicioDoc();
+  docEditant = acaba ? false : k;
   refrescaDoc();
-  if(on) toast("Mode d'edició: clica qualsevol text del document per canviar-lo.");
-  else toast("Edició acabada.");
+  if(acaba){ toast("Edició acabada. Els canvis queden desats."); return; }
+  const cos = $("#doc-cos"), el = cos && seccioDoc(cos, k);
+  if(el){ el.focus({preventScroll:true}); el.scrollIntoView({block:"nearest", behavior:"smooth"}); }
+  toast("Clica el text de l'apartat per canviar-lo. Els canvis es desen sols.");
+}
+function acabaEdicioDoc(){ if(docEditant) editaSeccioDoc(docEditant); }
+
+/* La fletxa d'un apartat retocat: com «Restaura» de la franja, però amb
+   confirmació, perquè és una icona petita al costat del llapis. */
+async function restauraSeccioDoc(k){
+  if(!await confirma("Torna a generar l'apartat",
+       "Es perdran els canvis fets a mà en aquest apartat i tornarà a reflectir el que diu el pla.",
+       {confirma:"Torna'l a generar", perillos:true})) return;
+  restauraSeccio(k);
 }
 
 /* Desa com a retocats els apartats que ara no coincideixen amb el que es
@@ -282,21 +324,39 @@ function commutaMesuresSimples(){
   if(!p) return;
   if(docEditant) buidaEdicioDoc();
   p.docMesuresSimples = !p.docMesuresSimples;
-  const ed = p.docEdit;
-  if(ed && ed.seccions && ed.seccions.mesures != null){
-    const t = document.createElement("template");
-    t.innerHTML = ed.seccions.mesures;
-    const taula = graellaMesuresDe(t.content);
-    if(taula){
-      let tb = taula.querySelector("tbody");
-      if(!tb){ tb = document.createElement("tbody"); taula.appendChild(tb); }
-      tb.innerHTML = filesMesuresDoc(p);
-      ed.seccions.mesures = t.innerHTML;
-    }
-  }
+  refaGraellesMesures(p);
   desa();
   refrescaDoc();
   toast(p.docMesuresSimples ? "Graella de mesures amb només els títols." : "Graella de mesures amb la redacció completa.");
+}
+/* Estratègies metodològiques en una taula pròpia o dins de la graella de
+   mesures. Mateix criteri que la graella simplificada: en un apartat retocat
+   a mà només es refan les dues graelles. */
+function commutaEstrategiesApart(){
+  const p = pi(state.docPi);
+  if(!p) return;
+  if(docEditant) buidaEdicioDoc();
+  p.docEstrategiesApart = !estrategiesApart(p);
+  refaGraellesMesures(p);
+  desa();
+  refrescaDoc();
+  toast(estrategiesApart(p) ? "Estratègies en una graella independent, per categories." : "Estratègies dins de la graella de mesures.");
+}
+/* En un apartat 5 retocat a mà, refà la graella de mesures i la de les
+   estratègies a partir del pla i respecta la resta del text. */
+function refaGraellesMesures(p){
+  const ed = p.docEdit;
+  if(!ed || !ed.seccions || ed.seccions.mesures == null) return;
+  const t = document.createElement("template");
+  t.innerHTML = ed.seccions.mesures;
+  const taula = graellaMesuresDe(t.content);
+  if(!taula) return;
+  let tb = taula.querySelector("tbody");
+  if(!tb){ tb = document.createElement("tbody"); taula.appendChild(tb); }
+  tb.innerHTML = filesMesuresDoc(p);
+  t.content.querySelectorAll('div[data-doc="estrategies"]').forEach(x => x.remove());
+  if(estrategiesApart(p)) taula.insertAdjacentHTML("afterend", blocEstrategiesDoc(p));
+  ed.seccions.mesures = t.innerHTML;
 }
 /* La graella de mesures dins d'un document desat. Els documents editats abans
    que la taula portés la marca data-doc es reconeixen pel títol de l'apartat. */

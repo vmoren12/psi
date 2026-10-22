@@ -21,7 +21,8 @@ const dfila = v => v ? ` data-fila="${esc(v)}"` : "";
 /* Una fila de la taula de mesures del document oficial: agrupa les mesures
    triades per a una destinació i hi afegeix la concreció escrita. */
 function cellaMesuresDoc(p, dest, etiqueta){
-  const items = p.adaptacions.filter(x => x.materia===dest);
+  const apart = estrategiesApart(p);
+  const items = p.adaptacions.filter(x => x.materia===dest && !(apart && esEstrategiaPla(x)));
   const txt = (p.mesures[dest]||"").trim();
   if(!items.length && !txt) return "";
   /* Graella simplificada: només el títol de cada mesura, agrupades per
@@ -45,9 +46,33 @@ function cellaMesuresDoc(p, dest, etiqueta){
 /* Files de la graella de mesures (apartat 5). Es fan servir també per
    refer només aquesta graella dins d'un document editat a mà. */
 function filesMesuresDoc(p){
-  return cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")
-    + (p.materies.map(m => cellaMesuresDoc(p, m, m)).join("")
-       || (p.adaptacions.length ? "" : `<tr><td colspan="2">—</td></tr>`));
+  return (cellaMesuresDoc(p, DEST_TOTES, "Totes les matèries del pla")
+    + p.materies.map(m => cellaMesuresDoc(p, m, m)).join(""))
+    || `<tr><td colspan="2">—</td></tr>`;
+}
+
+/* ----- Estratègies metodològiques en una graella pròpia -----
+   Per defecte, les estratègies del banc que s'han afegit al pla no van
+   barrejades amb les mesures del Decret 150/2017: surten en una taula a part,
+   dins del mateix apartat, amb una fila per categoria. p.docEstrategiesApart
+   (false) les torna a posar dins de la graella de mesures. */
+const estrategiesApart = p => p.docEstrategiesApart !== false && p.adaptacions.some(esEstrategiaPla);
+function filesEstrategiesDoc(p){
+  const perCat = {};
+  p.adaptacions.filter(esEstrategiaPla).forEach(x => {
+    const c = categoriaEstrategiaPla(x);
+    (perCat[c] = perCat[c] || []).push(x);
+  });
+  const ordre = ESTRATEGIES_CATS().filter(c => perCat[c])
+    .concat(Object.keys(perCat).filter(c => !ESTRATEGIES_CATS().includes(c)));
+  return ordre.map(c => `<tr${dfila("estr:"+c)}><td class="k">${esc(c)}</td><td>
+    <ul style="margin:0;padding-left:16px">${perCat[c].map(x => `<li>${esc(x.text || x.titol)}${
+      x.materia && x.materia !== DEST_TOTES ? ` <i>(${esc(x.materia)})</i>` : ""}</li>`).join("")}</ul></td></tr>`).join("");
+}
+function blocEstrategiesDoc(p){
+  return `<div data-doc="estrategies"><h3>Estratègies metodològiques</h3>
+  <table data-doc="estrategies"><thead><tr><th style="width:30%">Categoria</th><th>Estratègies metodològiques a l'aula</th></tr></thead>
+  <tbody>${filesEstrategiesDoc(p)}</tbody></table></div>`;
 }
 
 /* Casella «Instrument i evidència» del document: instruments i evidències d'un
@@ -71,10 +96,15 @@ function cellaAvaluacioDoc(o){
    l'objectiu (pas 6), encara que s'hagi redactat en text lliure, i les
    caselles repetides es fusionen amb rowspan perquè cada matèria i cada
    trimestre hi constin un sol cop. */
+/* Objectius que surten al document: els que tenen alguna cosa escrita. Un
+   objectiu afegit i deixat en blanc no hi ha de portar la frase plantilla. */
+const objectiusDoc = p => p.objectius.filter(o =>
+  objEscrit(o) || llistaPlena(o, "instrument").length || llistaPlena(o, "evidencia").length);
 function taulaObjectiusDoc(p, a, ambAval){
-  const ordM = m => { const i = p.materies.indexOf(m); return i < 0 ? (m ? 900 : 999) : i; };
+  /* L'àmbit personal i social va davant de les matèries: és transversal. */
+  const ordM = m => { if(m === AMBIT_PERSONAL) return -1; const i = p.materies.indexOf(m); return i < 0 ? (m ? 900 : 999) : i; };
   const ordT = t => { const i = TRIMESTRES.indexOf(t); return i < 0 ? 99 : i; };
-  const obs = p.objectius.map((o, i) => ({o, i})).sort((x, y) =>
+  const obs = objectiusDoc(p).map((o, i) => ({o, i})).sort((x, y) =>
     ordM(x.o.materia) - ordM(y.o.materia) || String(x.o.materia||"").localeCompare(String(y.o.materia||""), "ca")
     || ordT(x.o.trimestre) - ordT(y.o.trimestre) || x.i - y.i).map(x => x.o);
   const mat = o => o.materia || "", tri = o => o.trimestre || "";
@@ -88,10 +118,10 @@ function taulaObjectiusDoc(p, a, ambAval){
       let n = 1; while(i+n < obs.length && mat(obs[i+n]) === mat(o) && tri(obs[i+n]) === tri(o)) n++;
       cel += `<td rowspan="${n}" data-col="tri">${esc(tri(o) || "—")}</td>`;
     }
-    return `<tr data-obj="${esc(o.id)}">${cel}<td data-col="obj">${esc(fraseText(o, a.alias))}</td><td data-col="ins">${cellaAvaluacioDoc(o)}</td>${
+    return `<tr data-obj="${esc(o.id)}">${cel}<td data-col="obj">${esc(fraseText(o, a.alias) || "—")}</td><td data-col="ins">${cellaAvaluacioDoc(o)}</td>${
       ambAval ? `<td data-aval="" data-col="aval">${cellaAssolimentDoc(p, o)}</td>` : ""}</tr>`;
   }).join("");
-  return `<table><thead><tr><th style="width:15%" data-col="mat">Matèria</th><th style="width:11%" data-col="tri">Trimestre</th><th data-col="obj">Objectiu</th>
+  return `<table><thead><tr><th style="width:15%" data-col="mat">Matèria o àmbit</th><th style="width:11%" data-col="tri">Trimestre</th><th data-col="obj">Objectiu</th>
     <th style="width:${ambAval?20:24}%" data-col="ins">Instrument i evidència</th>${ambAval?`<th style="width:13%" data-aval="" data-col="aval">Avaluació</th>`:""}</tr></thead>
     <tbody>${files}</tbody></table>`;
 }
@@ -149,7 +179,7 @@ function docCos(p, a){
         || (st.sabersSense||[]).length || (st.sabers||[]).length || st.propis
         || Object.values(st.adaptCE||{}).some(v => (v||"").trim());
   });
-  const ambObjectius = p.objectius.length && p.docObjectius!==false;
+  const ambObjectius = objectiusDoc(p).length && p.docObjectius!==false;
   const ambAval = ambObjectius && p.objectius.some(o => valoracionsObj(p, o).length);
   return `
   <div class="head" data-sec="cap">
@@ -198,6 +228,7 @@ function docCos(p, a){
   <section data-sec="mesures"><h2>Proposta educativa · Mesures i suports</h2>
   <table data-doc="mesures"><thead><tr><th style="width:30%">Matèria / Àmbit / Projecte</th><th>Mesures i suports universals, addicionals i/o intensius</th></tr></thead>
   <tbody>${filesMesuresDoc(p)}</tbody></table>
+  ${estrategiesApart(p) ? blocEstrategiesDoc(p) : ""}
   <p class="legal">Intensitat de les mesures d'aquest pla: ${(()=>{const c=comptaIntensitats(p);return `${c.Universal} universals, ${c.Addicional} addicionals i ${c.Intensiva} intensives`;})()}. Decret 150/2017, de 17 d'octubre, de l'atenció educativa a l'alumnat en el marc d'un sistema educatiu inclusiu.</p></section>
 
   ${matsCurr.map(nom=>{
@@ -297,7 +328,7 @@ function docCos(p, a){
 
   ${p.seguiments.length?`<section data-sec="annex" data-annex="1"><h2>Annex · ${ambObjectius ? "Registre de seguiment del pla" : "Valoració del grau d'assoliment dels objectius"}</h2>
   ${p.seguiments.map(s=>`<h3>${esc(s.trimestre)} — ${dataCat(s.data)} · ${esc(s.decisio)}</h3>
-    ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b> — ${esc(fraseText(o, a.alias))}</li>`:"";}).join("")}</ul>`}
+    ${ambObjectius ? "" : `<ul>${Object.entries(s.valoracions||{}).map(([k,v])=>{const o=p.objectius.find(x=>x.id===k);return o?`<li>${esc(o.materia)}: <b>${esc(v)}</b>${fraseText(o, a.alias) ? " — "+esc(fraseText(o, a.alias)) : ""}</li>`:"";}).join("")}</ul>`}
     ${s.observacions?`<p>${esc(s.observacions)}</p>`:(ambObjectius?`<p class="orig">Sense observacions.</p>`:"")}`).join("")}</section>`:""}
 
   <div class="foot" data-sec="peu">Pla de suport individualitzat · Curs ${esc(p.curs)} · ${esc(state.centre||"[Centre educatiu]")} · Document generat el ${dataCat(avui())}<br>
