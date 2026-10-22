@@ -312,7 +312,9 @@ def main(argv=None) -> int:
             print("ERROR: no hi ha %s. Executeu «python -m tools.build»."
                   % rutes.SORTIDA.relative_to(rutes.ARREL))
             return 1
-        actual = rutes.SORTIDA.read_text(encoding="utf-8", newline="")
+        # En bytes, sense traduir salts de línia. `read_text(newline=...)` no
+        # existeix fins a Python 3.13, i el projecte ha de funcionar amb 3.9.
+        actual = rutes.SORTIDA.read_bytes().decode("utf-8")
         if actual != html:
             print("ERROR: %s no correspon a src/ i data/.\n"
                   "       Executeu «python -m tools.build» i incloeu-ho al canvi."
@@ -323,10 +325,11 @@ def main(argv=None) -> int:
         return 0
 
     rutes.DIST.mkdir(parents=True, exist_ok=True)
-    # newline="" perquè el fitxer distribuït porti sempre salts LF, tant si es
+    # En bytes perquè el fitxer distribuït porti sempre salts LF, tant si es
     # genera a Windows com a Linux: així la còpia de `dist/` no canvia de mida
-    # ni de suma de verificació segons qui la construeixi.
-    rutes.SORTIDA.write_text(html, encoding="utf-8", newline="")
+    # ni de suma de verificació segons qui la construeixi. (`write_text` no
+    # accepta `newline` fins a Python 3.10.)
+    rutes.SORTIDA.write_bytes(html.encode("utf-8"))
     if not silenci:
         print("Aplicació construïda.")
         print(resum(html))

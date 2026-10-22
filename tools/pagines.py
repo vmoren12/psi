@@ -113,8 +113,10 @@ def munta():
             text = p.read_text(encoding="utf-8")
             if MARCA_VERSIO not in text:
                 raise ErrorDePublicacio("web/sw.js ja no porta la marca %s" % MARCA_VERSIO)
-            (rutes.LLOC / p.name).write_text(
-                text.replace(MARCA_VERSIO, marca), encoding="utf-8", newline="")
+            # En bytes, sense traduir salts de línia (Python 3.9 no té
+            # `write_text(newline=...)`).
+            (rutes.LLOC / p.name).write_bytes(
+                text.replace(MARCA_VERSIO, marca).encode("utf-8"))
         else:
             shutil.copyfile(p, rutes.LLOC / p.name)
 
