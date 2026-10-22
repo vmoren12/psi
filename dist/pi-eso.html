@@ -420,10 +420,27 @@ details.ce .ceb{padding:6px 14px 12px}
 .btn.bc-fet:hover{background:#185a4d;border-color:#185a4d}
 .btn.bc-fet .msym{font-size:19px}
 /* ---------- adaptació de criteris (pas 5) ---------- */
-.crit.on{background:#fbfdfb}
-.crit-tools{display:flex;gap:7px;flex-wrap:nowrap;align-items:center;margin-top:3px;
-  overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;padding:4px 0}
-.crit-tools>*{flex:0 0 auto}
+/* Criteris triats: fons verd suau i filet a l'esquerra, perquè es vegin d'un
+   cop d'ull entre tots els del decret. Els d'un nivell anterior, en groc. */
+.crit.on{background:var(--met-soft);border-left:3px solid var(--met);border-bottom-color:transparent;
+  border-radius:0 var(--r) var(--r) 0;padding:9px 10px 9px 8px;margin:4px 0}
+.crit.on .code{font-weight:600}
+.crit.on.prim{background:var(--warn-soft);border-left-color:var(--warn)}
+.crit.on .sab-chip{background:var(--surface)}
+/* Competència específica amb algun criteri triat (o adaptada): la capçalera
+   amb fons, amb el mateix codi de color. */
+.ce-bloc{margin-top:14px}
+.ce-cap{display:flex;gap:8px;align-items:flex-start;border:1px solid transparent;border-radius:var(--r)}
+.ce-bloc.on .ce-cap{background:var(--met-soft);border-color:#b9d6cb;padding:8px 10px}
+.ce-bloc.on .ce-cap .ct{font-weight:500;color:var(--ink)}
+.ce-bloc.on.prim .ce-cap{background:var(--warn-soft);border-color:#e0d2a4}
+/* «✓ N sabers»: la mateixa mida que «Tria sabers», però destacat. */
+.btn.sab-on{background:var(--met-soft);border-color:var(--met);color:#134338;font-weight:600}
+.btn.sab-on:hover{background:#d3e7df}
+/* Les eines d'un criteri triat salten de línia si no hi caben: mai no han de
+   demanar desplaçament horitzontal. */
+.crit-tools{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:3px;padding:4px 0}
+.crit-tools>*{flex:0 0 auto;max-width:100%}
 /* El desplegable d'acció té opcions molt llargues i s'enduria tota la fila:
    se li posa sostre i el text triat es retalla. L'acció, si no és la de
    mantenir el criteri igual, també surt sencera a l'etiqueta del costat. */
@@ -451,7 +468,6 @@ details.ce .ceb{padding:6px 14px 12px}
 .curr-pan.ent-esq{animation:curr-esq .2s ease-out}
 @media (prefers-reduced-motion:reduce){.curr-pan.ent-dreta,.curr-pan.ent-esq{animation:none}}
 .cen{font-family:var(--mono);font-size:11px;color:#fff;background:var(--ink);border-radius:3px;padding:2px 6px;flex:0 0 auto;margin-top:2px}
-.btn.tria{background:var(--met-soft);border-color:#b9d6cb;color:#134338}
 .sab-tria{display:flex;flex-direction:column;gap:4px;margin-top:7px}
 .sab-chip{display:flex;gap:10px;align-items:baseline;font-size:12.5px;line-height:1.45;color:var(--ink2);background:var(--met-soft);border:1px solid #b9d6cb;border-radius:var(--r);padding:5px 9px}
 .sab-chip b{font-family:var(--mono);font-size:10.5px;font-weight:500;color:#134338;white-space:nowrap;margin-left:auto}
@@ -4878,8 +4894,11 @@ function fontCurricular(p, nom, font){
       const kce = claCE(nom, font, c.n);
       const adCE = st.adaptCE[kce] || "";
       const obCE = !!state.openAdapt[nom+"#CE#"+kce];
-      return `<div style="margin-top:14px">
-        <div style="display:flex;gap:8px;align-items:flex-start">
+      /* Una competència amb algun criteri triat, o adaptada, va destacada. Es
+         miren tots els cursos, també els que el filtre amaga. */
+      const ceOn = !!adCE || c.grups.some(g => g.items.some(i => st.criteris.includes(claCrit(font, i.c, g.curs))));
+      return `<div class="ce-bloc${ceOn?" on":""}${baix?" prim":""}">
+        <div class="ce-cap">
           <span class="cen" style="background:${baix?"var(--warn)":"var(--met)"}">CE${c.n}</span>
           <span class="ct" style="font-size:13.5px;line-height:1.5;flex:1">${esc(c.desc)}</span>
           <button class="btn sm ${adCE?"ok":"ghost"}" style="flex:0 0 auto" onclick="obreAdaptCE(${jq(nom)},${jq(kce)})">${adCE?"✓ Adaptada":"Adaptar"}</button></div>
@@ -4913,7 +4932,7 @@ function fontCurricular(p, nom, font){
                   <option value="">Acció sobre el criteri…</option>
                   ${ACCIONS_CURR.map(x=>`<option ${ac===x?"selected":""}>${x}</option>`).join("")}</select>
                 <button class="btn sm ${ad?"ok":"ghost"}" onclick="obreAdapt(${jq(key)})">${ad?"✓ Adaptat":"Adaptar"}</button>
-                <button class="btn sm ${sb.length?"tria":"ghost"}" onclick="obreSabers(${jq(nom)},${jq(key)})">${sb.length?`✓ ${sb.length} saber${sb.length===1?"":"s"}`:"Tria sabers"}</button>
+                <button class="btn sm ${sb.length?"sab-on":"ghost"}" onclick="obreSabers(${jq(nom)},${jq(key)})">${sb.length?`✓ ${sb.length} saber${sb.length===1?"":"s"}`:"Tria sabers"}</button>
                 ${ac && ac!=="Mantenir sense canvis" ? `<span class="tag con">${esc(ac)}</span>` : ""}
               </div>
               ${sb.length ? `<div class="sab-tria">${sb.map(s=>`<span class="sab-chip${saberInferior(p,s)?" baix":""}">${esc(s.t)}<b>${esc(etapaDe(s.font))} · ${esc(s.curs||"—")}</b></span>`).join("")}</div>` : ""}

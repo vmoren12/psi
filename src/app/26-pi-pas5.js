@@ -519,8 +519,11 @@ function fontCurricular(p, nom, font){
       const kce = claCE(nom, font, c.n);
       const adCE = st.adaptCE[kce] || "";
       const obCE = !!state.openAdapt[nom+"#CE#"+kce];
-      return `<div style="margin-top:14px">
-        <div style="display:flex;gap:8px;align-items:flex-start">
+      /* Una competència amb algun criteri triat, o adaptada, va destacada. Es
+         miren tots els cursos, també els que el filtre amaga. */
+      const ceOn = !!adCE || c.grups.some(g => g.items.some(i => st.criteris.includes(claCrit(font, i.c, g.curs))));
+      return `<div class="ce-bloc${ceOn?" on":""}${baix?" prim":""}">
+        <div class="ce-cap">
           <span class="cen" style="background:${baix?"var(--warn)":"var(--met)"}">CE${c.n}</span>
           <span class="ct" style="font-size:13.5px;line-height:1.5;flex:1">${esc(c.desc)}</span>
           <button class="btn sm ${adCE?"ok":"ghost"}" style="flex:0 0 auto" onclick="obreAdaptCE(${jq(nom)},${jq(kce)})">${adCE?"✓ Adaptada":"Adaptar"}</button></div>
@@ -554,7 +557,7 @@ function fontCurricular(p, nom, font){
                   <option value="">Acció sobre el criteri…</option>
                   ${ACCIONS_CURR.map(x=>`<option ${ac===x?"selected":""}>${x}</option>`).join("")}</select>
                 <button class="btn sm ${ad?"ok":"ghost"}" onclick="obreAdapt(${jq(key)})">${ad?"✓ Adaptat":"Adaptar"}</button>
-                <button class="btn sm ${sb.length?"tria":"ghost"}" onclick="obreSabers(${jq(nom)},${jq(key)})">${sb.length?`✓ ${sb.length} saber${sb.length===1?"":"s"}`:"Tria sabers"}</button>
+                <button class="btn sm ${sb.length?"sab-on":"ghost"}" onclick="obreSabers(${jq(nom)},${jq(key)})">${sb.length?`✓ ${sb.length} saber${sb.length===1?"":"s"}`:"Tria sabers"}</button>
                 ${ac && ac!=="Mantenir sense canvis" ? `<span class="tag con">${esc(ac)}</span>` : ""}
               </div>
               ${sb.length ? `<div class="sab-tria">${sb.map(s=>`<span class="sab-chip${saberInferior(p,s)?" baix":""}">${esc(s.t)}<b>${esc(etapaDe(s.font))} · ${esc(s.curs||"—")}</b></span>`).join("")}</div>` : ""}

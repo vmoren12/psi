@@ -158,6 +158,15 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Canviat
 
+- **Pas 5: competències i criteris triats destacats.** Un criteri marcat porta
+  fons verd suau i un filet a l'esquerra (groc si és d'un nivell anterior), i
+  la competència específica que té algun criteri triat, o que s'ha adaptat,
+  porta la capçalera amb fons. Les eines d'un criteri triat salten de línia
+  quan no hi caben, en lloc de demanar desplaçament horitzontal.
+- **Pas 5: el botó «✓ N sabers» ja no s'allarga.** Compartia el nom de classe
+  amb les opcions grans dels diàlegs i en prenia l'amplada completa, cosa que
+  obligava a fer scroll horitzontal. Ara té la mateixa mida que «Tria sabers»,
+  destacat en verd.
 - **El document no porta mai el text de la plantilla dels objectius.** Un
   objectiu sense res escrit no surt al document encara que estigui marcat
   «Inclou els objectius al document del PI», i si no n'hi ha cap de redactat
