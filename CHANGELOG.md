@@ -158,6 +158,13 @@ el projecte usa [versionat semàntic](https://semver.org/lang/ca/).
 
 ### Canviat
 
+- **El document només esmenta la primària quan se'n fa servir algun
+  element.** El peu «Aquesta matèria incorpora elements curriculars
+  d'educació primària…» de la proposta educativa sortia sempre que la matèria
+  tingués una àrea de primària carregada, encara que no se n'hagués marcat res
+  o se n'hagués desmarcat tot. Ara només hi consten les àrees de les quals hi
+  ha algun criteri, saber o competència adaptada; si no n'hi ha cap, el peu no
+  hi surt.
 - **Pas 5: competències i criteris triats destacats.** Un criteri marcat porta
   fons verd suau i un filet a l'esquerra (groc si és d'un nivell anterior), i
   la competència específica que té algun criteri triat, o que s'ha adaptat,

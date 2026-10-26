@@ -78,6 +78,13 @@ async function treuPrimaria(nom, area, forca){
   renderPi();
   toast(`S'ha tret ${area} de ${nom}.`);
 }
+/* Àrees de primària de les quals la matèria fa servir algun element. Tenir-ne
+   una de carregada no compta: és el que diu el document, i una àrea activada
+   i després buidada no hi ha de constar. */
+function areesPrimUsades(p, nom){
+  if(esPlaPrim(p)) return [];
+  return currDe(p, nom).prim.filter(a => comptaFont(p, nom, idPrim(a)) > 0);
+}
 /* Elements d'una font concreta triats dins d'una matèria. */
 function comptaFont(p, nom, font){
   const st = currDe(p, nom);

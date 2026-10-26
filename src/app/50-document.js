@@ -281,7 +281,7 @@ function docCos(p, a){
     ${(baixos.length || critBaixos.length)?`<p class="legal">${esc(nom)} incorpora ${[
         critBaixos.length ? `${critBaixos.length} criteri${critBaixos.length===1?"":"s"} d'avaluació` : "",
         baixos.length ? `${baixos.length} saber${baixos.length===1?"":"s"}` : ""].filter(Boolean).join(" i ")} d'un nivell anterior al que cursa l'alumne/a (${esc(p.de.curs||"—")}), motiu pel qual el pla consta com a <b>curricular</b>. L'alumne/a s'avalua d'acord amb els criteris i els sabers que consten en aquest pla, cosa que en cap cas pot suposar una limitació en les seves qualificacions.</p>`:""}
-    ${(st.prim||[]).length?`<p class="legal">Aquesta matèria incorpora elements curriculars d'educació primària (annex 2 del Decret 175/2022): ${esc(st.prim.join(", "))}. L'alumne/a s'avalua d'acord amb els criteris que consten en aquest pla, cosa que en cap cas pot suposar una limitació en les seves qualificacions.</p>`:""}</section>`;
+    ${areesPrimUsades(p, nom).length?`<p class="legal">Aquesta matèria incorpora elements curriculars d'educació primària (annex 2 del Decret 175/2022): ${esc(areesPrimUsades(p, nom).join(", "))}. L'alumne/a s'avalua d'acord amb els criteris que consten en aquest pla, cosa que en cap cas pot suposar una limitació en les seves qualificacions.</p>`:""}</section>`;
   }).join("")}
 
   ${p.transv.length?`<section data-sec="transversals"><h2>Proposta educativa · Competències transversals</h2>
